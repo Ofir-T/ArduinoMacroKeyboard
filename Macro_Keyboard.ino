@@ -1,16 +1,22 @@
 /*
-
+Hello! this is the Arduino-Pro-Micro Macro-Keyboard code V1 by Ofir Temelman,
+originally uploaded to Thingiverse @ https://www.thingiverse.com/thing:4628023. The encoder section of ths code is adapted from Mikolas Zuza's Oversized Volume Knob on Prusaprinters.org
+You can use any keyboard buttons available in HID-Project.h (see bottom comment), but I prefer to
+keep them the usually unused F13-F24 keys, and change their actions using a macro program
 */
-//#include <Keyboard.h>
+
+// Required libraries - don't forget to add them to your IDE!
 #include <ClickEncoder.h>
 #include <TimerOne.h>
 #include <HID-Project.h>
 
-#define ENCODER_CLK A0 // Change A0 to, for example, A5 if you want to use analog pin 5 instead
+//Analog pins That would get input from encoder. A# is the pin number on the arduino
+#define ENCODER_CLK A0 
 #define ENCODER_DT A1
 #define ENCODER_SW A2
-//
-// Function Keys
+
+
+// Function key definitions
 #define KEYCODE_F13 0xF0 //0x68 & 0x88
 #define KEYCODE_F14 0xF1 //0x69 & 0x88
 #define KEYCODE_F15 0xF2 //0x6A & 0x88
@@ -23,53 +29,56 @@
 #define KEYCODE_F22 0xF9 //0x71 & 0x88
 #define KEYCODE_F23 0xFA //0x72 & 0x88
 #define KEYCODE_F24 0xFB //0x73 & 0x88
-//#define KEY_RIGHT_ALT  0x86
+//this allows the use of the name "KEYCODE_F##" instead of the value "0xF#" for simplicity
 
  
 ClickEncoder *encoder; // variable representing the rotary encoder
 int16_t last, value; // variables for current and last rotation value
 
-
-const int buttonPins[9] = {2, 3, 10, 4, 5, 6, 7, 8, 9};
-int buttonState[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+//Buttons
+const int buttonPins[9] = {2, 3, 10, 4, 5, 6, 7, 8, 9}; // This defines the pins on the arduino that will recieve the key presses
+int buttonState[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0}; // This 
 int prevButtonState[9] = {HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH};
-bool flag = false;
-byte counter = 0x39;
 
+/* Experimental
 byte commandSet1[13] = {KEY_F13, KEY_F14, KEY_F15, KEY_F16, KEY_F17, KEY_F18, KEY_F19, KEY_F20, KEY_F21, KEY_F22, KEY_F23, KEY_F24, KEY_RIGHT_ALT };
+bool flag = false;
+byte counter = 0x39; //try unsigned long instead
 //int[] CommandSets[4] = {CommandSet1[13], null, null, null};
 //int toggle[4] = {0, 1, 2, 3};
+*/
 
-void setup()
+void setup() //this is a one-time pre-run of stuff we need to get the code running as we planned
 {
+
+  //initialize the keypad buttons
   for (int i = 0; i < 9 ; i++)
   {
-    pinMode(buttonPins[i], INPUT_PULLUP);
+    pinMode(buttonPins[i], INPUT_PULLUP); // this goes over every button-pin we defined earlier, and initializes them as input - so they can recieve signals and pullup, so we can connect them directly to the board without resistors
     digitalWrite(buttonPins[i], HIGH);
-  }
+  } 
 
+
+// initialize the encoder
    encoder = new ClickEncoder(ENCODER_DT, ENCODER_CLK, ENCODER_SW); // Initializes the rotary encoder with the mentioned pins
 
-  Timer1.initialize(1000); // Initializes the timer, which the rotary encoder uses to detect rotation
+// initialize the timer, which the rotary encoder uses to detect rotation
+  Timer1.initialize(1000); 
   Timer1.attachInterrupt(timerIsr); 
   last = -1;
 
-  //Serial.begin(9600);
-  Keyboard.begin();
-  //Consumer.begin();
-
+  Keyboard.begin(); //initialize the hid Communication - From this line onwards, the computer should see the arduino as a keyboard
 }
 
-void loop()
+void loop() // the main body of our code. this loop runs continuously with our code inside it
 {
-    // Buttons
-  for (int j = 0; j < 9 ; j++)
+  // Check if any of the keypad buttons was pressed & send the keystroke if needed
+  for (int j = 0; j < 9 ; j++) // goes over every button pin we defined
   {
-    //Serial.println(buttonPins[j]);
-    buttonState[j] = digitalRead(buttonPins[j]);
-    if ((buttonState[j] != prevButtonState[j]) && (buttonState[j] == HIGH))
+    buttonState[j] = digitalRead(buttonPins[j]); // reads current button state
+    if ((buttonState[j] != prevButtonState[j]) && (buttonState[j] == HIGH)) // if the button changed state, and is now pressed, do what's inside the statement
     {
-      switch (j)
+      switch (j) // this triggers each button's corresponding action e.g. when the 1st button is pressed, the arduino tells the PC that the F13 key was pressed
       {
         case 0:
         Keyboard.press(KEY_F13);
@@ -107,43 +116,38 @@ void loop()
         Keyboard.press(KEY_F21);
         break;
       }
-      //Keyboard.press(commandSet1[j]);
-      //Serial.println(commandSet1[j]); 
-      delay(30);
+      //Keyboard.press(commandSet1[j]); //Experimental
+      delay(30); // a small delay after reading the buttons helps prevent accidental double-presses, like if the arduino reads the button faster than we can release it. 30ms is usually small enough and very reliable
     }
-    prevButtonState[j] = buttonState[j];
+    prevButtonState[j] = buttonState[j]; // this remebers the button's current state, so we can compare to it on the next round of the loop.
   }
 
 
-  // Encoder
+  //Read the encoder
    value += encoder->getValue();
   
-    // Rotation
+    // Rotation - Volume control
     if (value != last) { // New value is different than the last one, that means to encoder was rotated
       if(last<value) // Detecting the direction of rotation
-       //Keyboard.press(commandSet1[9]); 
+       //Keyboard.press(commandSet1[9]); // Experimental
        Consumer.write(MEDIA_VOLUME_UP); // Replace this line to have a different function when rotating counter-clockwise
         else
-        //Keyboard.press(commandSet1[10]);
+        //Keyboard.press(commandSet1[10]); // Experimental
         Consumer.write(MEDIA_VOLUME_DOWN); // Replace this line to have a different function when rotating clockwise
       last = value; // Refreshing the "last" varible for the next loop with the current value
-      //Serial.print("Encoder Value: "); // Text output of the rotation value used manily for debugging (open Tools - Serial Monitor to see it)
-      //Serial.println(value);
     }
   
-    // Encoder Clicks
+    // Encoder Clicks - Play/pause, Next
     ClickEncoder::Button b = encoder->getButton(); // Asking the button for it's current state
     if (b != ClickEncoder::Open) { // If the button is unpressed, we'll skip to the end of this if block
-      //Serial.print("Button: "); 
-      //#define VERBOSECASE(label) case label: Serial.println(#label); break;
       switch (b) {
         case ClickEncoder::Clicked: // Button was clicked once
-          //Keyboard.press(commandSet1[11]);
+          //Keyboard.press(commandSet1[11]); // Experimental
           Consumer.write(MEDIA_PLAY_PAUSE); // Replace this line to have a different function when clicking button once
         break;      
         
         case ClickEncoder::DoubleClicked: // Button was double clicked
-           //Keyboard.press(commandSet1[12]);
+           //Keyboard.press(commandSet1[12]); // Experimental
            Consumer.write(MEDIA_NEXT); // Replace this line to have a different function when double-clicking
         break;      
       }
@@ -153,14 +157,19 @@ void loop()
     delay(10); // Wait 10 milliseconds, we definitely don't need to detect the rotary encoder any faster than that
 }
 
+//Timer for the encoder
+void timerIsr() {
+  encoder->service();
+}
+
+/* Experimental
+// Multiple Command Sets
 int Toggle(String action)
 {
   // funtion to toggle between command sets
 }
+*/
 
-void timerIsr() {
-  encoder->service();
-}
 
 /*
     This is just a long comment
