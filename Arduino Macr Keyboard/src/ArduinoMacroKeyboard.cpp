@@ -26,7 +26,7 @@ int prevButtonState[9] = {HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH};
 //Command Sets
 const int numSets = 2;
 const int numCmd = 14;
-int toggle = 0;
+int toggle = 1;
 KeyboardKeycode commandSets[numSets][numCmd] = 
 { // 9x Button, 2x Encoder rotation, 3x Encoder Click 
   {KEY_F13, KEY_F14, KEY_F15, KEY_F16, KEY_F17, KEY_F18, KEY_F19, KEY_F20, KEY_F21, KEYPAD_A, KEYPAD_B, KEY_F22, KEY_F23, KEY_F24}, // Fxx + media
@@ -68,48 +68,53 @@ void loop() // the main body of our code. this loop runs continuously with our c
   for (int j = 0; j < 9 ; j++) // goes over every button pin we defined
   {
     buttonState[j] = digitalRead(buttonPins[j]); // reads current button state
-    if ((buttonState[j] != prevButtonState[j]) && (buttonState[j] == HIGH)) // if the button changed state, and is now pressed, do what's inside the statement
+    if ((buttonState[j] != prevButtonState[j])) // if the button changed state, and is now pressed, do what's inside the statement
     {
-      Keyboard.press(commandSets[toggle][j]); // this triggers each button's corresponding action e.g. when the 1st button is pressed, the arduino tells the PC that the F13 key was pressed
+      if(buttonState[j] == LOW)
+        Keyboard.press(commandSets[toggle][j]); // this triggers each button's corresponding action e.g. when the 1st button is pressed, the arduino tells the PC that the F13 key was pressed
+      else
+        Keyboard.releaseAll();
     }
     prevButtonState[j] = buttonState[j]; // this remebers the button's current state, so we can compare to it on the next round of the loop.
-    delay(5);
   }
 
   //Read the encoder
    value += encoder->getValue();
   
-    // Rotation - Volume control
+    // Encoder Rotation
     if (value != last) { // New value is different than the last one, that means to encoder was rotated
       if(last<value) // Detecting the direction of rotation
-       Consumer.write(MEDIA_VOLUME_UP); // Replace this line to have a different function when rotating counter-clockwise
-        else
+        Consumer.write(MEDIA_VOLUME_UP); // Replace this line to have a different function when rotating counter-clockwise
+      else
         Consumer.write(MEDIA_VOLUME_DOWN); // Replace this line to have a different function when rotating clockwise
       last = value; // Refreshing the "last" varible for the next loop with the current value
     }
   
-    // Encoder Clicks - Play/pause, Next
+    // Encoder Clicks
     ClickEncoder::Button b = encoder->getButton(); // Asking the button for it's current state
     if (b != ClickEncoder::Open) { // If the button is unpressed, we'll skip to the end of this if block
       switch (b) {
         case ClickEncoder::Clicked: // Button was clicked once
           Keyboard.press(commandSets[toggle][11]);
+          //Keyboard.release(commandSets[toggle][12]);
           //Consumer.write(MEDIA_PLAY_PAUSE); // Replace this line to have a different function when clicking button once
         break;      
         
         case ClickEncoder::DoubleClicked: // Button was double clicked
           Keyboard.press(commandSets[toggle][12]);
+          //Keyboard.release(commandSets[toggle][12]);
         break;      
 
         case ClickEncoder::Held: // Button was Held
           toggle = Toggle(toggle, numSets);
-          //Keyboard.press(commandSets[toggle][13]);
+          Keyboard.press(commandSets[toggle][13]);
+          //Keyboard.release(commandSets[toggle][13]);
         break;
       }
+      Keyboard.releaseAll();
     }
 
-    Keyboard.releaseAll();
-    delay(10); // a small delay after reading the buttons helps prevent accidental double-presses, like if the arduino reads the button faster than we can release it. 30ms is usually small enough and very reliable // Wait 10 milliseconds, we definitely don't need to detect the rotary encoder any faster than that
+    delay(5); // a small delay after reading the buttons helps prevent accidental double-presses.
 }
 
 //Timer for the encoder
@@ -127,8 +132,6 @@ int Toggle(int toggle, int numSets) // funtion to toggle between command sets
   
   return toggle;
 }
-
-
 
 /*
     This is just a long comment
