@@ -10,38 +10,47 @@ keep them the usually unused F13-F24 keys, and change their actions using a macr
 #include <ClickEncoder.h>
 #include <TimerOne.h>
 #include <HID-Project.h>
+#include <Blink.h>
 
 //Analog pins That would get input from encoder. A# is the pin number on the arduino
 #define ENCODER_CLK A0 
 #define ENCODER_DT A1
 #define ENCODER_SW A2
+void timerIsr();
+ClickEncoder *encoder; // variable representing the rotary encoder
+int16_t last, value; // variables for current and last rotation value
 
 //Buttons & pins
+void scanPad();
+void scanEncoder();
 const int numButtons = 9;
 const int buttonPins[9] = {2, 3, 10, 4, 5, 6, 7, 8, 9}; // This defines the pins on the arduino that will recieve the key presses
 int buttonState[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0}; // This 
 int prevButtonState[9] = {HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH, HIGH};
 
+//LED
+Blink rxLed(LED_BUILTIN_RX, 250);
+Blink txLed(LED_BUILTIN_TX, 250);
 
 //Command Sets
+int Toggle(int, int);
 const int numSets = 2;
 const int numCmd = 14;
 int toggle = 1;
 KeyboardKeycode commandSets[numSets][numCmd] = 
-{ // 9x Button, 2x Encoder rotation, 3x Encoder Click 
-  {KEY_F13, KEY_F14, KEY_F15, KEY_F16, KEY_F17, KEY_F18, KEY_F19, KEY_F20, KEY_F21, KEYPAD_A, KEYPAD_B, KEY_F22, KEY_F23, KEY_F24}, // Fxx + media
-  //{KEYPAD_1, KEYPAD_2, KEYPAD_3, KEYPAD_4, KEYPAD_5, KEYPAD_6, KEYPAD_7, KEYPAD_8, KEYPAD_9, KEY_F13, KEY_F14, KEY_F15, KEY_F16, KEY_F17}, // Numpad + Fxx
-  {KEY_1, KEY_Q, KEY_F, KEY_D, KEY_4, KEY_W, KEY_B, KEY_E, KEY_R, KEYPAD_A, KEYPAD_B, KEY_F22, KEY_F23, KEY_F24}
-};
+  { // 9x Button, 2x Encoder rotation, 3x Encoder Click 
+    {KEY_F13, KEY_F14, KEY_F15, KEY_F16, KEY_F17, KEY_F18, KEY_F19, KEY_F20, KEY_F21, KEYPAD_A, KEYPAD_B, KEY_F22, KEY_F23, KEY_F24}, // Fxx + media
+    //{KEYPAD_1, KEYPAD_2, KEYPAD_3, KEYPAD_4, KEYPAD_5, KEYPAD_6, KEYPAD_7, KEYPAD_8, KEYPAD_9, KEY_F13, KEY_F14, KEY_F15, KEY_F16, KEY_F17}, // Numpad + Fxx
+    {KEY_1, KEY_Q, KEY_F, KEY_D, KEY_4, KEY_W, KEY_B, KEY_E, KEY_R, KEYPAD_A, KEYPAD_B, KEY_F22, KEY_F23, KEY_F24}
+  };
 
-void timerIsr();
-int Toggle(int, int);
-ClickEncoder *encoder; // variable representing the rotary encoder
-int16_t last, value; // variables for current and last rotation value
+//Latency Testing
+void executionTime(void (*)());
+int testIndicator = 0; // for incoming serial data
+#define ITERATIONS 1 
 
 void setup() //this is a one-time pre-run of stuff we need to get the code running as we planned
 {
-
   //initialize the keypad buttons
   for (int i = 0; i < 9 ; i++)
   {
@@ -49,20 +58,40 @@ void setup() //this is a one-time pre-run of stuff we need to get the code runni
     digitalWrite(buttonPins[i], HIGH);
   } 
 
-
 // initialize the encoder
-   encoder = new ClickEncoder(ENCODER_DT, ENCODER_CLK, ENCODER_SW); // Initializes the rotary encoder with the mentioned pins
+  encoder = new ClickEncoder(ENCODER_DT, ENCODER_CLK, ENCODER_SW); // Initializes the rotary encoder with the mentioned pins
 
 // initialize the timer, which the rotary encoder uses to detect rotation
   Timer1.initialize(1000); 
   Timer1.attachInterrupt(timerIsr); 
   last = -1;
 
-  //Serial.begin(9600);
+  Serial.begin(9600);
   Keyboard.begin(); //initialize the hid Communication - From this line onwards, the computer should see the arduino as a keyboard
+
+  delay(5000); // 5 seconds of mercy
+  Serial.println("Starting loop...");
 }
 
 void loop() // the main body of our code. this loop runs continuously with our code inside it
+{
+  
+  if (Serial.available() > 0) {
+    // read the incoming byte:
+    testIndicator = Serial.read();
+  }
+  
+  if(testIndicator == 'l')
+  {
+    executionTime(scanPad);
+    executionTime(scanEncoder);
+  }
+
+  scanPad();
+  scanEncoder();
+}
+
+void scanPad()
 {
   // Check if any of the keypad buttons was pressed & send the keystroke if needed
   for (int j = 0; j < 9 ; j++) // goes over every button pin we defined
@@ -77,44 +106,49 @@ void loop() // the main body of our code. this loop runs continuously with our c
     }
     prevButtonState[j] = buttonState[j]; // this remebers the button's current state, so we can compare to it on the next round of the loop.
   }
+  //delay(5); // a small delay after reading the buttons helps prevent accidental double-presses.
+}
 
+void scanEncoder()
+{
   //Read the encoder
-   value += encoder->getValue();
+  value += encoder->getValue();
   
-    // Encoder Rotation
-    if (value != last) { // New value is different than the last one, that means to encoder was rotated
-      if(last<value) // Detecting the direction of rotation
-        Consumer.write(MEDIA_VOLUME_UP); // Replace this line to have a different function when rotating counter-clockwise
-      else
-        Consumer.write(MEDIA_VOLUME_DOWN); // Replace this line to have a different function when rotating clockwise
-      last = value; // Refreshing the "last" varible for the next loop with the current value
-    }
-  
-    // Encoder Clicks
-    ClickEncoder::Button b = encoder->getButton(); // Asking the button for it's current state
-    if (b != ClickEncoder::Open) { // If the button is unpressed, we'll skip to the end of this if block
-      switch (b) {
-        case ClickEncoder::Clicked: // Button was clicked once
-          Keyboard.press(commandSets[toggle][11]);
-          //Keyboard.release(commandSets[toggle][12]);
-          //Consumer.write(MEDIA_PLAY_PAUSE); // Replace this line to have a different function when clicking button once
-        break;      
-        
-        case ClickEncoder::DoubleClicked: // Button was double clicked
-          Keyboard.press(commandSets[toggle][12]);
-          //Keyboard.release(commandSets[toggle][12]);
-        break;      
+  // Encoder Rotation
+  if (value != last) { // New value is different than the last one, that means to encoder was rotated
+    if(last<value) // Detecting the direction of rotation
+      Consumer.write(MEDIA_VOLUME_UP); // Replace this line to have a different function when rotating counter-clockwise
+    else
+      Consumer.write(MEDIA_VOLUME_DOWN); // Replace this line to have a different function when rotating clockwise
+    last = value; // Refreshing the "last" varible for the next loop with the current value
+  }
 
-        case ClickEncoder::Held: // Button was Held
-          toggle = Toggle(toggle, numSets);
-          Keyboard.press(commandSets[toggle][13]);
-          //Keyboard.release(commandSets[toggle][13]);
-        break;
-      }
-      Keyboard.releaseAll();
-    }
+  // Encoder Clicks
+  ClickEncoder::Button b = encoder->getButton(); // Asking the button for it's current state
+  if (b != ClickEncoder::Open) { // If the button is unpressed, we'll skip to the end of this if block
+    switch (b) {
+      case ClickEncoder::Clicked: // Button was clicked once
+        Keyboard.press(commandSets[toggle][11]);
+        //Keyboard.release(commandSets[toggle][12]);
+        //Consumer.write(MEDIA_PLAY_PAUSE); // Replace this line to have a different function when clicking button once
+      break;      
+      
+      case ClickEncoder::DoubleClicked: // Button was double clicked
+        Keyboard.press(commandSets[toggle][12]);
+        //Keyboard.release(commandSets[toggle][12]);
+      break;      
 
-    delay(5); // a small delay after reading the buttons helps prevent accidental double-presses.
+      case ClickEncoder::Held: // Button was Held
+        toggle = Toggle(toggle, numSets);
+        Keyboard.press(commandSets[toggle][13]);
+        rxLed.sequence(3, 150);
+        txLed.sequence(3, 150);
+        //Keyboard.release(commandSets[toggle][13]);
+      break;
+    }
+    Keyboard.releaseAll();
+  }
+  //delay(5); // a small delay after reading the buttons helps prevent accidental double-presses.
 }
 
 //Timer for the encoder
@@ -122,8 +156,8 @@ void timerIsr() {
   encoder->service();
 }
 
-// Multiple Command Sets
-int Toggle(int toggle, int numSets) // funtion to toggle between command sets
+//Command Sets selector
+int Toggle(int toggle, int numSets)
 {
   if(toggle >= 0 && toggle < (numSets-1))
     toggle ++;
@@ -133,18 +167,13 @@ int Toggle(int toggle, int numSets) // funtion to toggle between command sets
   return toggle;
 }
 
-/*
-    This is just a long comment
-    Here are some fun functions you can use to replace the default behaviour 
-    Consumer.write(CONSUMER_BRIGHTNESS_UP);
-    Consumer.write(CONSUMER_BRIGHTNESS_DOWN);
-    Consumer.write(CONSUMER_BROWSER_HOME);
-    Consumer.write(CONSUMER_SCREENSAVER);
-    Consumer.write(HID_CONSUMER_AL_CALCULATOR); //launch calculator :)
-    Consumer.write(HID_CONSUMER_AC_ZOOM_IN);
-    Consumer.write(HID_CONSUMER_AC_SCROLL_UP);
-    CONSUMER_SLEEP = 0x32,
-
-    FULL LIST CAN BE FOUND HERE:
-    https://github.com/NicoHood/HID/blob/master/src/HID-APIs/ConsumerAPI.h
-*/
+void executionTime(void (*func)())
+{
+  unsigned long startMicros = micros();
+    for (int n = 0; n < ITERATIONS; n++) {
+      (*func)();
+    }
+    unsigned long endMicros = micros();
+    float delta = (endMicros - startMicros)/ITERATIONS;
+    Serial.println("Execution time: " + String(delta, 6) + "us");
+}
