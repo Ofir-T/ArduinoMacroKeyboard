@@ -296,18 +296,18 @@ void executionTime(void (*func)())
 //     Serial.print("\n");
 //   }
 
-//   //scanPad(pinTester);
-for (int i = 0; i < (NUMPAD_ROWS * NUMPAD_COLS); i++)
-    while(true)
-      {
+// //   //scanPad(pinTester);
+// for (int i = 0; i < (NUMPAD_ROWS * NUMPAD_COLS); i++)
+//     while(true)
+//       {
         
-      }
-// }
+//       }
+// // }
 
-void pinTesting() // scan buttons until one is pressed, then return/report the associated pin number.
-{
+// void pinTesting() // scan buttons until one is pressed, then return/report the associated pin number.
+// {
   
   
-} 
+// } 
 
 // Exclusive Button Hold: a flag/ function of holding a button prevents the inital click from actuating
