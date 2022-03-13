@@ -3,7 +3,7 @@
   Created by Ofir Temelman, December 15, 2021.
   Released into the public domain.
 */
-
+#pragma once
 #ifndef Blink_h
 #define Blink_h
 

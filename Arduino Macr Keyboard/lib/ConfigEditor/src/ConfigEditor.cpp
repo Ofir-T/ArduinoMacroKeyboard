@@ -13,8 +13,8 @@ namespace ConfigEditor
         switch (editorCmd) //check if it matches any of the editor mode comannds
         {
             case 'l':
-                executionTime(scanPad);
-                executionTime(scanEncoder);
+                //executionTime(scanPad);
+                //executionTime(scanEncoder);
                 break;
                 
             case 'i':

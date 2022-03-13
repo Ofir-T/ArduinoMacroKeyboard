@@ -1,8 +1,7 @@
 /*
 Hello! this is the Arduino-Pro-Micro Macro-Keyboard code V1 by Ofir Temelman,
 originally uploaded to Thingiverse @ https://www.thingiverse.com/thing:4628023.
-You can use any keyboard buttons available in HID-Project.h (see bottom comment), but I prefer to
-keep them the usually unused F13-F24 keys, and change their actions using a macro program
+You can use any keyboard buttons available in HID-Project.h (see bottom comment)
 */
 
 // Required libraries - don't forget to add them to your IDE!
@@ -31,17 +30,17 @@ void timer1_isr();
 //
 void scanPad();
 void scanEncoder();
-const int numPadRows = 3;                                         // the size of the button grid: 3x3, 4x2, etc.
-const int numPadCols = 3;                                         // the size of the button grid: 3x3, 4x2, etc.
-const int buttonPins[numPadRows][numPadCols] = {  {2, 3, 10},     // This defines the pins on the arduino
+const int NUMPAD_ROWS = 3;                                         // the size of the button grid: 3x3, 4x2, etc.
+const int NUMPAD_COLS = 3;                                         // the size of the button grid: 3x3, 4x2, etc.
+const int buttonPins[NUMPAD_ROWS][NUMPAD_COLS] = {  {2, 3, 10},     // This defines the pins on the arduino
                                                   {4, 5, 6},      // that will recieve the key presses
                                                   {7, 8, 9}   };                                                                 
 
-int buttonState[numPadRows][numPadCols] = {       {0, 0, 0},
+int buttonState[NUMPAD_ROWS][NUMPAD_COLS] = {       {0, 0, 0}, // change to LOW instead?
                                                   {0, 0, 0},
                                                   {0, 0, 0}   };
 
-int prevButtonState[numPadRows][numPadCols] = {   {HIGH, HIGH, HIGH},
+int prevButtonState[NUMPAD_ROWS][NUMPAD_COLS] = {   {HIGH, HIGH, HIGH},
                                                   {HIGH, HIGH, HIGH},
                                                   {HIGH, HIGH, HIGH}   };
 
@@ -58,16 +57,15 @@ const int numSets = 2;
 const int numEncCmd = 5; // command to enter programming mode should be considered seperately, and excluded here
 int setSelector = 0; // this determines the default command set that will be used when powered up.
 
-KeyboardKeycode keyPadSets[numSets][numPadRows][numPadCols] = 
+KeyboardKeycode keyPadSets[numSets][NUMPAD_ROWS][NUMPAD_COLS] = 
   {
-    {{KEY_F13, KEY_F14, KEY_F15}, {KEY_F16, KEY_F17, KEY_F18}, {KEY_F19, KEY_F20, KEY_F21}}, 
+    {{KEY_F13, KEY_F14, KEY_F15}, {KEY_F16, KEY_F17, KEY_F18}, {KEY_F19, KEY_F20, KEY_F21}}, // Generic example of usually unused keys. works well with AutoHotKey
     {{KEY_1, KEY_Q, KEY_F}, {KEY_D, KEY_4, KEY_W}, {KEY_B, KEY_E, KEY_R}}  // Example League of Legends set ;)
   };
 
 KeyboardKeycode encoderSets[numSets][numEncCmd] =
 {
   {KEY_A, KEY_B, KEY_F22, KEY_F23, KEY_F24},
-  //{KEY_F13, KEY_F14, KEY_F15, KEY_F16, KEY_F17},
   {KEYPAD_A, KEYPAD_B, KEY_F22, KEY_F23, KEY_F24}
 };
 
@@ -88,12 +86,12 @@ constexpr uint16_t SERIAL_BAUDRATE = 9600;  // unnecessary since hid opens seria
 void setup()
 {
   pinMode(LED_BUILTIN_TX, INPUT);               // this is a trick to turn off the tx/rx onboard leds
-  pinMode(LED_BUILTIN_RX, INPUT);
+  //pinMode(LED_BUILTIN_RX, INPUT);
 
 //initialize the keypad buttons
-  for (int i = 0; i < numPadRows ; i++)
+  for (int i = 0; i < NUMPAD_ROWS ; i++)
   {
-    for(int j = 0; j < numPadRows; j++)
+    for(int j = 0; j < NUMPAD_ROWS; j++)
     {
       pinMode(buttonPins[i][j], INPUT_PULLUP); // this goes over every button-pin we defined earlier, and initializes them as input - 
       digitalWrite(buttonPins[i][j], HIGH);    // so they can recieve signals and pullup, so we can connect them directly to the board without resistors
@@ -128,7 +126,8 @@ void loop()
         executionTime(scanPad);
         executionTime(scanEncoder);
         break;
-      case 'c':
+      case 's':
+        //keypadSetup();
         break;
         //editorCmd = 0; // happens if matches any of the above cases
       default:
@@ -147,19 +146,19 @@ void loop()
 //
 void scanPad() // Check if any of the keypad buttons was pressed & send the keystroke if needed
 {
-  for (int i = 0; i < numPadRows ; i++) // goes over every button pin we defined
+  for (int i = 0; i < NUMPAD_ROWS ; i++) // goes over every button pin we defined
   {
-    for(int j = 0; j < numPadRows; j++)
+    for(int j = 0; j < NUMPAD_ROWS; j++)
     {
       buttonState[i][j] = digitalRead(buttonPins[i][j]); // reads current button state
       if ((buttonState[i][j] != prevButtonState[i][j])) // if the button changed state, and is now pressed, do what's inside the statement
       {
         if(buttonState[i][j] == LOW)
-        {
+        { // action to take after press:
           if(!editorMode)
-          Keyboard.press(keyPadSets[setSelector][i][j]); // this triggers each button's corresponding action e.g. when the 1st button is pressed, the arduino tells the PC that the F13 key was pressed
+            Keyboard.press(keyPadSets[setSelector][i][j]); // this triggers each button's corresponding action e.g. when the 1st button is pressed, the arduino tells the PC that the F13 key was pressed
           else  // for debugging
-            Serial.println("This button is connected to pin " + String(buttonPins[i][j]));
+            Serial.println("This button is connected to pin " + String(buttonPins[i][j]));;
         }
         else
           Keyboard.releaseAll();
@@ -179,12 +178,12 @@ void scanEncoder()
     {
       if(lastValue>value){ // Detecting the direction of rotation
         Consumer.write(MEDIA_VOLUME_UP); // Replace this line to have a different function when rotating counter-clockwise
-        Keyboard.press(encoderSets[setSelector][0]);
+        //Keyboard.press(encoderSets[setSelector][0]);
         Keyboard.releaseAll();
       }
       else{
         Consumer.write(MEDIA_VOLUME_DOWN); // Replace this line to have a different function when rotating clockwise
-        Keyboard.press(encoderSets[setSelector][1]);
+        //Keyboard.press(encoderSets[setSelector][1]);
         Keyboard.releaseAll();
       }
     }
@@ -268,3 +267,47 @@ void executionTime(void (*func)())
     float delta = (endMillis - startMillis)/TEST_REPITITIONS;
     Serial.println("Execution time: " + String(delta, 6) + "ms");
 }
+
+// ----------------------------------------------------------------------------
+// Work In Progress
+//
+
+// void pinTester(int row, int col)
+// {
+//   // button [num] is on pin [i,j] // or after 10 idle seconds, ask if there is a problem --> insert pin to appropriate location in buttonPins array
+//   Serial.println("This button is connected to pin " + String(buttonPins[row][col]));
+// } 
+
+// void keypadSetup()
+// {
+//   // switch testing sequence initiated, please press the keypad buttons in order:
+//   // [1] [2] [3]
+//   // [4] [5] [6]
+//   // [7] [8] [9]
+
+//   Serial.println("Switch testing sequence initiated, please press the keypad buttons in order:");
+
+//   for (int i = 0; i < NUMPAD_ROWS ; i++)
+//   {
+//     for(int j = 0; j < NUMPAD_COLS; j++) //NUMPAD_COLS?
+//     {
+//       Serial.print("[" + String((i+1) + (j*NUMPAD_COLS)) + "] ");
+//     }
+//     Serial.print("\n");
+//   }
+
+//   //scanPad(pinTester);
+for (int i = 0; i < (NUMPAD_ROWS * NUMPAD_COLS); i++)
+    while(true)
+      {
+        
+      }
+// }
+
+void pinTesting() // scan buttons until one is pressed, then return/report the associated pin number.
+{
+  
+  
+} 
+
+// Exclusive Button Hold: a flag/ function of holding a button prevents the inital click from actuating

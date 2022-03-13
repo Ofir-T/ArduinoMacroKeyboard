@@ -3,7 +3,6 @@
   Created by Ofir Temelman, December 15, 2021.
   Released into the public domain.
 */
-
 #include "Arduino.h"
 #include "Blink.h"
 
