@@ -1,0 +1,6 @@
+#pragma once
+#ifndef Configuration_h
+#define Configuration_h
+    #include "Arduino.h"
+
+#endif
