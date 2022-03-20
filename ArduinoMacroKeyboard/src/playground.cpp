@@ -84,32 +84,35 @@ constexpr uint16_t SERIAL_BAUDRATE = 9600;  // unnecessary since hid opens seria
 // ----------------------------------------------------------------------------
 // Keypad rotation - WIP
 //
-int tempArray[NUMPAD_ROWS*NUMPAD_COLS];
+KeyboardKeycode tempArray[numSets][NUMPAD_ROWS*NUMPAD_COLS];
 
 int currentOrientation = 3; // 0,1,2,3 -> top, left, bottom, right
 int lastOrientation = 3;
 int delta = currentOrientation - lastOrientation;
 
-typedef int (*accessfn)(int x, int y);
+typedef KeyboardKeycode (*accessfn)(int k, int x, int y);
 
-int normal( int x, int y){ return buttonPins[(NUMPAD_COLS*x)+y]; }
-int rotateCW( int x, int y){ return buttonPins[(NUMPAD_COLS-1-x)+3*y]; }   // <<<<<< This is the main thing
-int rotateCCW( int x, int y){ return buttonPins[3*(NUMPAD_COLS-1-y)+x]; }
+KeyboardKeycode normal( int k, int x, int y){ return keypadSets[k][(NUMPAD_COLS*x)+y]; }
+KeyboardKeycode rotateCW( int k, int x, int y){ return keypadSets[k][(NUMPAD_COLS-1-x)+3*y]; }   // <<<<<< This is the main thing
+KeyboardKeycode rotateCCW( int k, int x, int y){ return keypadSets[k][3*(NUMPAD_COLS-1-y)+x]; }
 
 void cloneArray()
 {
-  for (int i = 0; i < NUMPAD_ROWS*NUMPAD_COLS; i++)
-  {
-    buttonPins[i] = tempArray[i];
-  }
+  for (int k = 0; k < numSets; k++)
+    for (int i = 0; i < NUMPAD_ROWS*NUMPAD_COLS; i++)
+      keypadSets[k][i] = tempArray[k][i];
 }
 
-void rotateMatrix( accessfn afn){
-	for (int x=0; x<NUMPAD_ROWS; x++)
+void rotateMatrix( accessfn afn)
+{
+  for (int k = 0; k < numSets; k++)
   {
-		for(int y=0; y<NUMPAD_COLS; y++)
+    for (int x=0; x<NUMPAD_ROWS; x++)
     {
-      tempArray[(NUMPAD_COLS*x)+y] = afn(x,y); // now lets try and only pass the pointers
+      for(int y=0; y<NUMPAD_COLS; y++)
+      {
+        tempArray[k][(NUMPAD_COLS*x)+y] = afn(k,x,y); // now lets try and only pass the pointers
+      }
     }
   }
   cloneArray();
@@ -117,24 +120,30 @@ void rotateMatrix( accessfn afn){
 
 void initTempArray()
 {
-  for (int i = 0; i < NUMPAD_ROWS*NUMPAD_COLS; i++)
-  {
-      tempArray[i] = buttonPins[i];
-  }
+  for (int k = 0; k < numSets; k++)
+    for (int i = 0; i < NUMPAD_ROWS*NUMPAD_COLS; i++)
+    {
+        tempArray[k][i] = keypadSets[k][i];
+    }
 }
 
 void printArray()
 {
-  for(int i=0; i<NUMPAD_COLS*NUMPAD_ROWS; i++)
+  for (int k = 0; k < numSets; k++)
   {
-    Serial.print(buttonPins[i]);
-    
-    if((i+1) % NUMPAD_COLS == 0) 
-      Serial.println("");
-    else
-      Serial.print(" ");
+    Serial.println("Set " + String(k) + ":");
+    for(int i=0; i<NUMPAD_COLS*NUMPAD_ROWS; i++)
+    {
+      Serial.print(keypadSets[k][i]);
+      
+      if((i+1) % NUMPAD_COLS == 0) 
+        Serial.println("");
+      else
+        Serial.print(" ");
 
-    // delay(100);
+      // delay(100);
+    }
+    Serial.println("");
   }
   Serial.println("");
 }
@@ -144,28 +153,20 @@ void checkOrientation()
   //currentOrientation = INPUT;
   delta = currentOrientation - lastOrientation;
 
-  Serial.println("delta: " + String(delta));
-
   if(delta != 0)
   {
     if(delta > 0)
     {
       for(int j=0; j<delta; j++)
-      {
         rotateMatrix(rotateCW);
-        Serial.println("j: " + String(j));
-      }
-      Serial.println("rotating keypad clockwise");
+      Serial.println("Rotating keypad clockwise");
       printArray();
     }
     else
     {
       for(int j=0; j>delta; j--)
-      {
         rotateMatrix(rotateCCW);
-        Serial.println("j: " + String(j));
-      }
-      Serial.println("rotating keypad counter-clockwise");
+      Serial.println("Rotating keypad counter-clockwise");
       printArray();
     }
   }
@@ -210,17 +211,21 @@ void setup()
 //
 void loop() 
 {
-  if (editorMode && Serial.available() > 0) // Check for editor commands
+  if (Serial.available() > 0) // Check for editor commands
   {
     editorCmd = Serial.read(); // read the incoming byte:
     switch (editorCmd) //check if it matches any of the editor mode comannds
     {
+      case 'e':
+        editorMode = toggleEditorMode(editorMode);
+        Serial.println("Editor Mode:" + String(editorMode));
+        break;
       case 'l':
         //latencyTest(scanPad);
         //latencyTest(scanEncoder);
         break;
       case 's':
-        //keypadSetup();
+        //keypadSetsup();
         break;
       case 'r':
         currentOrientation = Toggle(currentOrientation, 4);
@@ -255,30 +260,16 @@ void scanPad() // Check if any of the keypad buttons was pressed & send the keys
         if(!editorMode)
           Keyboard.press(keypadSets[setSelector][i]); // this triggers each button's corresponding action e.g. when the 1st button is pressed, the arduino tells the PC that the F13 key was pressed
         else  // for debugging
-          Serial.println("This button is connected to pin " + String(buttonPins[i]));;
+          Serial.println("This button is mapped to action: " + String(keypadSets[setSelector][i]));;
       }
       else
-        Keyboard.releaseAll();
+        Keyboard.release(keypadSets[setSelector][i]);
     }
     prevButtonState[i] = buttonState[i]; // this remebers the button's current state, so we can compare to it on the next round of the loop.
   } 
 
   //delay(5); // a small delay after reading the buttons helps prevent accidental double-presses.
 }
-// int scanPad() // Check if any of the keypad buttons was pressed & send the keystroke if needed
-// {
-//   for (int i = 0; i < NUMPAD_ROWS*NUMPAD_COLS ; i++) // goes over every button pin we defined
-//   {
-//     buttonState[i] = digitalRead(buttonPins[i]); // reads current button state
-//     if ((buttonState[i] != prevButtonState[i])) // if the button changed state, and is now pressed, do what's inside the statement
-//     {
-//       return i;
-//     }
-//     prevButtonState[i] = buttonState[i]; // this remebers the button's current state, so we can compare to it on the next round of the loop.
-//   } 
-
-//   //delay(5); // a small delay after reading the buttons helps prevent accidental double-presses.
-// }
 
 void scanEncoder()
 {
@@ -310,9 +301,6 @@ void scanEncoder()
         checkOrientation();
         break;
     case Button::LongPressRepeat: // right now, getting to long press repeat also triggers held command
-        editorMode = toggleEditorMode(editorMode);
-        Serial.println("Editor Mode:" + String(editorMode));
-        delay(1000);// delay to prevent repeated toggling of editor mode. maybe insert to function?
         break;
     case Button::Held:
         setSelector = Toggle(setSelector, numSets);
@@ -338,9 +326,9 @@ void timer1_isr()
 }
 
 //Command Sets selector
-int Toggle(int selector, int numSets)
+int Toggle(int selector, int range)
 {
-  if(selector >= 0 && selector < (numSets-1))
+  if(selector >= 0 && selector < (range-1))
     selector ++;
   else
     selector = 0;
@@ -382,7 +370,7 @@ void latencyTest(void (*func)())
 // Work In Progress
 //
 
-// void keypadSetup()
+// void keypadSetsup()
 // {
 //   //Print:
 //   // switch testing sequence initiated, please press the keypad buttons in the following order:
