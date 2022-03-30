@@ -10,6 +10,8 @@ You can use any keyboard buttons available in HID-Project.h (see bottom comment)
 #include <TimerOne.h>
 #include <HID-Project.h>
 #include <Blink.h>
+#include <EEPROM.h>
+
 
 // ----------------------------------------------------------------------------
 // Encoder. A# is the analog pin number on the arduino that would get input from the encoder
@@ -34,17 +36,12 @@ void timer1_isr();
 void scanEncoder();
 const int NUMPAD_ROWS = 3;                                         // the size of the button grid: 3x3, 4x2, etc.
 const int NUMPAD_COLS = 3;                                         // the size of the button grid: 3x3, 4x2, etc.
-int buttonPins[NUMPAD_ROWS*NUMPAD_COLS] = {   4, 3, 2,     // This defines the pins on the arduino
+int buttonPins[NUMPAD_ROWS*NUMPAD_COLS] = {   4, 3, 2,     // This defines the pins on the arduino, make it a const?
                                               10, 6, 5,      // that will recieve the key presses
                                               9, 7, 8   };                                                                 
 
-int buttonState[NUMPAD_ROWS*NUMPAD_COLS] = {  0, 0, 0, // change to LOW instead?
-                                              0, 0, 0,
-                                              0, 0, 0   };
-
-int prevButtonState[NUMPAD_ROWS*NUMPAD_COLS] = {  HIGH, HIGH, HIGH,
-                                                  HIGH, HIGH, HIGH,
-                                                  HIGH, HIGH, HIGH   };
+int buttonState[NUMPAD_ROWS*NUMPAD_COLS] = {LOW};
+int prevButtonState[NUMPAD_ROWS*NUMPAD_COLS] = {HIGH};
 
 // ----------------------------------------------------------------------------
 // LED - WIP
@@ -57,7 +54,7 @@ Blink statusLed(LED_BUILTIN_RX, 250);
 int Toggle(int, int);
 const int numSets = 2;
 const int numEncCmd = 5; // command to enter programming mode should be considered seperately, and excluded here
-int setSelector = 0; // this determines the default command set that will be used when powered up.
+int activeSet = 0; // this determines the default command set that will be used when powered up.
 
 KeyboardKeycode keypadSets[numSets][NUMPAD_ROWS*NUMPAD_COLS] = 
   {
@@ -72,15 +69,20 @@ KeyboardKeycode encoderSets[numSets][numEncCmd] =
 };
 
 // ----------------------------------------------------------------------------
-// Editor mode
+// Companion app
 //
-bool editorMode = false;                    //false for release
+bool editorMode = true;                    
 bool toggleEditorMode(bool);
 void latencyTest(void (*func)());
-int editorCmd = 0;                          // for incoming serial data
+int editorCmd = 0;                          // for incoming serial data // change to appMessage
+int dataLength;                             // temporary variable describing the length of following data
 constexpr float TEST_REPITITIONS = 100.0;   // number of times to test the function and take the average
 constexpr uint16_t SERIAL_BAUDRATE = 9600;  // unnecessary since hid opens serial port anyway?
-
+void readMessage();
+void sendLayout();
+void sendKeyBinding();
+void sendOrientation();
+void sendActiveSet();
 // ----------------------------------------------------------------------------
 // Keypad rotation - WIP
 //
@@ -127,26 +129,26 @@ void initTempArray()
     }
 }
 
-void printArray()
-{
-  for (int k = 0; k < numSets; k++)
-  {
-    Serial.println("Set " + String(k) + ":");
-    for(int i=0; i<NUMPAD_COLS*NUMPAD_ROWS; i++)
-    {
-      Serial.print(keypadSets[k][i]);
+// void printArray()
+// {
+//   for (int k = 0; k < numSets; k++)
+//   {
+//     Serial.println("Set " + String(k) + ":");
+//     for(int i=0; i<NUMPAD_COLS*NUMPAD_ROWS; i++)
+//     {
+//       Serial.print(keypadSets[k][i]);
       
-      if((i+1) % NUMPAD_COLS == 0) 
-        Serial.println("");
-      else
-        Serial.print(" ");
+//       if((i+1) % NUMPAD_COLS == 0) 
+//         Serial.println("");
+//       else
+//         Serial.print(" ");
 
-      // delay(100);
-    }
-    Serial.println("");
-  }
-  Serial.println("");
-}
+//       // delay(100);
+//     }
+//     Serial.println("");
+//   }
+//   Serial.println("");
+// }
 
 void checkOrientation()
 { 
@@ -159,15 +161,15 @@ void checkOrientation()
     {
       for(int j=0; j<delta; j++)
         rotateMatrix(rotateCW);
-      Serial.println("Rotating keypad clockwise");
-      printArray();
+      // Serial.println("Rotating keypad clockwise");
+      // printArray();
     }
     else
     {
       for(int j=0; j>delta; j--)
         rotateMatrix(rotateCCW);
-      Serial.println("Rotating keypad counter-clockwise");
-      printArray();
+      // Serial.println("Rotating keypad counter-clockwise");
+      // printArray();
     }
   }
 
@@ -213,28 +215,7 @@ void loop()
 {
   if (Serial.available() > 0) // Check for editor commands
   {
-    editorCmd = Serial.read(); // read the incoming byte:
-    switch (editorCmd) //check if it matches any of the editor mode comannds
-    {
-      case 'e':
-        editorMode = toggleEditorMode(editorMode);
-        Serial.println("Editor Mode:" + String(editorMode));
-        break;
-      case 'l':
-        //latencyTest(scanPad);
-        //latencyTest(scanEncoder);
-        break;
-      case 's':
-        //keypadSetsup();
-        break;
-      case 'r':
-        currentOrientation = Toggle(currentOrientation, 4);
-        printArray();
-        checkOrientation();
-        break;
-      default: //editorCmd = 0; // empties the buffer if no known command available
-        break;
-    }
+    readMessage(); 
   }
   else // otherwise, keep scanning the buttons
   {
@@ -258,12 +239,12 @@ void scanPad() // Check if any of the keypad buttons was pressed & send the keys
       if(buttonState[i] == LOW)
       { // action to take after press:
         if(!editorMode)
-          Keyboard.press(keypadSets[setSelector][i]); // this triggers each button's corresponding action e.g. when the 1st button is pressed, the arduino tells the PC that the F13 key was pressed
+          Keyboard.press(keypadSets[activeSet][i]); // this triggers each button's corresponding action e.g. when the 1st button is pressed, the arduino tells the PC that the F13 key was pressed
         else  // for debugging
-          Serial.println("This button is mapped to action: " + String(keypadSets[setSelector][i]));;
+          Serial.println("This button is mapped to action: " + String(keypadSets[activeSet][i]));;
       }
       else
-        Keyboard.release(keypadSets[setSelector][i]);
+        Keyboard.release(keypadSets[activeSet][i]);
     }
     prevButtonState[i] = buttonState[i]; // this remebers the button's current state, so we can compare to it on the next round of the loop.
   } 
@@ -279,12 +260,12 @@ void scanEncoder()
     {
       if(lastValue>value){ // Detecting the direction of rotation
         Consumer.write(MEDIA_VOLUME_UP); // Replace this line to have a different function when rotating counter-clockwise
-        //Keyboard.press(encoderSets[setSelector][0]);
+        //Keyboard.press(encoderSets[activeSet][0]);
         Keyboard.releaseAll();
       }
       else{
         Consumer.write(MEDIA_VOLUME_DOWN); // Replace this line to have a different function when rotating clockwise
-        //Keyboard.press(encoderSets[setSelector][1]);
+        //Keyboard.press(encoderSets[activeSet][1]);
         Keyboard.releaseAll();
       }
     }
@@ -293,20 +274,24 @@ void scanEncoder()
     switch (encoder.getButton()) // Encoder Clicks
     {
     case Button::Clicked:
-        Keyboard.press(encoderSets[setSelector][2]);
+        Keyboard.press(encoderSets[activeSet][2]);
         Keyboard.releaseAll();
         break;
     case Button::DoubleClicked:
         currentOrientation = Toggle(currentOrientation, 4);
         checkOrientation();
+        sendOrientation();
         break;
     case Button::LongPressRepeat: // right now, getting to long press repeat also triggers held command
         break;
     case Button::Held:
-        setSelector = Toggle(setSelector, numSets);
-        statusLed.sequence(3, 150);
-        if (editorMode)
-            Serial.println("key set: " + String(setSelector));
+        if (!editorMode)
+        {
+          activeSet = Toggle(activeSet, numSets);
+          statusLed.sequence(3, 150);
+        }
+        // if (editorMode)
+        //     Serial.println("key set: " + String(activeSet));
         break;
     case Button::Released:
         break;
@@ -364,6 +349,90 @@ void latencyTest(void (*func)())
     unsigned long endMillis = millis();
     float delta = (endMillis - startMillis)/TEST_REPITITIONS;
     Serial.println("Execution time: " + String(delta, 6) + "ms");
+}
+
+void readMessage()
+{
+
+  editorCmd = Serial.read(); // read the incoming byte:
+    switch (editorCmd) //check if it matches any of the editor mode comannds
+    {
+      case 'e':
+        editorMode = toggleEditorMode(editorMode);
+        Serial.println("Editor Mode:" + String(editorMode));
+        break;
+      case 't':
+        latencyTest(scanPad);
+        latencyTest(scanEncoder);
+        break;
+      case 's':
+        //keypadSetsup();
+        break;
+      case 'r':
+        sendLayout();
+        sendKeyBinding();
+        sendOrientation();
+        sendActiveSet();
+        break;
+      case 'o':
+        currentOrientation = Toggle(currentOrientation, 4);
+        //printArray();
+        checkOrientation();
+        sendOrientation();
+        sendKeyBinding();
+        break;
+      default: //editorCmd = 0; // empties the buffer if no known command available
+        break;
+    }
+}
+
+void sendKeyBinding() //message format: "bind", "set0", key1, key2,...,keyi, "set1", key1, key2,...,keyi. size is (1 + numSets*(i+1)) bytes
+{ 
+  int dataLength = numSets*NUMPAD_ROWS*NUMPAD_COLS;
+  Serial.write("bind");
+  Serial.write(dataLength);
+  for (int k = 0; k < numSets; k++)
+  {
+    //Serial.print("set_");
+    for(int i=0; i<NUMPAD_COLS*NUMPAD_ROWS; i++)
+    {
+      Serial.write(keypadSets[k][i]);
+    }
+  }
+  Serial.write('\n');
+}
+
+void sendOrientation()
+{
+  int dataLength = 1;
+  Serial.write("orie");
+  Serial.write(dataLength); // length of message in bytes
+  Serial.write(currentOrientation); // each write is a byte
+  Serial.write('\n');
+}
+
+void sendLayout()
+{
+  int dataLength = 3;
+  Serial.write("conf");
+  Serial.write(dataLength); // length of message in bytes
+  Serial.write(NUMPAD_ROWS); // each write is a byte
+  Serial.write(NUMPAD_COLS);
+  Serial.write(numSets);
+  Serial.write('\n');
+  // sendEncodersActions(); // and/or features
+  // sendPins();
+  // SendEncoderPins();
+  // SendEncoderBindings();
+}
+
+void sendActiveSet()
+{
+  int dataLength = 1;
+  Serial.write("aset");
+  Serial.write(dataLength); // length of message in bytes
+  Serial.write(activeSet); // each write is a byte
+  Serial.write('\n');
 }
 
 // ----------------------------------------------------------------------------
@@ -463,9 +532,9 @@ void latencyTest(void (*func)())
 // {
 //   int button = scanPad();
 //   if(buttonState[button] == LOW)
-//     Keyboard.press(keypadSets[setSelector][button]);
+//     Keyboard.press(keypadSets[activeSet][button]);
 //   else
-//     Keyboard.release(keypadSets[setSelector][button]);
+//     Keyboard.release(keypadSets[activeSet][button]);
 // }
 
 // int getPin(int button)
