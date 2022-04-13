@@ -2,6 +2,9 @@
     "folders": [
         {
             "path": "."
+        },
+        {
+            "path": "..\\..\\..\\..\\Python\\ArduinoMacroKeyboard_Companion_App"
         }
     ]
 }

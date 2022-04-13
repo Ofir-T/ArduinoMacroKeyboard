@@ -82,14 +82,9 @@ constexpr uint16_t SERIAL_BAUDRATE = 9600;  // unnecessary since hid opens seria
 void readLine();
 void sendLayout();
 void sendKeyBinding();
-//void sendOrientation();
-//void sendActiveSet();
-//void sendEditorMode();
 void setEditorMode(byte);
 void sendMessage(char, char, const char *);
 void sendMessage(char, char, int);
-char* KeyBindingToCharArray();
-char* layoutToCharArray();
 void setBindings();//KeyboardKeycode[]);
 // ----------------------------------------------------------------------------
 // Keypad rotation
@@ -411,13 +406,10 @@ void readLine() // arduino encoding is utf-8 by default
           break;
         case 'c':
           //sendLayout();
-          //sprintf(content, "%d%d%d", NUM_ROWS, NUM_COLS, NUM_SETS);
-          //sendMessage(opCode, header, currentOrientation);
           sendMessage('s', header, NUM_ROWS*100 + NUM_COLS*10 + NUM_SETS);
           sendKeyBinding();
           sendMessage('s', 'o', currentOrientation);
           sendMessage('s', 'a', activeSet);
-          //sendActiveSet();
           break;
         case 'o':
           sendMessage(opCode, header, currentOrientation);
@@ -434,7 +426,6 @@ void readLine() // arduino encoding is utf-8 by default
           case 'e':
             setEditorMode(atoi(content));
             sendMessage('p', header, editorMode);
-            //sendEditorMode();
             break;
           case 'b':
             setBindings();
@@ -474,88 +465,6 @@ void readLine() // arduino encoding is utf-8 by default
     default:
         sendMessage('e', header, opCodeError);
   } //*/
-
-  /*
-  switch (header) //check if it matches any of the editor mode comannds
-  {
-    case 'e':
-      switch(opCode)
-      {
-        case 'g':
-          sendEditorMode();
-          break;
-        case 's':
-            setEditorMode(atoi(content));
-            sendEditorMode();
-            //Serial.println(content[0]-'0');
-            //byte value = content[0]-'0';
-            //strncpy(content, content, MAX_INPUT_LENGTH);
-            //sendMessage('p','e', content);
-          break;
-        default:
-          sendMessage('e', header, opCodeError);
-          break;
-      }
-      break;
-    case 't':
-      switch(opCode)
-      {
-        case 'g':
-          latencyTest(scanPad);
-          latencyTest(scanEncoder);
-          // sendLatency();
-          break;
-        default:
-          sendMessage('e', header, opCodeError);
-      }
-      break;
-    case 'b':
-      switch(opCode)
-      {
-        case 'g':
-          sendKeyBinding();
-          break;
-        case 's':
-          //setBindings()
-          break;
-        default:
-          sendMessage('e', header, opCodeError);
-      }
-      break;
-    case 'c':
-      switch(opCode)
-      {
-        case 'g':
-          sendLayout();
-          sendKeyBinding();
-          sendOrientation();
-          sendActiveSet();
-          break;
-        default:
-          sendMessage('e', header, opCodeError);
-      }
-      break;
-    case 'o':
-      switch(opCode)
-      {
-        case 'g':
-          currentOrientation = Toggle(currentOrientation, 4);
-          //printArray();
-          checkOrientation();
-          sendOrientation();
-          sendKeyBinding();
-          break;
-        default:
-          sendMessage('e', header, opCodeError);
-      }
-      break;
-    default:
-      header = (header < 0) ? 'u' : header;
-      sendMessage('e', header, headerError);
-      break;
-  }
-  //*/
-  //memset(content, 0, sizeof content); // "empty" content
 }
 
 void sendMessage(char opCode, char header, const char *content)
@@ -574,12 +483,11 @@ void sendMessage(char opCode, char header, int message)
 {
   itoa(message, content, 10);
 
-  char length = strlen(content);
-  char charLength = length;
+  byte length = strlen(content);
 
   Serial.write(opCode);
   Serial.write(header);
-  Serial.write(charLength); // length of message in bytes
+  Serial.write(length);// length of message in bytes
   Serial.write(content);
   Serial.write('\n');
 }
@@ -604,80 +512,10 @@ void sendKeyBinding()//int set=-1) //message format: "bind", "set0", key1, key2,
   Serial.write('\n');
 }
 
-// void sendOrientation()
-// {
-//   int dataLength = 1;
-//   char opCode = 's';
-//   char header = 'o';
-
-//   Serial.write(opCode);
-//   Serial.write(header);
-//   Serial.write(dataLength); // length of message in bytes
-//   Serial.write(currentOrientation);
-//   Serial.write('\n');
-// }
-
-void sendLayout()
-{
-  int dataLength = 3;
-  char opCode = 's';
-  char header = 'c';
-
-  Serial.write(opCode);
-  Serial.write(header);
-  Serial.write(dataLength); // length of message in bytes
-  Serial.write(NUM_ROWS); // each write is a byte
-  Serial.write(NUM_COLS);
-  Serial.write(NUM_SETS);
-  Serial.write('\n');
-  // sendEncodersActions(); // and/or features
-  // sendPins();
-  // SendEncoderPins();
-  // SendEncoderBindings();
-}
-
-// void sendActiveSet()
-// {
-//   int dataLength = 1;
-//   char opCode = 's';
-//   char header = 'a';
-
-//   Serial.write(opCode);
-//   Serial.write(header);
-//   Serial.write(dataLength); // length of message in bytes
-//   Serial.write(activeSet); // each write is a byte
-//   Serial.write('\n');
-// }
-
-
-// void sendEditorMode()
-// {
-//   int dataLength = 1;
-//   char opCode = 'p';
-//   char header = 'e';
-
-//   Serial.write(opCode);
-//   Serial.write(header);
-//   Serial.write(dataLength); // length of message in bytes
-//   Serial.write(editorMode); // each write is a byte
-//   Serial.write('\n');
-//   //sprintf(line, '');
-// }
-
 void setEditorMode(byte value)
 {
   editorMode = value;
 }
-
-// char* KeyBindingToCharArray()
-// {
-
-// }
-
-// char* layoutToCharArray()
-// {
-
-// }
 
 void setBindings()//KeyboardKeycode[])
 {
