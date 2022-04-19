@@ -1,7 +1,8 @@
 /*
-Hello! this is the Arduino-Pro-Micro Macro-Keyboard code by Ofir Temelman,
-originally uploaded to Thingiverse @ https://www.thingiverse.com/thing:4628023.
-You can use any keyboard buttons available in HID-Project.h (see bottom comment)
+Hello! this is the Arduino-Macro-Keyboard program,
+Project Details on Thingiverse @ https://www.thingiverse.com/thing:4628023.
+List of available action is TBD.
+by Ofir Temelman 19/04/22.
 */
 
 // Required libraries - don't forget to add them to your IDE!
@@ -10,6 +11,7 @@ You can use any keyboard buttons available in HID-Project.h (see bottom comment)
 #include <TimerOne.h>
 #include <HID-Project.h>
 #include <Blink.h>
+//#include <RawByteSerial.h>
 //#include <EEPROM.h>
 
 
@@ -20,7 +22,7 @@ constexpr uint8_t ENCODER_CLK = A0;
 constexpr uint8_t ENCODER_DT = A1;
 constexpr uint8_t ENCODER_SW = A2;
 constexpr uint8_t ENCODER_STEPSPERNOTCH = 4;
-constexpr bool BTN_ACTIVESTATE = LOW;         // Type of encoder button. Either active LOW or active High
+constexpr boolean BTN_ACTIVESTATE = LOW;         // Type of encoder button. Either active LOW or active High
 constexpr uint16_t ENC_SERVICE_US = 1000;     // 1ms
 
 static ClickEncoder encoder{ENCODER_CLK, ENCODER_DT, ENCODER_SW, ENCODER_STEPSPERNOTCH, BTN_ACTIVESTATE};
@@ -69,23 +71,47 @@ KeyboardKeycode encoderSets[NUM_SETS][NUM_ENC_CMD] =
 };
 
 // ----------------------------------------------------------------------------
+// Serial communication
+//
+const int MAX_INPUT_LENGTH = 2 + max((NUM_ROWS*NUM_COLS), (NUM_ENC_CMD)) * NUM_SETS;
+char buffer[MAX_INPUT_LENGTH+1], content[MAX_INPUT_LENGTH+1]; // +1 for null terminator of character string
+char opCode, header;
+int end;
+byte endOfLine = '\n'; // as-is, \n collides with keyboardkeycode of 'g', which is also 0x0A
+
+// ----------------------------------------------------------------------------
 // Companion app
 //
-int editorMode = 0;                    
-bool toggleEditorMode(bool);
-void latencyTest(void (*func)());
-const int MAX_INPUT_LENGTH = max((NUM_ROWS*NUM_COLS), (NUM_ENC_CMD)) * NUM_SETS;
-char line[MAX_INPUT_LENGTH+2+1]; // +1 for null terminator of character string
-char content[MAX_INPUT_LENGTH+1];
-constexpr float TEST_REPITITIONS = 100.0;   // number of times to test the function and take the average
+boolean appIsOpen = false;                    
+void waitForApp();
 constexpr uint16_t SERIAL_BAUDRATE = 9600;  // unnecessary since hid opens serial port anyway?
 void readLine();
 void sendLayout();
 void sendKeyBinding();
-void setEditorMode(byte);
+void setAppState(boolean);
 void sendMessage(char, char, const char *);
 void sendMessage(char, char, int);
-void setBindings();//KeyboardKeycode[]);
+void processMessage(char, char, char*);
+void setBindings(const char *);
+
+// ----------------------------------------------------------------------------
+// Debug Information
+//
+boolean debugSerialIn = false;
+boolean debugSerialOut = false;
+const char *opCodeError = "opCodeError";
+const char *headerError = "headerError";
+const char *unknownError = "unknownError";
+const char *lengthError = "lengthError";
+const char *contentError = "contentError";
+const char *notAFeatureError = "notAFeatureError";
+const char *waitingForApp = "waiting for app";
+const char *arduinoReady = "AMK ready";
+const char *appIsClosing = "app is closing";
+
+
+void latencyTest(void (*func)());
+constexpr float TEST_REPITITIONS = 100.0;   // number of times to test the function and take the average
 // ----------------------------------------------------------------------------
 // Keypad rotation
 //
@@ -180,18 +206,6 @@ void checkOrientation()
 }
 
 // ----------------------------------------------------------------------------
-// Debug Information
-//
-bool debugSerial = false;
-const char *opCodeError = "unknown op code";
-const char *headerError = "unknown header";
-const char *unknownError = "unknown error";
-const char *lengthError = "message length mismatch";
-const char *notAFeatureError = "unknown request";
-//const char *layout = ;
-
-
-// ----------------------------------------------------------------------------
 // Initial setup of the encoder, buttons, led, and communication.
 // This is a one-time pre-run of stuff we need to get the code running as we planned
 //
@@ -208,7 +222,7 @@ void setup()
   }
 
   initTempArray();
-  line[0] = 0; // zero initialize
+  buffer[0] = 0; // zero initialize
 
 // Encoder features
   encoder.setAccelerationEnabled(true); // Comment/delete this line to disable acceleration. Adjusting acceleration values can be done in the ClickEncoder.h file
@@ -221,8 +235,6 @@ void setup()
 
 //initialize the hid Communication - From the next line onwards, the computer should see the arduino as a keyboard
   Keyboard.begin(); 
-
-  delay(5000); // 5 seconds of mercy
 }
 
 // ----------------------------------------------------------------------------
@@ -230,17 +242,35 @@ void setup()
 //
 void loop() 
 {
-  if (Serial.available() > 0) // Check for editor commands
+//---------------------------------THIS---------------------------------
+
+  if (Serial.available() > 0) // Check for messages from the app
   {
-    readLine(); 
+    if(appIsOpen)
+        readLine();
+    else
+      waitForApp();
   }
   else // otherwise, keep scanning the buttons
   {
-    //pressRelease(scanPad);
     scanPad();
     scanEncoder();
     checkOrientation();
   }
+
+//---------------------------------OR THIS------------------------------
+
+  // if (Serial.available() > 0) // Check for messages from the app
+  // {
+  //   readLine(); 
+  // }
+  // else // otherwise, keep scanning the buttons
+  // {
+  //   //pressRelease(scanPad);
+  //   scanPad();
+  //   scanEncoder();
+  //   checkOrientation();
+  // }
 }
 
 // ----------------------------------------------------------------------------
@@ -254,11 +284,11 @@ void scanPad() // Check if any of the keypad buttons was pressed & send the keys
     if ((buttonState[i] != prevButtonState[i])) // if the button changed state, and is now pressed, do what's inside the statement
     {
       if(buttonState[i] == LOW)
-      { // action to take after press:
-        if(editorMode == 0)
-          Keyboard.press(keypadSets[activeSet][i]); // this triggers each button's corresponding action e.g. when the 1st button is pressed, the arduino tells the PC that the F13 key was pressed
+      {
+        if(appIsOpen)
+          Serial.println("This button is mapped to action: " + String(keypadSets[activeSet][i]));
         else  // for debugging
-          Serial.println("This button is mapped to action: " + String(keypadSets[activeSet][i]));;
+          Keyboard.press(keypadSets[activeSet][i]); // send the button's action
       }
       else
         Keyboard.release(keypadSets[activeSet][i]);
@@ -302,12 +332,12 @@ void scanEncoder()
     case Button::LongPressRepeat: // right now, getting to long press repeat also triggers held command
         break;
     case Button::Held:
-        if (editorMode == 0)
+        if (!appIsOpen)
         {
           activeSet = Toggle(activeSet, NUM_SETS);
           statusLed.sequence(3, 150);
         }
-        // if (editorMode)
+        // if (appIsOpen)
         //     Serial.println("key set: " + String(activeSet));
         break;
     case Button::Released:
@@ -330,6 +360,7 @@ void timer1_isr()
 //Command Sets selector
 int Toggle(int selector, int range)
 {
+  // returns selector++ over specified range. i.e. 0->1, 1->2,...,(range-2)->(range-1), (range-1)->0,...
   if(selector >= 0 && selector < (range-1))
     selector ++;
   else
@@ -338,22 +369,25 @@ int Toggle(int selector, int range)
   return selector;
 }
 
-//Start-Stop editor mode (toggles serial communication, enables/disables latency testing & key remapping)
-bool toggleEditorMode(bool editorMode)
+//Start-Stop app communication
+void waitForApp()
 {
-  if(!editorMode)
+  // read a 'line' from the serial into buffer, then split it to opCode, header, and content
+  end = Serial.readBytesUntil('\n', buffer, MAX_INPUT_LENGTH+2);
+  buffer[end] = '\0';
+  opCode = buffer[0];
+  header = buffer[1];
+  // something to do if buffer has less than 3 bytes in it. i.e. end < 3
+
+  //not reading content because it is not important in this instance
+
+  if(opCode == 'a' && header == 'o')
   {
-    //Serial.begin(SERIAL_BAUDRATE);
-    //editing actions to be placed here
-    editorMode = true;
+    appIsOpen = true;
+    sendMessage('p', 'r', arduinoReady);
   }
   else
-  {
-    //save edits & close serial communication
-    //Serial.end();
-    editorMode = false;
-  }
-  return editorMode;
+    sendMessage('p', 'm', waitingForApp);
 }
 
 //measures execution time in milliseconds for any given void func(). used to estimate the keyboards latency.
@@ -368,52 +402,56 @@ void latencyTest(void (*func)())
     Serial.println("Execution time: " + String(delta, 6) + "ms");
 }
 
-void readLine() // arduino encoding is utf-8 by default
+void readLine()
 { 
-  int end = Serial.readBytesUntil('\n', line, MAX_INPUT_LENGTH+2);
-  line[end] = '\0';
-  char opCode = line[0];
-  char header = line[1];
-  // something to do if message line has only header and opcode
-  byte length = line[2]-'0';
-
-  strncpy(content, &line[3], MAX_INPUT_LENGTH);
-  // Serial.write(opCode);
-  // Serial.write(header);
-  // Serial.write(length);
-  // Serial.write('\n');
-  // Serial.write(content);
-  // Serial.write('\n');
-  // Serial.println(end);
-
-  if(debugSerial == true)
-  { 
-    //sprintf(line, "%s%s%d%s", 'p', header, end-1, content);
-    sendMessage('p', header, content); // "return to sender"
+  // read a 'line' from the serial into buffer, then split it to opCode, header, and content
+  end = Serial.readBytesUntil('\n', buffer, MAX_INPUT_LENGTH+5);
+  buffer[end] = '\0';
+  opCode = buffer[0];
+  header = buffer[1];
+  //byte length = buffer[2];
+  //ignoring length for the moment
+  // something to do if buffer has less than 3 bytes in it. i.e. end < 3
+  for(byte i=2; i < strlen(buffer); i++)
+  {
+    content[i-2] = buffer[i]; //-'0;
   }
 
-// /*
+  if(debugSerialIn == true)// debugs serial in
+      sendMessage('p', header, content); // "return to sender"
+      // sendMessage('p', 'l', end); // echo message length
+
+  // process message and choose corresponding action
   switch(opCode)
   {
+    case 'a':
+      if(header == 'o')
+        sendMessage('e', header, arduinoReady);
+      else
+        if(header == 'c')
+        {
+          sendMessage('p', opCode, appIsClosing);
+          appIsOpen = false;
+        }
+      break;
     case 'g': // get requests
       switch(header)
       {
         case 'e':
-          sendMessage(opCode, header, editorMode);
+          sendMessage('p', header, appIsOpen);
           break;
         case 'b':
           sendKeyBinding();
           break;
         case 'c':
-          //sendLayout();
-          sendMessage('s', header, NUM_ROWS*100 + NUM_COLS*10 + NUM_SETS);
-          sendKeyBinding();
-          sendMessage('s', 'o', currentOrientation);
-          sendMessage('s', 'a', activeSet);
+          sendLayout();
           break;
         case 'o':
-          sendMessage(opCode, header, currentOrientation);
-          sendKeyBinding();
+          sendMessage('s', header, currentOrientation);
+          // sendKeyBinding();
+          break;
+        case 'a':
+          sendMessage('s', 'a', activeSet);
           break;
         default:
         header = (header < '0') ? 'u' : header;
@@ -423,15 +461,13 @@ void readLine() // arduino encoding is utf-8 by default
     case 's': // set requests 
       switch(header)
         {
-          case 'e':
-            setEditorMode(atoi(content));
-            sendMessage('p', header, editorMode);
-            break;
+
           case 'b':
-            setBindings();
+            setBindings(content);
+            sendKeyBinding();
             break;
           case 'c':
-            sendMessage('e', header, "setConfiguration() does not exist");
+            sendMessage('e', header, headerError);
             break;
           case 'o':
             currentOrientation = atoi(content);
@@ -450,7 +486,7 @@ void readLine() // arduino encoding is utf-8 by default
         case 'l':
           latencyTest(scanPad);
           latencyTest(scanEncoder);
-          sendMessage('e', header, "latency test results are <placeholder>");
+          sendMessage('e', header, "<latency test results>");
           break;
         case 'o':
           sendMessage('s', header, currentOrientation);
@@ -464,17 +500,19 @@ void readLine() // arduino encoding is utf-8 by default
     break;
     default:
         sendMessage('e', header, opCodeError);
-  } //*/
+  }
+  
+  if(debugSerialOut == true) //debugs serial out
+    sendMessage('p', header, content); // "return to sender"
 }
 
 void sendMessage(char opCode, char header, const char *content)
 {
-  char length = strlen(content);
-  char charLength = length;
+  byte length = strlen(content);
 
   Serial.write(opCode);
   Serial.write(header);
-  Serial.write(charLength); // length of message in bytes
+  Serial.write(length); // length of message in bytes
   Serial.write(content);
   Serial.write('\n');
 }
@@ -482,7 +520,6 @@ void sendMessage(char opCode, char header, const char *content)
 void sendMessage(char opCode, char header, int message)
 {
   itoa(message, content, 10);
-
   byte length = strlen(content);
 
   Serial.write(opCode);
@@ -492,35 +529,42 @@ void sendMessage(char opCode, char header, int message)
   Serial.write('\n');
 }
 
-void sendKeyBinding()//int set=-1) //message format: "bind", "set0", key1, key2,...,keyi, "set1", key1, key2,...,keyi. size is (1 + NUM_SETS*(i+1)) bytes
+void sendLayout() // sends the physical layout of the keyboard: number of key rows, number of key columns, number of key sets.
+{
+  sprintf(content, "%d%d%d",NUM_ROWS, NUM_COLS, NUM_SETS);
+  sendMessage('s', 'c', content);
+}
+
+void sendKeyBinding() //message format: 
 { 
-  int dataLength = NUM_SETS*NUM_ROWS*NUM_COLS;
-  char opCode = 's';
-  char header = 'b';
-
-  Serial.write(opCode);
-  Serial.write(header);
-  Serial.write(dataLength);
-
+  int buttonsPerSet = NUM_COLS*NUM_ROWS;
   for (int k = 0; k < NUM_SETS; k++)
   {
     for(int i=0; i<NUM_COLS*NUM_ROWS; i++)
     {
-      Serial.write(keypadSets[k][i]);
+      content[(k*buttonsPerSet) + i] = keypadSets[k][i];
     }
   }
-  Serial.write('\n');
+  sendMessage('s', 'b', content);
 }
 
-void setEditorMode(byte value)
+void setAppState(boolean value)
 {
-  editorMode = value;
+  appIsOpen = value;
 }
 
-void setBindings()//KeyboardKeycode[])
+void setBindings(const char *content)//KeyboardKeycode[])
 {
-  sendMessage('e', 'b', notAFeatureError);
+  int buttonsPerSet = NUM_COLS*NUM_ROWS;
+  for (int k = 0; k < NUM_SETS; k++)
+  {
+    for(int i=0; i<buttonsPerSet; i++)
+    {
+      keypadSets[k][i] = KeyboardKeycode(content[(k*buttonsPerSet) + i]);
+    }
+  }
 }
+
 // ----------------------------------------------------------------------------
 // Work In Progress
 //
