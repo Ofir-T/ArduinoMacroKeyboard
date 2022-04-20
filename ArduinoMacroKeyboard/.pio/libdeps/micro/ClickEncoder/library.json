@@ -1,0 +1,14 @@
+{
+  "name": "ClickEncoder",
+  "version": "1.1.0",
+  "keywords": "rotary, encoder, button, input, Arduino",
+  "license": "MIT",
+  "description": "Arduino library to handle rotary encoders with (or without) buttons as a user input device. Supports Acceleration, Click, DoubleClick, Held, LongPressRepeat. Contains examples both for Arduino and PlatformIO IDEs and provides unittests.",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/Schallbert/encoder.git"
+  },
+  "frameworks": "arduino",
+  "platforms": "atmelavr"
+}

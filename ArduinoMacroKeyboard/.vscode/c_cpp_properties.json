@@ -1,0 +1,74 @@
+//
+// !!! WARNING !!! AUTO-GENERATED FILE!
+// PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
+// https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
+//
+{
+    "configurations": [
+        {
+            "name": "PlatformIO",
+            "includePath": [
+                "c:/Users/Ofir/Documents/GitHub/ArduinoMacroKeyboard/ArduinoMacroKeyboard/include",
+                "c:/Users/Ofir/Documents/GitHub/ArduinoMacroKeyboard/ArduinoMacroKeyboard/src",
+                "c:/Users/Ofir/Documents/GitHub/ArduinoMacroKeyboard/ArduinoMacroKeyboard/lib/Blink/src",
+                "c:/Users/Ofir/Documents/GitHub/ArduinoMacroKeyboard/ArduinoMacroKeyboard/.pio/libdeps/micro/ClickEncoder",
+                "c:/Users/Ofir/Documents/GitHub/ArduinoMacroKeyboard/ArduinoMacroKeyboard/.pio/libdeps/micro/TimerOne",
+                "c:/Users/Ofir/Documents/GitHub/ArduinoMacroKeyboard/ArduinoMacroKeyboard/.pio/libdeps/micro/HID-Project/src",
+                "C:/Users/Ofir/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                "C:/Users/Ofir/.platformio/packages/framework-arduino-avr/cores/arduino",
+                "C:/Users/Ofir/.platformio/packages/framework-arduino-avr/variants/micro",
+                "c:/Users/Ofir/Documents/GitHub/ArduinoMacroKeyboard/ArduinoMacroKeyboard/lib/ConfigEditor/src",
+                "c:/Users/Ofir/Documents/GitHub/ArduinoMacroKeyboard/ArduinoMacroKeyboard/lib/RawByteSerial",
+                "c:/Users/Ofir/Documents/GitHub/ArduinoMacroKeyboard/ArduinoMacroKeyboard/lib/Rotator/src",
+                "C:/Users/Ofir/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                "C:/Users/Ofir/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                "C:/Users/Ofir/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                "C:/Users/Ofir/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "c:/Users/Ofir/Documents/GitHub/ArduinoMacroKeyboard/ArduinoMacroKeyboard/include",
+                    "c:/Users/Ofir/Documents/GitHub/ArduinoMacroKeyboard/ArduinoMacroKeyboard/src",
+                    "c:/Users/Ofir/Documents/GitHub/ArduinoMacroKeyboard/ArduinoMacroKeyboard/lib/Blink/src",
+                    "c:/Users/Ofir/Documents/GitHub/ArduinoMacroKeyboard/ArduinoMacroKeyboard/.pio/libdeps/micro/ClickEncoder",
+                    "c:/Users/Ofir/Documents/GitHub/ArduinoMacroKeyboard/ArduinoMacroKeyboard/.pio/libdeps/micro/TimerOne",
+                    "c:/Users/Ofir/Documents/GitHub/ArduinoMacroKeyboard/ArduinoMacroKeyboard/.pio/libdeps/micro/HID-Project/src",
+                    "C:/Users/Ofir/.platformio/packages/framework-arduino-avr/libraries/HID/src",
+                    "C:/Users/Ofir/.platformio/packages/framework-arduino-avr/cores/arduino",
+                    "C:/Users/Ofir/.platformio/packages/framework-arduino-avr/variants/micro",
+                    "c:/Users/Ofir/Documents/GitHub/ArduinoMacroKeyboard/ArduinoMacroKeyboard/lib/ConfigEditor/src",
+                    "c:/Users/Ofir/Documents/GitHub/ArduinoMacroKeyboard/ArduinoMacroKeyboard/lib/RawByteSerial",
+                    "c:/Users/Ofir/Documents/GitHub/ArduinoMacroKeyboard/ArduinoMacroKeyboard/lib/Rotator/src",
+                    "C:/Users/Ofir/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                    "C:/Users/Ofir/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
+                    "C:/Users/Ofir/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
+                    "C:/Users/Ofir/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                    ""
+                ]
+            },
+            "defines": [
+                "PLATFORMIO=50205",
+                "ARDUINO_AVR_MICRO",
+                "F_CPU=16000000L",
+                "ARDUINO_ARCH_AVR",
+                "ARDUINO=10808",
+                "USB_VID=0x2341",
+                "USB_PID=0x8037",
+                "USB_PRODUCT=\"Arduino Micro\"",
+                "USB_MANUFACTURER=\"Arduino\"",
+                "__AVR_ATmega32U4__",
+                ""
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++11",
+            "compilerPath": "C:/Users/Ofir/.platformio/packages/toolchain-atmelavr/bin/avr-gcc.exe",
+            "compilerArgs": [
+                "-mmcu=atmega32u4",
+                ""
+            ]
+        }
+    ],
+    "version": 4
+}

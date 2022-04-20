@@ -1,0 +1,19 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+# Project directories
+/examples/ClickEncoder_Platformio/.pio/
+/examples/ClickEncoder_Platformio/.vscode/
+/examples/ClickEncoder_Platformio/include/
+/examples/ClickEncoder_Platformio/lib/
