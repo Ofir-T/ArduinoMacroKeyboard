@@ -1,46 +1,96 @@
-/*
-  Blink.cpp - Library for Blinking LED's.
-  Created by Ofir Temelman, December 15, 2021.
-  Released into the public domain.
-*/
+
 #include "Arduino.h"
-#include "Blink.h"
 
-Blink::Blink(int pin, int durationMs = 250)
-{
-  pinMode(pin, OUTPUT);
-  _pin = pin;
-  _durationMs = durationMs;
-}
+const int NUM_ROWS = 3;
+const int NUM_COLS = 3;
+int buttonPins[NUM_ROWS][NUM_COLS]= {
+		{1, 2, 3},
+		{4, 5, 6},
+		{7, 8, 9}
+};
 
-void Blink::defaultDuration(int durationMs)
-{
-  _durationMs = durationMs;
-}
+int tempArray[NUM_ROWS][NUM_COLS];
 
-void Blink::sequence(int nBlinks, int duration = 0)
-{
-  if (duration == 0)
-    duration = _durationMs;
+int currentOrientation = 3; // 0,1,2,3 -> top, left, bottom, right
+int lastOrientation = 3;
+int delta = currentOrientation - lastOrientation;
 
-  if (digitalRead(_pin))
+typedef int (*accessfn)(int x, int y);
+
+int normal( int x, int y){ return buttonPins[x][y]; }
+int rotateCW( int x, int y){ return buttonPins[NUM_ROWS-1-y][x]; }   // <<<<<< This is the main thing
+int rotateCCW( int x, int y){ return buttonPins[y][NUM_COLS-1-x]; }
+
+void rotateMatrix( accessfn afn){
+	for (int x=0; x<NUM_ROWS; x++)
   {
-    for (int i=0; i<=nBlinks;  i++)
+		for(int y=0; y<NUM_COLS; y++)
     {
-       digitalWrite(_pin, LOW);
-       delay(duration);
-       digitalWrite(_pin, HIGH);
-       delay(duration);
+      tempArray[x][y] = afn(x,y); // now lets try and only pass the pointers
     }
   }
+  cloneArray();
+}
+
+void cloneArray()
+{
+  for (int i = 0; i < NUM_ROWS; i++)
+  {
+    for (int j = 0; j < NUM_COLS; j++)
+    {
+      buttonPins[i][j] = tempArray[i][j];
+    }
+  }
+}
+
+void initTempArray()
+{
+  byte i = NUM_ROWS, j = NUM_COLS;
+  for (int i = 0; i < NUM_ROWS; i++)
+  {
+    for (int j = 0; j < NUM_COLS; j++)
+    {
+      tempArray[i][j] = buttonPins[i][j];
+    }
+  }
+}
+
+void checkOrientation()
+{ 
+  lastOrientation = currentOrientation;
+  //currentOrientation = INPUT;
+  delta = currentOrientation - lastOrientation;
+
+  if(delta = 0)
+    return;
   else
+    if(delta > 0)
+      for(int i=0; i<delta; i++)
+        rotateMatrix(rotateCW);
+    else
+      for(int i=0; i>delta; i--)
+        rotateMatrix(rotateCCW);
+}
+
+void printArray()
+{
+  for (int x=0; x<NUM_ROWS; x++)
   {
-    for (int i=0; i<=nBlinks;  i++)
+		for(int y=0; y<NUM_COLS; y++)
     {
-       digitalWrite(_pin, HIGH);
-       delay(duration);
-       digitalWrite(_pin, LOW);
-       delay(duration);
+      Serial.print(buttonPins[x][y]);
+      delay(100);
     }
+    Serial.println("");
   }
+  Serial .println("");
+}
+
+void setup(){
+	Serial.begin(9600);
+
+}
+
+void loop(){
+  
 }
