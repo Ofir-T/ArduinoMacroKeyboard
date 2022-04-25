@@ -11,9 +11,8 @@ by Ofir Temelman 19/04/22.
 #include <TimerOne.h>
 #include <HID-Project.h>
 #include <Blink.h>
+#include <EEPROM.h>
 //#include <RawByteSerial.h>
-//#include <EEPROM.h>
-
 
 // ----------------------------------------------------------------------------
 // Name. This is the name of your AMK.
@@ -64,10 +63,10 @@ const int NUM_ENC_CMD = 5; // command to enter programming mode should be consid
 int activeSet = 0; // this determines the default command set that will be used when powered up.
 
 KeyboardKeycode keypadSets[NUM_SETS][NUM_ROWS*NUM_COLS] = 
-  {
-    {KEY_F13, KEY_F14, KEY_F15, KEY_F16, KEY_F17, KEY_F18, KEY_F19, KEY_F20, KEY_F21}, // Generic example of usually unused keys. works well with AutoHotKey
-    {KEY_1, KEY_Q, KEY_F, KEY_D, KEY_4, KEY_W, KEY_B, KEY_E, KEY_R}  // Example League of Legends set ;)
-  };
+{
+  {KEY_F13, KEY_F14, KEY_F15, KEY_F16, KEY_F17, KEY_F18, KEY_F19, KEY_F20, KEY_F21}, // Generic example of usually unused keys. works well with AutoHotKey
+  {KEY_1, KEY_Q, KEY_F, KEY_D, KEY_4, KEY_W, KEY_B, KEY_E, KEY_R}  // Example League of Legends set ;)
+};
 
 KeyboardKeycode encoderSets[NUM_SETS][NUM_ENC_CMD] =
 {
@@ -115,7 +114,7 @@ const char *appIsClosing = "app is closing";
 
 
 void latencyTest(void (*func)());
-constexpr float TEST_REPITITIONS = 100.0;   // number of times to test the function and take the average
+constexpr float TEST_REPITITIONS = 1.0;//100.0;   // number of times to test the function and take the average
 // ----------------------------------------------------------------------------
 // Keypad rotation
 //
@@ -162,30 +161,33 @@ void initTempArray()
     }
 }
 
-// void printArray()
-// {
-//   for (int k = 0; k < NUM_SETS; k++)
-//   {
-//     Serial.println("Set " + String(k) + ":");
-//     for(int i=0; i<NUM_COLS*NUM_ROWS; i++)
-//     {
-//       Serial.print(keypadSets[k][i]);
+void printArray()
+{
+  for (int k = 0; k < NUM_SETS; k++)
+  {
+    Serial.println("Set " + String(k) + ":");
+    for(int i=0; i<NUM_COLS*NUM_ROWS; i++)
+    {
+      Serial.print(keypadSets[k][i]);
       
-//       if((i+1) % NUM_COLS == 0) 
-//         Serial.println("");
-//       else
-//         Serial.print(" ");
+      if((i+1) % NUM_COLS == 0) 
+        Serial.println("");
+      else
+        Serial.print(" ");
 
-//       // delay(100);
-//     }
-//     Serial.println("");
-//   }
-//   Serial.println("");
-// }
+      // delay(100);
+    }
+    Serial.println("");
+  }
+  Serial.println("");
+}
 
 void checkOrientation()
 { 
-  //currentOrientation = INPUT;
+  /*
+    INSERT SENEOR READ HERE
+  */
+ 
   delta = currentOrientation - lastOrientation;
 
   if(delta != 0)
@@ -210,11 +212,95 @@ void checkOrientation()
 }
 
 // ----------------------------------------------------------------------------
+// EEPROM - manage long-term memory
+// 
+
+/*
+Storage Adresses:
+  [0 : isFirstBoot ,1-(sizeof(keypadSets)-1) : keypadSets, sizeof(keypadSets)-255: empty]
+*/
+boolean debugEEPROM = false;
+boolean resetAMK = false;
+boolean isFirstBoot = (EEPROM.read(0) == 255);
+byte isFirstBootAddr = 0;
+byte keypadStartAddr = 1;
+
+void printEepromAt(byte addr)//reads the specified EEPROM address and prints result to serial monitor
+{
+  Serial.print("EEPROM- ");
+  byte value = EEPROM.read(addr);
+  Serial.print("addr: ");
+  Serial.print(addr);
+  Serial.print(", ");
+  Serial.print("value: ");
+  Serial.print(value);
+  Serial.println();
+}
+
+void saveKeypadToEeprom(KeyboardKeycode bindings[NUM_SETS][NUM_COLS*NUM_ROWS])
+{
+  byte key;
+  byte buttonsPerSet = NUM_COLS*NUM_ROWS;
+  byte index;
+
+  if(debugEEPROM)
+    Serial.println("Saving keypad to EEPROM");
+
+  for (byte k=0; k < NUM_SETS; k++)
+  {
+    for(byte i=0; i < buttonsPerSet; i++)
+    {
+      index = (k*buttonsPerSet)+i+keypadStartAddr;
+      key =  bindings[k][i];
+      EEPROM.update(index, key);
+      printEepromAt(index);
+    }
+  }
+}
+
+void getKeypadTFromEeprom()
+{
+  byte buttonsPerSet = NUM_COLS*NUM_ROWS;
+  byte index;
+
+  for (byte k=0; k < NUM_SETS; k++)
+  {
+    for(byte i=0; i < buttonsPerSet; i++)
+    {
+      index = (k*buttonsPerSet)+i+keypadStartAddr;
+      keypadSets[k][i] = KeyboardKeycode(EEPROM.read(index));
+      // Serial.println(keypadSets[k][i]);
+    }
+  }
+}
+
+// ----------------------------------------------------------------------------
 // Initial setup of the encoder, buttons, led, and communication.
 // This is a one-time pre-run of stuff we need to get the code running as we planned
 //
 void setup()
 {
+  delay(10000);
+  if(isFirstBoot || resetAMK)
+  {
+    Serial.println("Resetting keypad to default");
+    saveKeypadToEeprom(keypadSets);
+    getKeypadTFromEeprom();
+    EEPROM.update(0, 1);
+
+    if(debugEEPROM)
+    {
+      Serial.print("isFirstBoot: ");
+      Serial.println(EEPROM.read(0));
+    }
+  }
+  else
+  {
+    Serial.println("Retrieveing keypad");
+    getKeypadTFromEeprom();
+    printArray();
+  }
+
   pinMode(LED_BUILTIN_TX, INPUT);               // this is a trick to turn off the tx/rx onboard leds
   //pinMode(LED_BUILTIN_RX, INPUT);
 
@@ -226,7 +312,7 @@ void setup()
   }
 
   initTempArray();
-  buffer[0] = 0; // zero initialize
+  buffer[0] = 0;
 
 // Encoder features
   encoder.setAccelerationEnabled(true); // Comment/delete this line to disable acceleration. Adjusting acceleration values can be done in the ClickEncoder.h file
@@ -261,20 +347,6 @@ void loop()
     scanEncoder();
     checkOrientation();
   }
-
-//---------------------------------OR THIS------------------------------
-
-  // if (Serial.available() > 0) // Check for messages from the app
-  // {
-  //   readLine(); 
-  // }
-  // else // otherwise, keep scanning the buttons
-  // {
-  //   //pressRelease(scanPad);
-  //   scanPad();
-  //   scanEncoder();
-  //   checkOrientation();
-  // }
 }
 
 // ----------------------------------------------------------------------------
@@ -474,6 +546,7 @@ void readLine()
           case 'b':
             setBindings(content);
             sendKeyBinding();
+            saveKeypadToEeprom(keypadSets);
             break;
           case 'c':
             sendMessage('e', header, headerError);

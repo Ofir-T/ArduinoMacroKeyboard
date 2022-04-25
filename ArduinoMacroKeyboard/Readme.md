@@ -41,13 +41,13 @@ Tools: soldering iron, solder
 ## Instructions
 In instructions.pdf
 
-## To-Do:
+## To-Do
 
 # General
 - [V] Seperate encoder scan from pad scan
 - [V] Fix tx rx leds
 - [V] Create a rotation function for use with an IMU (e.g. mpu6050), so that so that key bindings appear the same in all orientations(wheel on left, right, top ,bottom).
-- [] Persistent profiles (eeprom).
+- [V] Persistent profiles (eeprom).
 - [] Design snap-on lid, and board mount to replace the bolts.
 - [] upload .step files
 
@@ -58,7 +58,7 @@ In instructions.pdf
 
 # Testing mode:
 - [V] latency test on the fly.
-- []  key press higlighting with in app
+- []  key press higlighting in the app
 
 # First setup:
 - ~~[X] test to find switch-pin correlation (maybe make scanPad() return return button data instead of doing action)~~
@@ -66,7 +66,7 @@ In instructions.pdf
 - ~~[X] change navigation from char to physical buttons (also check for first time setup).~~
 > can't even remember what I meant when I wrote this :D
 
-## Known Issues:
+## Known Issues
 
 # Arduino:
 - longrepeatedhold also triggers held (at least one time)
@@ -77,12 +77,12 @@ In instructions.pdf
 # App:
 - The app will recognize your device only if you plug it in BEFORE starting the app.
 
-## Notes:
+## Notes
 - separate main.cpp into a header and source?
 - far future: bluetooth + battery?
+- change device name? (in COM devices)
 
-## App notes:
+## App notes
 - The attached executable is only compiled for Windows 10, but the source is available for you to compile on your own system. 
 - The exectutables with multidevice in the name will allow you to choose between arduino COM devices. I haven't tested it with more than one device yet.
-- also, the AMK will reset to it's default bindings upon it's reset, but will retain the edited profile as long as it is powered. (will be taken care of in the future)
 - Application GUI was only tested on my laptop wih 1920x1080 resolution, so weridness might happen on other resolutions/aspect ratios.
