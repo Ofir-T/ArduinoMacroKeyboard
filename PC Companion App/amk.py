@@ -9,6 +9,7 @@ import inspect
 class AMK: #ArduinoMacroKeyboard:
     def __init__(self, **kwargs):#rows = None, cols= None, sets=None, bindings=None, orientation=None, active_set=None, name=None, arduino_callback=None):
         # self.layout = 
+        self.serial_port = kwargs.get('serial_port', None)
         self.num_rows = kwargs.get('num_rows', None)
         self.num_cols = kwargs.get('num_cols', None)
         self.num_sets = kwargs.get('num_sets', None)
@@ -17,6 +18,7 @@ class AMK: #ArduinoMacroKeyboard:
         self.active_set = kwargs.get('active_set', None)
         self.name = kwargs.get('name', None)
         self.arduino_callback = kwargs.get('arduino_callback', None)
+        #attribute arduino ready?
 
 #region constructors
     @classmethod

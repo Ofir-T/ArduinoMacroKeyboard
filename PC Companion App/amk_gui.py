@@ -1,14 +1,29 @@
+import sys
+import ctypes
 import tkinter as tk
 from tkinter import ttk
 import inspect
 import amk
+import logging
 
+# KEYBOARD_X = 1
+# KEYBOARD_Y = 4
+
+# KEYBOARD_WIDTH = 10
+# KEYBOARD_HEIGHT = 12
+
+# SET_SELECTOR_X = 12
+# SET_SELECTOR_Y = 6
+# SET_SELECTOR_WIDTH = 4
+# SET_SELECTOR_VALUES = [i for i in range(keypad['num_sets'])]
 
 class MainFrame:
-    def __init__(self, master, width, height, AMK=None): # param reveal_cells=false
+    def __init__(self, master, width, height, **kwargs): # param reveal_cells=false
+        logging.info(f'Loading GUI')
         self.controller = None
         self.master = master
-        self.AMK = AMK
+        self.AMK = kwargs.get('AMK', None)
+        #self.devices = kwargs.get('devices', None)
         self.grid_rows = 21
         self.grid_cols = 17
         self.grid_labels = [[0]*self.grid_cols]*self.grid_rows
@@ -29,17 +44,16 @@ class MainFrame:
                 # label['text'] = f'{i},{j}'
         self.frame.pack(side='top', fill='both', expand=True)
 
-        self.button = tk.Button(self.frame, text ="Save Changes")
-        self.button.grid(row=9, column=12, columnspan=4, sticky='NSEW')
+        self.save_button = tk.Button(self.frame, text ="Save Changes")
+        self.save_button.grid(row=9, column=12, columnspan=4, sticky='NSEW')
 
         self.keyboard = MacroKeyboard(self.frame, self)
         self.set_selector = SetSelector(self.frame, self)
-        self.subscribers = [self.keyboard, self.set_selector]
+        self.device_selector = DeviceSelector(self.frame, self, devices=kwargs.get('devices', []), callback=kwargs.get('switch_device_callback', None))
+        self.subscribers = [self.keyboard, self.set_selector, self.device_selector]
 
         if(self.AMK != None):
             self.refresh_with(AMK)
-
-        # self.master.mainloop()
 
     def add_subscriber(self, subscriber):
         if subscriber not in self.subscribers:
@@ -57,13 +71,18 @@ class MainFrame:
                 set_index, key_index, key_code = data
                 self.AMK['bindings'][set_index][key_index] = key_code
                 self.refresh_with(self.AMK)
+            if event == 'active_device_changed': #in progress
+                print(f'Active device changed to: {data.to_string()}')
+                self.AMK = data
+                self.refresh_with(self.AMK)
 
-    def refresh_with(self, AMK):
+    def refresh_with(self, AMK, **kwargs):
         # print(AMK.to_string())
         self.AMK = AMK
         self.keyboard.refresh_with(self.AMK)
         self.set_selector.refresh_with(self.AMK)
-        self.button.configure(command=self.AMK.save_to_arduino)
+        self.save_button.configure(command=self.save_button_callback)
+        self.device_selector.refresh_with(kwargs.get('devices', self.device_selector.devices))
         self.master.update()
 
     def refresh_window(self):
@@ -88,6 +107,10 @@ class MainFrame:
         self_str = f'this object is a {type(self)} with attributes:\n{attributes_str}'
         return inspect.cleandoc(self_str)
     
+    def save_button_callback(self):
+        tk.messagebox.showinfo(title=None, message='Changes Saved')
+        self.AMK.save_to_arduino()
+
     # def pub_vars(self):
     #     """Gives the variable names of our instance we want to expose
     #     """
@@ -129,6 +152,47 @@ class SetSelector:
         active_set = int(self.stringvar.get())
         self.controller.notify({'active_set_changed':active_set})
         # print(f'changed active set to: {stringvar_set.get()}')
+
+class DeviceSelector:
+    def __init__(self, master, controller, devices=[], callback=None, default_value='', pos_x = 12, pos_y = 4, state='readonly'):
+        self.controller = controller
+        self.master = master
+        self.devices = devices
+        self.callback = callback
+
+        self.frame = tk.Frame(master=self.master, relief=tk.GROOVE, borderwidth=1)
+        self.frame.columnconfigure(0, weight=1, uniform="device")
+        self.frame.columnconfigure(1, weight=1, uniform="device")
+
+        self.label = tk.Label(master=self.frame, text='Devices:', relief=tk.GROOVE, borderwidth=0)
+        self.label.grid(row=0, column=0, sticky='E')
+
+        self.stringvar = tk.StringVar()
+        self.combobox = ttk.Combobox(master=self.frame, textvariable=self.stringvar, width=4)
+        self.combobox['values'] = [device.description for device in devices]
+        self.combobox['state'] = state
+        self.combobox.set(default_value) #self.combobox['values'][0]
+        self.combobox.grid(row=0,column=1, columnspan=2, sticky="E")
+        self.combobox.bind('<<ComboboxSelected>>', self.notify_device_changed)
+
+        self.frame.grid(row=pos_y, column=pos_x, sticky='NSEW', columnspan=4)
+
+    def set_controller(self, controller: object):
+        self.controller = controller
+        self.controller.add_subscriber(self)
+
+    def refresh_with(self, devices):
+        self.devices = devices # make a refresh device list
+        self.combobox['values'] = [device.description for device in self.devices]
+        # self.combobox.set(self.combobox['values'][0]) # set the default device
+
+    def notify_device_changed(self, event):
+        # set the app's active device
+        chosen_device = self.stringvar.get()
+        for device in self.devices:
+            if(chosen_device == device.description):
+                active_device = self.callback(device.name)
+        self.controller.notify({'active_device_changed':active_device})
 
 class MacroKeyboard:
     def __init__(self, master, controller, pos_x=1, pos_y=4, size_x=10, size_y=12):

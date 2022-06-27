@@ -1,0 +1,1366 @@
+2022-05-26 12:42:51,469:INFO:Opened App
+2022-05-26 12:42:51,472:DEBUG:debug_test : True
+2022-05-26 12:42:51,472:DEBUG:debug_parsing : False
+2022-05-26 12:42:51,473:DEBUG:debug_out_comms : False
+2022-05-26 12:42:51,473:DEBUG:debug_in_comms : False
+2022-05-26 12:42:51,473:DEBUG:debug_resolution : False
+2022-05-26 12:42:51,473:DEBUG:debug_manual_comms : False
+2022-05-26 12:42:51,473:DEBUG:with_gui : False
+2022-05-26 12:42:51,484:INFO:COM devices found: []
+2022-05-26 12:42:51,484:INFO:Serial devices found: []
+2022-05-26 12:42:51,675:INFO:Opened App
+2022-05-26 12:42:51,678:DEBUG:debug_test : True
+2022-05-26 12:42:51,678:DEBUG:debug_parsing : False
+2022-05-26 12:42:51,678:DEBUG:debug_out_comms : False
+2022-05-26 12:42:51,678:DEBUG:debug_in_comms : False
+2022-05-26 12:42:51,678:DEBUG:debug_resolution : False
+2022-05-26 12:42:51,678:DEBUG:debug_manual_comms : False
+2022-05-26 12:42:51,679:DEBUG:with_gui : False
+2022-05-26 12:42:51,688:INFO:COM devices found: []
+2022-05-26 12:42:51,688:INFO:Serial devices found: []
+2022-05-26 12:43:29,811:INFO:Opened App
+2022-05-26 12:43:29,813:DEBUG:debug_test : True
+2022-05-26 12:43:29,814:DEBUG:debug_parsing : False
+2022-05-26 12:43:29,814:DEBUG:debug_out_comms : False
+2022-05-26 12:43:29,814:DEBUG:debug_in_comms : False
+2022-05-26 12:43:29,814:DEBUG:debug_resolution : False
+2022-05-26 12:43:29,814:DEBUG:debug_manual_comms : False
+2022-05-26 12:43:29,814:DEBUG:with_gui : False
+2022-05-26 12:43:29,824:INFO:COM devices found: []
+2022-05-26 12:43:29,824:INFO:Serial devices found: []
+2022-05-26 12:44:04,605:INFO:Opened App
+2022-05-26 12:44:04,607:DEBUG:debug_test : True
+2022-05-26 12:44:04,608:DEBUG:debug_parsing : False
+2022-05-26 12:44:04,608:DEBUG:debug_out_comms : False
+2022-05-26 12:44:04,608:DEBUG:debug_in_comms : False
+2022-05-26 12:44:04,608:DEBUG:debug_resolution : False
+2022-05-26 12:44:04,608:DEBUG:debug_manual_comms : False
+2022-05-26 12:44:04,608:DEBUG:with_gui : False
+2022-05-26 12:44:04,618:INFO:COM devices found: []
+2022-05-26 12:44:04,618:INFO:Serial devices found: []
+2022-05-26 12:45:04,326:INFO:Opened App
+2022-05-26 12:45:04,328:DEBUG:debug_test : True
+2022-05-26 12:45:04,328:DEBUG:debug_parsing : False
+2022-05-26 12:45:04,329:DEBUG:debug_out_comms : False
+2022-05-26 12:45:04,329:DEBUG:debug_in_comms : False
+2022-05-26 12:45:04,329:DEBUG:debug_resolution : False
+2022-05-26 12:45:04,329:DEBUG:debug_manual_comms : False
+2022-05-26 12:45:04,329:DEBUG:with_gui : False
+2022-05-26 12:45:04,340:INFO:COM devices found: []
+2022-05-26 12:45:04,340:INFO:Serial devices found: []
+2022-05-26 12:57:57,509:INFO:Opened App
+2022-05-26 12:57:57,512:DEBUG:debug_test : True
+2022-05-26 12:57:57,512:DEBUG:debug_parsing : False
+2022-05-26 12:57:57,512:DEBUG:debug_out_comms : False
+2022-05-26 12:57:57,512:DEBUG:debug_in_comms : False
+2022-05-26 12:57:57,512:DEBUG:debug_resolution : False
+2022-05-26 12:57:57,513:DEBUG:debug_manual_comms : False
+2022-05-26 12:57:57,513:DEBUG:with_gui : False
+2022-05-26 12:57:57,524:INFO:COM devices found: []
+2022-05-26 12:57:57,524:INFO:Serial devices found: []
+2022-05-26 12:59:24,659:INFO:Opened App
+2022-05-26 12:59:24,662:DEBUG:debug_test : True
+2022-05-26 12:59:24,662:DEBUG:debug_parsing : False
+2022-05-26 12:59:24,662:DEBUG:debug_out_comms : False
+2022-05-26 12:59:24,662:DEBUG:debug_in_comms : False
+2022-05-26 12:59:24,662:DEBUG:debug_resolution : False
+2022-05-26 12:59:24,662:DEBUG:debug_manual_comms : False
+2022-05-26 12:59:24,663:DEBUG:with_gui : False
+2022-05-26 12:59:24,670:INFO:COM devices found: []
+2022-05-26 12:59:24,671:INFO:Serial devices found: []
+2022-05-26 13:11:03,633:INFO:Opened App
+2022-05-26 13:11:03,636:DEBUG:debug_test : True
+2022-05-26 13:11:03,636:DEBUG:debug_parsing : False
+2022-05-26 13:11:03,637:DEBUG:debug_out_comms : False
+2022-05-26 13:11:03,637:DEBUG:debug_in_comms : False
+2022-05-26 13:11:03,637:DEBUG:debug_resolution : False
+2022-05-26 13:11:03,637:DEBUG:debug_manual_comms : False
+2022-05-26 13:11:03,637:DEBUG:with_gui : False
+2022-05-26 13:11:03,654:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002712DE13220>]
+2022-05-26 13:11:03,654:INFO:Serial devices found: [Serial<id=0x2712de136d0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:11:03,663:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002712DE133D0>]
+2022-05-26 13:11:03,663:INFO:Serial devices found: [Serial<id=0x2712de13700, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:11:03,848:INFO:Opened App
+2022-05-26 13:11:03,851:DEBUG:debug_test : True
+2022-05-26 13:11:03,851:DEBUG:debug_parsing : False
+2022-05-26 13:11:03,851:DEBUG:debug_out_comms : False
+2022-05-26 13:11:03,852:DEBUG:debug_in_comms : False
+2022-05-26 13:11:03,852:DEBUG:debug_resolution : False
+2022-05-26 13:11:03,852:DEBUG:debug_manual_comms : False
+2022-05-26 13:11:03,852:DEBUG:with_gui : False
+2022-05-26 13:11:03,864:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001957525CA00>]
+2022-05-26 13:11:03,864:INFO:Serial devices found: [Serial<id=0x1957525dff0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:11:03,872:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001957525DCF0>]
+2022-05-26 13:11:03,872:INFO:Serial devices found: [Serial<id=0x1957525e020, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:11:13,049:INFO:Opened App
+2022-05-26 13:11:13,052:DEBUG:debug_test : True
+2022-05-26 13:11:13,052:DEBUG:debug_parsing : False
+2022-05-26 13:11:13,052:DEBUG:debug_out_comms : False
+2022-05-26 13:11:13,052:DEBUG:debug_in_comms : False
+2022-05-26 13:11:13,052:DEBUG:debug_resolution : False
+2022-05-26 13:11:13,052:DEBUG:debug_manual_comms : False
+2022-05-26 13:11:13,052:DEBUG:with_gui : False
+2022-05-26 13:11:13,063:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001B14E65CA00>]
+2022-05-26 13:11:13,064:INFO:Serial devices found: [Serial<id=0x1b14e65dff0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:11:13,072:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001B14E65DCF0>]
+2022-05-26 13:11:13,072:INFO:Serial devices found: [Serial<id=0x1b14e65e020, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:11:15,852:INFO:Opened App
+2022-05-26 13:11:15,854:DEBUG:debug_test : True
+2022-05-26 13:11:15,855:DEBUG:debug_parsing : False
+2022-05-26 13:11:15,855:DEBUG:debug_out_comms : False
+2022-05-26 13:11:15,855:DEBUG:debug_in_comms : False
+2022-05-26 13:11:15,855:DEBUG:debug_resolution : False
+2022-05-26 13:11:15,855:DEBUG:debug_manual_comms : False
+2022-05-26 13:11:15,855:DEBUG:with_gui : False
+2022-05-26 13:11:15,867:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001FF976BCA00>]
+2022-05-26 13:11:15,867:INFO:Serial devices found: [Serial<id=0x1ff976bdff0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:11:15,875:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001FF976BDCF0>]
+2022-05-26 13:11:15,875:INFO:Serial devices found: [Serial<id=0x1ff976be020, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:11:24,096:INFO:Opened App
+2022-05-26 13:11:24,098:DEBUG:debug_test : True
+2022-05-26 13:11:24,098:DEBUG:debug_parsing : False
+2022-05-26 13:11:24,098:DEBUG:debug_out_comms : False
+2022-05-26 13:11:24,098:DEBUG:debug_in_comms : False
+2022-05-26 13:11:24,099:DEBUG:debug_resolution : False
+2022-05-26 13:11:24,099:DEBUG:debug_manual_comms : False
+2022-05-26 13:11:24,099:DEBUG:with_gui : False
+2022-05-26 13:11:24,111:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000196E535CA00>]
+2022-05-26 13:11:24,111:INFO:Serial devices found: [Serial<id=0x196e535dff0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:11:24,118:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000196E535DCF0>]
+2022-05-26 13:11:24,118:INFO:Serial devices found: [Serial<id=0x196e535e020, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:11:27,454:INFO:Opened App
+2022-05-26 13:11:27,457:DEBUG:debug_test : True
+2022-05-26 13:11:27,457:DEBUG:debug_parsing : False
+2022-05-26 13:11:27,457:DEBUG:debug_out_comms : False
+2022-05-26 13:11:27,458:DEBUG:debug_in_comms : False
+2022-05-26 13:11:27,458:DEBUG:debug_resolution : False
+2022-05-26 13:11:27,458:DEBUG:debug_manual_comms : False
+2022-05-26 13:11:27,458:DEBUG:with_gui : False
+2022-05-26 13:11:27,469:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000025BA8DACA00>]
+2022-05-26 13:11:27,469:INFO:Serial devices found: [Serial<id=0x25ba8dadff0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:11:27,477:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000025BA8DADCF0>]
+2022-05-26 13:11:27,478:INFO:Serial devices found: [Serial<id=0x25ba8dae020, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:11:37,028:INFO:Opened App
+2022-05-26 13:11:37,030:DEBUG:debug_test : True
+2022-05-26 13:11:37,030:DEBUG:debug_parsing : False
+2022-05-26 13:11:37,030:DEBUG:debug_out_comms : False
+2022-05-26 13:11:37,030:DEBUG:debug_in_comms : False
+2022-05-26 13:11:37,030:DEBUG:debug_resolution : False
+2022-05-26 13:11:37,030:DEBUG:debug_manual_comms : False
+2022-05-26 13:11:37,030:DEBUG:with_gui : False
+2022-05-26 13:11:37,045:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002215540CA00>]
+2022-05-26 13:11:37,045:INFO:Serial devices found: [Serial<id=0x2215540dff0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:11:37,053:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002215540DCF0>]
+2022-05-26 13:11:37,053:INFO:Serial devices found: [Serial<id=0x2215540e020, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:12:24,904:INFO:Opened App
+2022-05-26 13:12:24,907:DEBUG:debug_test : True
+2022-05-26 13:12:24,907:DEBUG:debug_parsing : False
+2022-05-26 13:12:24,907:DEBUG:debug_out_comms : False
+2022-05-26 13:12:24,907:DEBUG:debug_in_comms : False
+2022-05-26 13:12:24,907:DEBUG:debug_resolution : False
+2022-05-26 13:12:24,907:DEBUG:debug_manual_comms : False
+2022-05-26 13:12:24,907:DEBUG:with_gui : True
+2022-05-26 13:12:24,919:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000290DDB6CA00>]
+2022-05-26 13:12:24,919:INFO:Serial devices found: [Serial<id=0x290ddb6dff0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:12:24,927:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000290DDB6DCF0>]
+2022-05-26 13:12:24,927:INFO:Serial devices found: [Serial<id=0x290ddb6e020, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:12:24,938:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000290DDB6CA00>]
+2022-05-26 13:12:24,946:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000290DDB6CE80>]
+2022-05-26 13:12:59,024:INFO:Opened App
+2022-05-26 13:12:59,027:DEBUG:debug_test : True
+2022-05-26 13:12:59,027:DEBUG:debug_parsing : False
+2022-05-26 13:12:59,027:DEBUG:debug_out_comms : False
+2022-05-26 13:12:59,027:DEBUG:debug_in_comms : False
+2022-05-26 13:12:59,027:DEBUG:debug_resolution : False
+2022-05-26 13:12:59,027:DEBUG:debug_manual_comms : False
+2022-05-26 13:12:59,027:DEBUG:with_gui : True
+2022-05-26 13:12:59,039:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002A7B246CA00>]
+2022-05-26 13:12:59,039:INFO:Serial devices found: [Serial<id=0x2a7b246df00, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:12:59,046:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002A7B246DC00>]
+2022-05-26 13:12:59,046:INFO:Serial devices found: [Serial<id=0x2a7b246df30, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:12:59,058:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002A7B246CA00>]
+2022-05-26 13:12:59,068:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002A7B246CD90>]
+2022-05-26 13:13:14,913:INFO:Opened App
+2022-05-26 13:13:14,916:DEBUG:debug_test : True
+2022-05-26 13:13:14,916:DEBUG:debug_parsing : False
+2022-05-26 13:13:14,916:DEBUG:debug_out_comms : False
+2022-05-26 13:13:14,916:DEBUG:debug_in_comms : False
+2022-05-26 13:13:14,916:DEBUG:debug_resolution : False
+2022-05-26 13:13:14,916:DEBUG:debug_manual_comms : False
+2022-05-26 13:13:14,916:DEBUG:with_gui : True
+2022-05-26 13:13:14,927:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000239312ECA00>]
+2022-05-26 13:13:14,927:INFO:Serial devices found: [Serial<id=0x239312edf00, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:13:14,938:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000239312EDC00>]
+2022-05-26 13:13:14,938:INFO:Serial devices found: [Serial<id=0x239312edf30, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:13:14,948:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000239312ECA00>]
+2022-05-26 13:13:14,958:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000239312ECD90>]
+2022-05-26 13:13:30,870:INFO:Opened App
+2022-05-26 13:13:30,873:DEBUG:debug_test : True
+2022-05-26 13:13:30,873:DEBUG:debug_parsing : False
+2022-05-26 13:13:30,873:DEBUG:debug_out_comms : False
+2022-05-26 13:13:30,873:DEBUG:debug_in_comms : False
+2022-05-26 13:13:30,873:DEBUG:debug_resolution : False
+2022-05-26 13:13:30,873:DEBUG:debug_manual_comms : False
+2022-05-26 13:13:30,873:DEBUG:with_gui : True
+2022-05-26 13:13:30,883:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001F9BFE0CA00>]
+2022-05-26 13:13:30,883:INFO:Serial devices found: [Serial<id=0x1f9bfe0df00, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:13:30,892:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001F9BFE0DC00>]
+2022-05-26 13:13:30,892:INFO:Serial devices found: [Serial<id=0x1f9bfe0df30, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:13:30,905:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001F9BFE0CA00>]
+2022-05-26 13:13:30,913:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001F9BFE0CD90>]
+2022-05-26 13:13:52,385:INFO:Opened App
+2022-05-26 13:13:52,388:DEBUG:debug_test : True
+2022-05-26 13:13:52,388:DEBUG:debug_parsing : False
+2022-05-26 13:13:52,388:DEBUG:debug_out_comms : False
+2022-05-26 13:13:52,388:DEBUG:debug_in_comms : False
+2022-05-26 13:13:52,388:DEBUG:debug_resolution : False
+2022-05-26 13:13:52,388:DEBUG:debug_manual_comms : False
+2022-05-26 13:13:52,388:DEBUG:with_gui : True
+2022-05-26 13:13:52,401:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002187F9DCA00>]
+2022-05-26 13:13:52,401:INFO:Serial devices found: [Serial<id=0x2187f9ddf00, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:13:52,409:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002187F9DDC00>]
+2022-05-26 13:13:52,409:INFO:Serial devices found: [Serial<id=0x2187f9ddf30, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:13:52,520:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002187FA0A260>]
+2022-05-26 13:13:52,529:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002187FA0A290>]
+2022-05-26 13:14:04,562:INFO:Opened App
+2022-05-26 13:14:04,564:DEBUG:debug_test : True
+2022-05-26 13:14:04,565:DEBUG:debug_parsing : False
+2022-05-26 13:14:04,565:DEBUG:debug_out_comms : False
+2022-05-26 13:14:04,565:DEBUG:debug_in_comms : False
+2022-05-26 13:14:04,565:DEBUG:debug_resolution : False
+2022-05-26 13:14:04,565:DEBUG:debug_manual_comms : False
+2022-05-26 13:14:04,565:DEBUG:with_gui : True
+2022-05-26 13:14:04,577:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002001215CA00>]
+2022-05-26 13:14:04,577:INFO:Serial devices found: [Serial<id=0x2001215df00, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:14:04,584:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002001215DC00>]
+2022-05-26 13:14:04,584:INFO:Serial devices found: [Serial<id=0x2001215df30, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:14:04,700:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002001218A260>]
+2022-05-26 13:14:04,709:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002001218A290>]
+2022-05-26 13:14:26,930:INFO:Opened App
+2022-05-26 13:14:26,933:DEBUG:debug_test : True
+2022-05-26 13:14:26,933:DEBUG:debug_parsing : False
+2022-05-26 13:14:26,933:DEBUG:debug_out_comms : False
+2022-05-26 13:14:26,933:DEBUG:debug_in_comms : False
+2022-05-26 13:14:26,933:DEBUG:debug_resolution : False
+2022-05-26 13:14:26,933:DEBUG:debug_manual_comms : False
+2022-05-26 13:14:26,934:DEBUG:with_gui : True
+2022-05-26 13:14:26,945:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000016AECAF3100>]
+2022-05-26 13:14:26,946:INFO:Serial devices found: [Serial<id=0x16aecaf35b0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:14:26,956:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000016AECAF32B0>]
+2022-05-26 13:14:26,956:INFO:Serial devices found: [Serial<id=0x16aecaf35e0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:14:35,980:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000016AECAF3490>]
+2022-05-26 13:14:35,990:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000016AECAF32E0>]
+2022-05-26 13:15:17,739:INFO:Opened App
+2022-05-26 13:15:17,742:DEBUG:debug_test : True
+2022-05-26 13:15:17,742:DEBUG:debug_parsing : False
+2022-05-26 13:15:17,742:DEBUG:debug_out_comms : False
+2022-05-26 13:15:17,742:DEBUG:debug_in_comms : False
+2022-05-26 13:15:17,742:DEBUG:debug_resolution : False
+2022-05-26 13:15:17,742:DEBUG:debug_manual_comms : False
+2022-05-26 13:15:17,742:DEBUG:with_gui : True
+2022-05-26 13:15:17,752:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000015A5B74CA00>]
+2022-05-26 13:15:17,752:INFO:Serial devices found: [Serial<id=0x15a5b74df00, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:15:17,761:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000015A5B74DC00>]
+2022-05-26 13:15:17,761:INFO:Serial devices found: [Serial<id=0x15a5b74df30, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:15:17,772:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000015A5B74CA00>]
+2022-05-26 13:15:17,781:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000015A5B74CD90>]
+2022-05-26 13:15:32,073:INFO:Opened App
+2022-05-26 13:15:32,076:DEBUG:debug_test : True
+2022-05-26 13:15:32,076:DEBUG:debug_parsing : False
+2022-05-26 13:15:32,076:DEBUG:debug_out_comms : False
+2022-05-26 13:15:32,076:DEBUG:debug_in_comms : False
+2022-05-26 13:15:32,076:DEBUG:debug_resolution : False
+2022-05-26 13:15:32,077:DEBUG:debug_manual_comms : False
+2022-05-26 13:15:32,077:DEBUG:with_gui : True
+2022-05-26 13:15:32,087:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000017B1162CA00>]
+2022-05-26 13:15:32,087:INFO:Serial devices found: [Serial<id=0x17b1162df00, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:15:32,096:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000017B1162DC00>]
+2022-05-26 13:15:32,096:INFO:Serial devices found: [Serial<id=0x17b1162df30, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:15:32,108:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000017B1162CA00>]
+2022-05-26 13:15:32,119:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000017B1162CD90>]
+2022-05-26 13:16:33,651:INFO:Opened App
+2022-05-26 13:16:33,654:DEBUG:debug_test : True
+2022-05-26 13:16:33,654:DEBUG:debug_parsing : False
+2022-05-26 13:16:33,654:DEBUG:debug_out_comms : False
+2022-05-26 13:16:33,654:DEBUG:debug_in_comms : False
+2022-05-26 13:16:33,654:DEBUG:debug_resolution : False
+2022-05-26 13:16:33,654:DEBUG:debug_manual_comms : False
+2022-05-26 13:16:33,654:DEBUG:with_gui : True
+2022-05-26 13:16:33,665:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000028E4238CA00>]
+2022-05-26 13:16:33,665:INFO:Serial devices found: [Serial<id=0x28e4238df00, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:16:33,673:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000028E4238DC00>]
+2022-05-26 13:16:33,674:INFO:Serial devices found: [Serial<id=0x28e4238df30, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:16:33,685:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000028E4238CA00>]
+2022-05-26 13:16:33,694:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000028E4238CD90>]
+2022-05-26 13:18:53,560:INFO:Opened App
+2022-05-26 13:18:53,563:DEBUG:debug_test : True
+2022-05-26 13:18:53,563:DEBUG:debug_parsing : True
+2022-05-26 13:18:53,563:DEBUG:debug_out_comms : False
+2022-05-26 13:18:53,564:DEBUG:debug_in_comms : False
+2022-05-26 13:18:53,564:DEBUG:debug_resolution : False
+2022-05-26 13:18:53,564:DEBUG:debug_manual_comms : False
+2022-05-26 13:18:53,564:DEBUG:with_gui : True
+2022-05-26 13:18:53,575:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000011E751BC9D0>]
+2022-05-26 13:18:53,576:INFO:Serial devices found: [Serial<id=0x11e751bded0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:18:53,586:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000011E751BDF00>]
+2022-05-26 13:18:53,595:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000011E751BCD60>]
+2022-05-26 13:20:03,424:INFO:Opened App
+2022-05-26 13:20:03,426:DEBUG:debug_test : True
+2022-05-26 13:20:03,426:DEBUG:debug_parsing : True
+2022-05-26 13:20:03,426:DEBUG:debug_out_comms : False
+2022-05-26 13:20:03,427:DEBUG:debug_in_comms : False
+2022-05-26 13:20:03,427:DEBUG:debug_resolution : False
+2022-05-26 13:20:03,427:DEBUG:debug_manual_comms : False
+2022-05-26 13:20:03,427:DEBUG:with_gui : True
+2022-05-26 13:20:03,439:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002166520C9D0>]
+2022-05-26 13:20:03,440:INFO:Serial devices found: [Serial<id=0x2166520ded0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:20:03,452:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002166520DF00>]
+2022-05-26 13:20:03,461:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002166520CD60>]
+2022-05-26 13:27:05,264:INFO:Opened App
+2022-05-26 13:27:05,266:DEBUG:debug_test : True
+2022-05-26 13:27:05,266:DEBUG:debug_parsing : True
+2022-05-26 13:27:05,266:DEBUG:debug_out_comms : False
+2022-05-26 13:27:05,266:DEBUG:debug_in_comms : False
+2022-05-26 13:27:05,267:DEBUG:debug_resolution : False
+2022-05-26 13:27:05,267:DEBUG:debug_manual_comms : False
+2022-05-26 13:27:05,267:DEBUG:with_gui : True
+2022-05-26 13:27:05,279:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001DAD051CA00>]
+2022-05-26 13:27:05,279:INFO:Serial devices found: [Serial<id=0x1dad051df60, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:27:05,279:INFO:[<amk.AMK object at 0x000001DAD051DC60>]
+2022-05-26 13:27:05,289:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001DAD051DF90>]
+2022-05-26 13:27:05,298:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001DAD051CDF0>]
+2022-05-26 13:27:56,804:INFO:Opened App
+2022-05-26 13:27:56,806:DEBUG:debug_test : True
+2022-05-26 13:27:56,806:DEBUG:debug_parsing : True
+2022-05-26 13:27:56,807:DEBUG:debug_out_comms : False
+2022-05-26 13:27:56,807:DEBUG:debug_in_comms : False
+2022-05-26 13:27:56,807:DEBUG:debug_resolution : False
+2022-05-26 13:27:56,807:DEBUG:debug_manual_comms : False
+2022-05-26 13:27:56,807:DEBUG:with_gui : True
+2022-05-26 13:27:56,816:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002B6EA77CA00>]
+2022-05-26 13:27:56,816:INFO:Serial devices found: [Serial<id=0x2b6ea77df60, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:27:56,816:INFO:AMK list: [<amk.AMK object at 0x000002B6EA77DC60>]
+2022-05-26 13:27:56,828:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002B6EA77DF90>]
+2022-05-26 13:27:56,836:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002B6EA77CDF0>]
+2022-05-26 13:31:26,120:INFO:Opened App
+2022-05-26 13:31:26,123:DEBUG:debug_test : True
+2022-05-26 13:31:26,123:DEBUG:debug_parsing : True
+2022-05-26 13:31:26,123:DEBUG:debug_out_comms : False
+2022-05-26 13:31:26,123:DEBUG:debug_in_comms : False
+2022-05-26 13:31:26,123:DEBUG:debug_resolution : False
+2022-05-26 13:31:26,123:DEBUG:debug_manual_comms : False
+2022-05-26 13:31:26,123:DEBUG:with_gui : True
+2022-05-26 13:31:26,136:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000022F11AAC9A0>]
+2022-05-26 13:31:26,136:INFO:Serial devices found: [Serial<id=0x22f11aadea0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:31:26,136:INFO:AMK list: [<amk.AMK object at 0x0000022F11AADBA0>]
+2022-05-26 13:31:26,150:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000022F11AACAC0>]
+2022-05-26 13:31:26,160:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000022F11AADED0>]
+2022-05-26 13:34:38,249:INFO:Opened App
+2022-05-26 13:34:38,252:DEBUG:debug_test : True
+2022-05-26 13:34:38,252:DEBUG:debug_parsing : True
+2022-05-26 13:34:38,252:DEBUG:debug_out_comms : False
+2022-05-26 13:34:38,252:DEBUG:debug_in_comms : False
+2022-05-26 13:34:38,252:DEBUG:debug_resolution : False
+2022-05-26 13:34:38,253:DEBUG:debug_manual_comms : False
+2022-05-26 13:34:38,253:DEBUG:with_gui : True
+2022-05-26 13:34:38,265:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000224C980CA00>]
+2022-05-26 13:34:38,266:INFO:Serial devices found: [Serial<id=0x224c980df90, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:34:38,266:INFO:AMK list: [<amk.AMK object at 0x00000224C980DC90>]
+2022-05-26 13:34:38,275:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000224C980CB20>]
+2022-05-26 13:34:38,284:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000224C980DFC0>]
+2022-05-26 13:36:41,881:INFO:Opened App
+2022-05-26 13:36:41,884:DEBUG:debug_test : True
+2022-05-26 13:36:41,884:DEBUG:debug_parsing : True
+2022-05-26 13:36:41,884:DEBUG:debug_out_comms : False
+2022-05-26 13:36:41,884:DEBUG:debug_in_comms : False
+2022-05-26 13:36:41,884:DEBUG:debug_resolution : False
+2022-05-26 13:36:41,884:DEBUG:debug_manual_comms : False
+2022-05-26 13:36:41,884:DEBUG:with_gui : True
+2022-05-26 13:36:41,894:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000022CC825C8B0>]
+2022-05-26 13:36:41,894:INFO:Serial devices found: [Serial<id=0x22cc825dd80, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:36:41,894:INFO:AMK list: [<amk.AMK object at 0x0000022CC825DA80>]
+2022-05-26 13:36:41,905:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000022CC825C970>]
+2022-05-26 13:36:41,913:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000022CC825DDB0>]
+2022-05-26 13:39:42,322:INFO:Opened App
+2022-05-26 13:39:42,325:DEBUG:debug_test : True
+2022-05-26 13:39:42,325:DEBUG:debug_parsing : True
+2022-05-26 13:39:42,325:DEBUG:debug_out_comms : False
+2022-05-26 13:39:42,325:DEBUG:debug_in_comms : False
+2022-05-26 13:39:42,325:DEBUG:debug_resolution : False
+2022-05-26 13:39:42,325:DEBUG:debug_manual_comms : False
+2022-05-26 13:39:42,325:DEBUG:with_gui : True
+2022-05-26 13:39:42,336:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000022D62233040>]
+2022-05-26 13:39:42,336:INFO:Serial devices found: [Serial<id=0x22d622334f0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:39:42,336:INFO:AMK list: [<amk.AMK object at 0x0000022D622331F0>]
+2022-05-26 13:39:42,348:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000022D62233010>]
+2022-05-26 13:39:42,357:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000022D62233520>]
+2022-05-26 13:40:19,073:INFO:Opened App
+2022-05-26 13:40:19,075:DEBUG:debug_test : True
+2022-05-26 13:40:19,075:DEBUG:debug_parsing : True
+2022-05-26 13:40:19,075:DEBUG:debug_out_comms : False
+2022-05-26 13:40:19,075:DEBUG:debug_in_comms : False
+2022-05-26 13:40:19,075:DEBUG:debug_resolution : False
+2022-05-26 13:40:19,076:DEBUG:debug_manual_comms : False
+2022-05-26 13:40:19,076:DEBUG:with_gui : True
+2022-05-26 13:40:19,086:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000015BE9573040>]
+2022-05-26 13:40:19,086:INFO:Serial devices found: [Serial<id=0x15be95734f0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:40:19,086:INFO:AMK list: [<amk.AMK object at 0x0000015BE95731F0>]
+2022-05-26 13:40:19,097:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000015BE9573010>]
+2022-05-26 13:40:19,105:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000015BE9573520>]
+2022-05-26 13:40:32,607:INFO:Opened App
+2022-05-26 13:40:32,609:DEBUG:debug_test : True
+2022-05-26 13:40:32,609:DEBUG:debug_parsing : True
+2022-05-26 13:40:32,609:DEBUG:debug_out_comms : False
+2022-05-26 13:40:32,609:DEBUG:debug_in_comms : False
+2022-05-26 13:40:32,609:DEBUG:debug_resolution : False
+2022-05-26 13:40:32,610:DEBUG:debug_manual_comms : False
+2022-05-26 13:40:32,610:DEBUG:with_gui : True
+2022-05-26 13:40:32,624:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001D27302C790>]
+2022-05-26 13:40:32,625:INFO:Serial devices found: [Serial<id=0x1d27302ddb0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:40:32,625:INFO:AMK list: [<amk.AMK object at 0x000001D27302DAB0>]
+2022-05-26 13:40:32,637:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001D27302C940>]
+2022-05-26 13:40:32,646:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001D27302DDE0>]
+2022-05-26 13:40:47,209:INFO:Opened App
+2022-05-26 13:40:47,212:DEBUG:debug_test : True
+2022-05-26 13:40:47,212:DEBUG:debug_parsing : True
+2022-05-26 13:40:47,212:DEBUG:debug_out_comms : False
+2022-05-26 13:40:47,212:DEBUG:debug_in_comms : False
+2022-05-26 13:40:47,212:DEBUG:debug_resolution : False
+2022-05-26 13:40:47,212:DEBUG:debug_manual_comms : False
+2022-05-26 13:40:47,213:DEBUG:with_gui : True
+2022-05-26 13:40:47,223:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000020823F53040>]
+2022-05-26 13:40:47,223:INFO:Serial devices found: [Serial<id=0x20823f534f0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 13:40:47,223:INFO:AMK list: [<amk.AMK object at 0x0000020823F531F0>]
+2022-05-26 13:40:47,234:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000020823F53010>]
+2022-05-26 13:40:47,242:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000020823F53520>]
+2022-05-26 15:08:25,671:INFO:Opened App
+2022-05-26 15:08:25,675:DEBUG:debug_test : True
+2022-05-26 15:08:25,675:DEBUG:debug_parsing : True
+2022-05-26 15:08:25,675:DEBUG:debug_out_comms : False
+2022-05-26 15:08:25,675:DEBUG:debug_in_comms : False
+2022-05-26 15:08:25,675:DEBUG:debug_resolution : False
+2022-05-26 15:08:25,675:DEBUG:debug_manual_comms : False
+2022-05-26 15:08:25,675:DEBUG:with_gui : True
+2022-05-26 15:08:25,696:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000287C84731C0>]
+2022-05-26 15:08:25,697:INFO:Serial devices found: [Serial<id=0x287c8473670, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-05-26 15:08:25,697:INFO:AMK list: [<amk.AMK object at 0x00000287C8473370>]
+2022-05-26 15:08:25,707:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000287C8473190>]
+2022-05-26 15:08:25,716:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000287C84736A0>]
+2022-06-26 13:03:34,478:INFO:Opened App
+2022-06-26 13:03:34,481:DEBUG:debug_test : True
+2022-06-26 13:03:34,481:DEBUG:debug_parsing : True
+2022-06-26 13:03:34,481:DEBUG:debug_out_comms : False
+2022-06-26 13:03:34,481:DEBUG:debug_in_comms : False
+2022-06-26 13:03:34,481:DEBUG:debug_resolution : False
+2022-06-26 13:03:34,482:DEBUG:debug_manual_comms : False
+2022-06-26 13:03:34,482:DEBUG:with_gui : True
+2022-06-26 13:03:34,494:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001CE7D9E3520>]
+2022-06-26 13:03:34,495:INFO:Serial devices found: [Serial<id=0x1ce7d9e39d0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 13:03:34,495:INFO:AMK list: [<amk.AMK object at 0x000001CE7D9E36D0>]
+2022-06-26 13:03:34,506:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001CE7D9E34F0>]
+2022-06-26 13:03:34,517:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001CE7D9E3A00>]
+2022-06-26 13:03:36,676:ERROR:Uncaught exception
+Traceback (most recent call last):
+  File "c:\Users\Ofir\Documents\GitHub\ArduinoMacroKeyboard\PC Companion App\main.py", line 400, in <module>
+    open_window(close_window)
+TypeError: open_window() takes 0 positional arguments but 1 was given
+2022-06-26 13:05:32,724:INFO:Opened App
+2022-06-26 13:05:32,726:DEBUG:debug_test : True
+2022-06-26 13:05:32,727:DEBUG:debug_parsing : True
+2022-06-26 13:05:32,727:DEBUG:debug_out_comms : False
+2022-06-26 13:05:32,727:DEBUG:debug_in_comms : False
+2022-06-26 13:05:32,727:DEBUG:debug_resolution : False
+2022-06-26 13:05:32,727:DEBUG:debug_manual_comms : False
+2022-06-26 13:05:32,727:DEBUG:with_gui : True
+2022-06-26 13:05:32,738:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000221E3F0CF70>]
+2022-06-26 13:05:32,738:INFO:Serial devices found: [Serial<id=0x221e3f0e1a0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 13:05:32,738:INFO:AMK list: [<amk.AMK object at 0x00000221E3F0DEA0>]
+2022-06-26 13:05:32,749:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000221E3F0C8E0>]
+2022-06-26 13:05:32,757:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000221E3F0E1D0>]
+2022-06-26 13:05:36,148:ERROR:Uncaught exception
+Traceback (most recent call last):
+  File "c:\Users\Ofir\Documents\GitHub\ArduinoMacroKeyboard\PC Companion App\main.py", line 400, in <module>
+    open_window()
+  File "c:\Users\Ofir\Documents\GitHub\ArduinoMacroKeyboard\PC Companion App\main.py", line 378, in open_window
+    parse_message(get_keypad(), arduino_amk)
+NameError: name 'arduino_amk' is not defined
+2022-06-26 13:06:23,386:INFO:Opened App
+2022-06-26 13:06:23,389:DEBUG:debug_test : True
+2022-06-26 13:06:23,389:DEBUG:debug_parsing : True
+2022-06-26 13:06:23,389:DEBUG:debug_out_comms : False
+2022-06-26 13:06:23,389:DEBUG:debug_in_comms : False
+2022-06-26 13:06:23,389:DEBUG:debug_resolution : False
+2022-06-26 13:06:23,390:DEBUG:debug_manual_comms : False
+2022-06-26 13:06:23,390:DEBUG:with_gui : True
+2022-06-26 13:06:23,402:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000015DDB4DCEE0>]
+2022-06-26 13:06:23,403:INFO:Serial devices found: [Serial<id=0x15ddb4de110, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 13:06:23,403:INFO:AMK list: [<amk.AMK object at 0x0000015DDB4DDE10>]
+2022-06-26 13:06:23,412:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000015DDB4DC880>]
+2022-06-26 13:06:23,421:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000015DDB4DE140>]
+2022-06-26 13:10:26,870:INFO:Opened App
+2022-06-26 13:10:26,873:DEBUG:debug_test : False
+2022-06-26 13:10:26,873:DEBUG:debug_parsing : True
+2022-06-26 13:10:26,873:DEBUG:debug_out_comms : False
+2022-06-26 13:10:26,873:DEBUG:debug_in_comms : False
+2022-06-26 13:10:26,874:DEBUG:debug_resolution : False
+2022-06-26 13:10:26,874:DEBUG:debug_manual_comms : False
+2022-06-26 13:10:26,874:DEBUG:with_gui : True
+2022-06-26 13:10:26,888:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001F24455CEB0>]
+2022-06-26 13:10:26,888:INFO:Serial devices found: [Serial<id=0x1f24455e0e0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 13:10:26,888:INFO:AMK list: [<amk.AMK object at 0x000001F24455DDE0>]
+2022-06-26 13:12:54,926:INFO:Opened App
+2022-06-26 13:12:54,928:DEBUG:debug_test : False
+2022-06-26 13:12:54,929:DEBUG:debug_parsing : True
+2022-06-26 13:12:54,929:DEBUG:debug_out_comms : False
+2022-06-26 13:12:54,929:DEBUG:debug_in_comms : False
+2022-06-26 13:12:54,929:DEBUG:debug_resolution : False
+2022-06-26 13:12:54,929:DEBUG:debug_manual_comms : False
+2022-06-26 13:12:54,929:DEBUG:with_gui : True
+2022-06-26 13:12:54,943:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001701E82CEB0>]
+2022-06-26 13:12:54,943:INFO:Serial devices found: [Serial<id=0x1701e82e0e0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 13:12:54,943:INFO:AMK list: [<amk.AMK object at 0x000001701E82DDE0>]
+2022-06-26 13:13:21,912:INFO:Opened App
+2022-06-26 13:13:21,914:DEBUG:debug_test : False
+2022-06-26 13:13:21,914:DEBUG:debug_parsing : True
+2022-06-26 13:13:21,915:DEBUG:debug_out_comms : False
+2022-06-26 13:13:21,915:DEBUG:debug_in_comms : False
+2022-06-26 13:13:21,915:DEBUG:debug_resolution : False
+2022-06-26 13:13:21,915:DEBUG:debug_manual_comms : False
+2022-06-26 13:13:21,915:DEBUG:with_gui : True
+2022-06-26 13:13:21,928:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000022E6FD9CEB0>]
+2022-06-26 13:13:21,929:INFO:Serial devices found: [Serial<id=0x22e6fd9e0e0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 13:13:21,929:INFO:AMK list: [<amk.AMK object at 0x0000022E6FD9DDE0>]
+2022-06-26 13:14:38,067:INFO:Opened App
+2022-06-26 13:14:38,070:DEBUG:debug_test : False
+2022-06-26 13:14:38,070:DEBUG:debug_parsing : True
+2022-06-26 13:14:38,070:DEBUG:debug_out_comms : False
+2022-06-26 13:14:38,070:DEBUG:debug_in_comms : False
+2022-06-26 13:14:38,070:DEBUG:debug_resolution : False
+2022-06-26 13:14:38,070:DEBUG:debug_manual_comms : False
+2022-06-26 13:14:38,070:DEBUG:with_gui : True
+2022-06-26 13:14:38,083:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000027B289ECEB0>]
+2022-06-26 13:14:38,083:INFO:Serial devices found: [Serial<id=0x27b289ee0e0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 13:14:38,084:INFO:AMK list: [<amk.AMK object at 0x0000027B289EDDE0>]
+2022-06-26 13:18:42,683:INFO:Opened App
+2022-06-26 13:18:42,685:DEBUG:debug_test : False
+2022-06-26 13:18:42,685:DEBUG:debug_parsing : True
+2022-06-26 13:18:42,686:DEBUG:debug_out_comms : False
+2022-06-26 13:18:42,686:DEBUG:debug_in_comms : False
+2022-06-26 13:18:42,686:DEBUG:debug_resolution : False
+2022-06-26 13:18:42,686:DEBUG:debug_manual_comms : False
+2022-06-26 13:18:42,686:DEBUG:with_gui : True
+2022-06-26 13:18:42,698:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002955FE0CF70>]
+2022-06-26 13:18:42,698:INFO:Serial devices found: [Serial<id=0x2955fe0e1a0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 13:18:42,698:INFO:AMK list: [<amk.AMK object at 0x000002955FE0DEA0>]
+2022-06-26 13:19:33,401:INFO:Opened App
+2022-06-26 13:19:33,403:DEBUG:debug_test : False
+2022-06-26 13:19:33,403:DEBUG:debug_parsing : True
+2022-06-26 13:19:33,403:DEBUG:debug_out_comms : False
+2022-06-26 13:19:33,404:DEBUG:debug_in_comms : False
+2022-06-26 13:19:33,404:DEBUG:debug_resolution : False
+2022-06-26 13:19:33,404:DEBUG:debug_manual_comms : False
+2022-06-26 13:19:33,404:DEBUG:with_gui : True
+2022-06-26 13:19:33,413:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000020472EFCF70>]
+2022-06-26 13:19:33,414:INFO:Serial devices found: [Serial<id=0x20472efe1a0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 13:19:33,414:INFO:AMK list: [<amk.AMK object at 0x0000020472EFDEA0>]
+2022-06-26 13:19:55,268:INFO:Opened App
+2022-06-26 13:19:55,270:DEBUG:debug_test : False
+2022-06-26 13:19:55,270:DEBUG:debug_parsing : True
+2022-06-26 13:19:55,270:DEBUG:debug_out_comms : False
+2022-06-26 13:19:55,270:DEBUG:debug_in_comms : False
+2022-06-26 13:19:55,270:DEBUG:debug_resolution : False
+2022-06-26 13:19:55,270:DEBUG:debug_manual_comms : False
+2022-06-26 13:19:55,271:DEBUG:with_gui : True
+2022-06-26 13:19:55,280:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002125AEBCF70>]
+2022-06-26 13:19:55,280:INFO:Serial devices found: [Serial<id=0x2125aebe1a0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 13:19:55,280:INFO:AMK list: [<amk.AMK object at 0x000002125AEBDEA0>]
+2022-06-26 13:21:53,736:INFO:Opened App
+2022-06-26 13:21:53,739:DEBUG:debug_test : False
+2022-06-26 13:21:53,739:DEBUG:debug_parsing : True
+2022-06-26 13:21:53,739:DEBUG:debug_out_comms : False
+2022-06-26 13:21:53,739:DEBUG:debug_in_comms : False
+2022-06-26 13:21:53,739:DEBUG:debug_resolution : False
+2022-06-26 13:21:53,739:DEBUG:debug_manual_comms : False
+2022-06-26 13:21:53,739:DEBUG:with_gui : True
+2022-06-26 13:21:53,752:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000026217CC3490>]
+2022-06-26 13:21:53,752:INFO:Serial devices found: [Serial<id=0x26217cc3940, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 13:21:53,752:INFO:AMK list: [<amk.AMK object at 0x0000026217CC3640>]
+2022-06-26 13:22:37,659:INFO:Opened App
+2022-06-26 13:22:37,661:DEBUG:debug_test : False
+2022-06-26 13:22:37,662:DEBUG:debug_parsing : True
+2022-06-26 13:22:37,662:DEBUG:debug_out_comms : False
+2022-06-26 13:22:37,662:DEBUG:debug_in_comms : False
+2022-06-26 13:22:37,662:DEBUG:debug_resolution : False
+2022-06-26 13:22:37,662:DEBUG:debug_manual_comms : False
+2022-06-26 13:22:37,662:DEBUG:with_gui : True
+2022-06-26 13:22:37,675:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000016ABF3E3490>]
+2022-06-26 13:22:37,675:INFO:Serial devices found: [Serial<id=0x16abf3e3940, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 13:22:37,675:INFO:AMK list: [<amk.AMK object at 0x0000016ABF3E3640>]
+2022-06-26 13:24:35,842:INFO:Opened App
+2022-06-26 13:24:35,844:DEBUG:debug_test : False
+2022-06-26 13:24:35,845:DEBUG:debug_parsing : True
+2022-06-26 13:24:35,845:DEBUG:debug_out_comms : False
+2022-06-26 13:24:35,845:DEBUG:debug_in_comms : False
+2022-06-26 13:24:35,845:DEBUG:debug_resolution : False
+2022-06-26 13:24:35,845:DEBUG:debug_manual_comms : False
+2022-06-26 13:24:35,845:DEBUG:with_gui : True
+2022-06-26 13:24:35,858:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001336986CEB0>]
+2022-06-26 13:24:35,859:INFO:Serial devices found: [Serial<id=0x1336986e0e0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 13:24:35,859:INFO:AMK list: [<amk.AMK object at 0x000001336986DDE0>]
+2022-06-26 13:24:38,089:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001336986E0B0>]
+2022-06-26 13:26:12,081:INFO:Opened App
+2022-06-26 13:26:12,084:DEBUG:debug_test : False
+2022-06-26 13:26:12,084:DEBUG:debug_parsing : True
+2022-06-26 13:26:12,084:DEBUG:debug_out_comms : False
+2022-06-26 13:26:12,084:DEBUG:debug_in_comms : False
+2022-06-26 13:26:12,085:DEBUG:debug_resolution : False
+2022-06-26 13:26:12,085:DEBUG:debug_manual_comms : False
+2022-06-26 13:26:12,085:DEBUG:with_gui : True
+2022-06-26 13:26:12,100:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001E657B933A0>]
+2022-06-26 13:26:12,100:INFO:Serial devices found: [Serial<id=0x1e657b93850, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 13:26:12,100:INFO:AMK list: [<amk.AMK object at 0x000001E657B93550>]
+2022-06-26 13:26:43,976:INFO:Opened App
+2022-06-26 13:26:43,979:DEBUG:debug_test : False
+2022-06-26 13:26:43,979:DEBUG:debug_parsing : True
+2022-06-26 13:26:43,979:DEBUG:debug_out_comms : False
+2022-06-26 13:26:43,979:DEBUG:debug_in_comms : False
+2022-06-26 13:26:43,979:DEBUG:debug_resolution : False
+2022-06-26 13:26:43,979:DEBUG:debug_manual_comms : False
+2022-06-26 13:26:43,979:DEBUG:with_gui : True
+2022-06-26 13:26:43,991:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000131DB02CEB0>]
+2022-06-26 13:26:43,991:INFO:Serial devices found: [Serial<id=0x131db02e0e0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 13:26:43,991:INFO:AMK list: [<amk.AMK object at 0x00000131DB02DDE0>]
+2022-06-26 13:26:49,987:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000131DB02E200>]
+2022-06-26 13:29:51,393:INFO:Opened App
+2022-06-26 13:29:51,396:DEBUG:debug_test : False
+2022-06-26 13:29:51,396:DEBUG:debug_parsing : True
+2022-06-26 13:29:51,397:DEBUG:debug_out_comms : False
+2022-06-26 13:29:51,397:DEBUG:debug_in_comms : False
+2022-06-26 13:29:51,397:DEBUG:debug_resolution : False
+2022-06-26 13:29:51,397:DEBUG:debug_manual_comms : False
+2022-06-26 13:29:51,397:DEBUG:with_gui : True
+2022-06-26 13:29:51,408:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001BD779F33D0>]
+2022-06-26 13:29:51,408:INFO:Serial devices found: [Serial<id=0x1bd779f3880, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 13:29:51,408:INFO:AMK list: [<amk.AMK object at 0x000001BD779F3580>]
+2022-06-26 13:29:53,679:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001BD779F37F0>]
+2022-06-26 13:32:19,454:INFO:Opened App
+2022-06-26 13:32:19,457:DEBUG:debug_test : False
+2022-06-26 13:32:19,457:DEBUG:debug_parsing : True
+2022-06-26 13:32:19,457:DEBUG:debug_out_comms : False
+2022-06-26 13:32:19,457:DEBUG:debug_in_comms : False
+2022-06-26 13:32:19,457:DEBUG:debug_resolution : False
+2022-06-26 13:32:19,457:DEBUG:debug_manual_comms : False
+2022-06-26 13:32:19,457:DEBUG:with_gui : True
+2022-06-26 13:32:19,468:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002AA588E3400>]
+2022-06-26 13:32:19,468:INFO:Serial devices found: [Serial<id=0x2aa588e38b0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 13:32:19,468:INFO:AMK list: [<amk.AMK object at 0x000002AA588E35B0>]
+2022-06-26 13:32:21,711:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002AA588E37C0>]
+2022-06-26 14:23:15,271:INFO:Opened App
+2022-06-26 14:23:15,274:DEBUG:debug_test : False
+2022-06-26 14:23:15,274:DEBUG:debug_parsing : True
+2022-06-26 14:23:15,274:DEBUG:debug_out_comms : False
+2022-06-26 14:23:15,274:DEBUG:debug_in_comms : False
+2022-06-26 14:23:15,274:DEBUG:debug_resolution : False
+2022-06-26 14:23:15,275:DEBUG:debug_manual_comms : False
+2022-06-26 14:23:15,275:DEBUG:with_gui : True
+2022-06-26 14:23:15,289:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000020389B73370>]
+2022-06-26 14:23:15,289:INFO:Serial devices found: [Serial<id=0x20389b73820, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 14:23:15,289:INFO:AMK list: [<amk.AMK object at 0x0000020389B73520>]
+2022-06-26 14:23:17,542:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000020389B73730>]
+2022-06-26 14:24:42,753:INFO:Opened App
+2022-06-26 14:24:42,755:DEBUG:debug_test : False
+2022-06-26 14:24:42,756:DEBUG:debug_parsing : True
+2022-06-26 14:24:42,756:DEBUG:debug_out_comms : False
+2022-06-26 14:24:42,756:DEBUG:debug_in_comms : False
+2022-06-26 14:24:42,756:DEBUG:debug_resolution : False
+2022-06-26 14:24:42,756:DEBUG:debug_manual_comms : False
+2022-06-26 14:24:42,756:DEBUG:with_gui : True
+2022-06-26 14:24:42,765:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002BA6324CE20>]
+2022-06-26 14:24:42,765:INFO:Serial devices found: [Serial<id=0x2ba6324e020, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 14:24:42,765:INFO:AMK list: [<amk.AMK object at 0x000002BA6324DD20>]
+2022-06-26 14:24:45,021:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002BA6324DFF0>]
+2022-06-26 14:26:14,731:INFO:Opened App
+2022-06-26 14:26:14,734:DEBUG:debug_test : False
+2022-06-26 14:26:14,734:DEBUG:debug_parsing : True
+2022-06-26 14:26:14,735:DEBUG:debug_out_comms : False
+2022-06-26 14:26:14,735:DEBUG:debug_in_comms : False
+2022-06-26 14:26:14,735:DEBUG:debug_resolution : False
+2022-06-26 14:26:14,735:DEBUG:debug_manual_comms : False
+2022-06-26 14:26:14,735:DEBUG:with_gui : True
+2022-06-26 14:26:14,747:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000025CBFA6CE20>]
+2022-06-26 14:26:14,747:INFO:Serial devices found: [Serial<id=0x25cbfa6e020, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 14:26:14,747:INFO:AMK list: [<amk.AMK object at 0x0000025CBFA6DD20>]
+2022-06-26 14:26:17,012:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000025CBFA6E1D0>]
+2022-06-26 15:01:58,527:INFO:Opened App
+2022-06-26 15:01:58,528:DEBUG:debug_test : False
+2022-06-26 15:01:58,529:DEBUG:debug_parsing : True
+2022-06-26 15:01:58,529:DEBUG:debug_out_comms : False
+2022-06-26 15:01:58,529:DEBUG:debug_in_comms : False
+2022-06-26 15:01:58,529:DEBUG:debug_resolution : False
+2022-06-26 15:01:58,529:DEBUG:debug_manual_comms : False
+2022-06-26 15:01:58,529:DEBUG:with_gui : True
+2022-06-26 15:02:16,897:INFO:Opened App
+2022-06-26 15:02:16,900:DEBUG:debug_test : True
+2022-06-26 15:02:16,900:DEBUG:debug_parsing : True
+2022-06-26 15:02:16,901:DEBUG:debug_out_comms : False
+2022-06-26 15:02:16,901:DEBUG:debug_in_comms : False
+2022-06-26 15:02:16,901:DEBUG:debug_resolution : False
+2022-06-26 15:02:16,901:DEBUG:debug_manual_comms : False
+2022-06-26 15:02:16,901:DEBUG:with_gui : True
+2022-06-26 15:02:16,994:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000230EBC1A1A0>]
+2022-06-26 15:05:52,659:INFO:Opened App
+2022-06-26 15:05:52,661:DEBUG:debug_test : True
+2022-06-26 15:05:52,661:DEBUG:debug_parsing : True
+2022-06-26 15:05:52,662:DEBUG:debug_out_comms : False
+2022-06-26 15:05:52,662:DEBUG:debug_in_comms : False
+2022-06-26 15:05:52,662:DEBUG:debug_resolution : False
+2022-06-26 15:05:52,662:DEBUG:debug_manual_comms : False
+2022-06-26 15:05:52,662:DEBUG:with_gui : True
+2022-06-26 15:05:52,757:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001B5B7363A90>]
+2022-06-26 15:07:01,217:INFO:Opened App
+2022-06-26 15:07:01,220:DEBUG:debug_test : True
+2022-06-26 15:07:01,220:DEBUG:debug_parsing : True
+2022-06-26 15:07:01,220:DEBUG:debug_out_comms : False
+2022-06-26 15:07:01,220:DEBUG:debug_in_comms : False
+2022-06-26 15:07:01,220:DEBUG:debug_resolution : False
+2022-06-26 15:07:01,221:DEBUG:debug_manual_comms : False
+2022-06-26 15:07:01,221:DEBUG:with_gui : True
+2022-06-26 15:07:01,322:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000018F8D7D39D0>]
+2022-06-26 15:07:26,262:INFO:Opened App
+2022-06-26 15:07:26,265:DEBUG:debug_test : True
+2022-06-26 15:07:26,265:DEBUG:debug_parsing : True
+2022-06-26 15:07:26,265:DEBUG:debug_out_comms : False
+2022-06-26 15:07:26,265:DEBUG:debug_in_comms : False
+2022-06-26 15:07:26,265:DEBUG:debug_resolution : False
+2022-06-26 15:07:26,266:DEBUG:debug_manual_comms : False
+2022-06-26 15:07:26,266:DEBUG:with_gui : True
+2022-06-26 15:07:26,359:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002050ED4A230>]
+2022-06-26 15:07:26,394:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002050ED7A8C0>]
+2022-06-26 15:09:57,028:INFO:Opened App
+2022-06-26 15:09:57,031:DEBUG:debug_test : True
+2022-06-26 15:09:57,031:DEBUG:debug_parsing : True
+2022-06-26 15:09:57,031:DEBUG:debug_out_comms : False
+2022-06-26 15:09:57,032:DEBUG:debug_in_comms : False
+2022-06-26 15:09:57,032:DEBUG:debug_resolution : False
+2022-06-26 15:09:57,032:DEBUG:debug_manual_comms : False
+2022-06-26 15:09:57,032:DEBUG:with_gui : True
+2022-06-26 15:09:57,131:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002AC1BBF3AF0>]
+2022-06-26 15:11:49,143:INFO:Opened App
+2022-06-26 15:11:49,145:DEBUG:debug_test : True
+2022-06-26 15:11:49,145:DEBUG:debug_parsing : True
+2022-06-26 15:11:49,145:DEBUG:debug_out_comms : False
+2022-06-26 15:11:49,145:DEBUG:debug_in_comms : False
+2022-06-26 15:11:49,145:DEBUG:debug_resolution : False
+2022-06-26 15:11:49,145:DEBUG:debug_manual_comms : False
+2022-06-26 15:11:49,145:DEBUG:with_gui : True
+2022-06-26 15:11:49,267:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000024411573AF0>]
+2022-06-26 15:12:36,859:INFO:Opened App
+2022-06-26 15:12:36,861:DEBUG:debug_test : True
+2022-06-26 15:12:36,861:DEBUG:debug_parsing : True
+2022-06-26 15:12:36,862:DEBUG:debug_out_comms : False
+2022-06-26 15:12:36,862:DEBUG:debug_in_comms : False
+2022-06-26 15:12:36,862:DEBUG:debug_resolution : False
+2022-06-26 15:12:36,862:DEBUG:debug_manual_comms : False
+2022-06-26 15:12:36,862:DEBUG:with_gui : True
+2022-06-26 15:12:36,978:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002419A903A60>]
+2022-06-26 15:12:37,026:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002419A4E93F0>]
+2022-06-26 15:13:03,505:INFO:Opened App
+2022-06-26 15:13:03,507:DEBUG:debug_test : True
+2022-06-26 15:13:03,508:DEBUG:debug_parsing : True
+2022-06-26 15:13:03,508:DEBUG:debug_out_comms : False
+2022-06-26 15:13:03,508:DEBUG:debug_in_comms : False
+2022-06-26 15:13:03,508:DEBUG:debug_resolution : False
+2022-06-26 15:13:03,508:DEBUG:debug_manual_comms : False
+2022-06-26 15:13:03,508:DEBUG:with_gui : True
+2022-06-26 15:13:03,624:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000014522FD3AC0>]
+2022-06-26 15:13:03,664:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000014522BB93F0>]
+2022-06-26 15:15:35,721:INFO:Opened App
+2022-06-26 15:15:35,722:DEBUG:debug_test : True
+2022-06-26 15:15:35,722:DEBUG:debug_parsing : True
+2022-06-26 15:15:35,723:DEBUG:debug_out_comms : False
+2022-06-26 15:15:35,723:DEBUG:debug_in_comms : False
+2022-06-26 15:15:35,723:DEBUG:debug_resolution : False
+2022-06-26 15:15:35,723:DEBUG:debug_manual_comms : False
+2022-06-26 15:15:35,723:DEBUG:with_gui : True
+2022-06-26 15:15:35,817:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000023375663AF0>]
+2022-06-26 15:28:42,493:INFO:Opened App
+2022-06-26 15:28:42,496:DEBUG:debug_test : True
+2022-06-26 15:28:42,496:DEBUG:debug_parsing : True
+2022-06-26 15:28:42,496:DEBUG:debug_out_comms : False
+2022-06-26 15:28:42,496:DEBUG:debug_in_comms : False
+2022-06-26 15:28:42,496:DEBUG:debug_resolution : False
+2022-06-26 15:28:42,496:DEBUG:debug_manual_comms : False
+2022-06-26 15:28:42,496:DEBUG:with_gui : True
+2022-06-26 15:28:42,589:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001D32FC13A00>]
+2022-06-26 15:37:44,040:INFO:Opened App
+2022-06-26 15:37:44,044:DEBUG:debug_test : True
+2022-06-26 15:37:44,044:DEBUG:debug_parsing : True
+2022-06-26 15:37:44,044:DEBUG:debug_out_comms : False
+2022-06-26 15:37:44,044:DEBUG:debug_in_comms : False
+2022-06-26 15:37:44,044:DEBUG:debug_resolution : False
+2022-06-26 15:37:44,044:DEBUG:debug_manual_comms : False
+2022-06-26 15:37:44,044:DEBUG:with_gui : True
+2022-06-26 15:37:44,168:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000167576D3820>]
+2022-06-26 16:03:00,205:INFO:Opened App
+2022-06-26 16:03:00,207:DEBUG:debug_test : True
+2022-06-26 16:03:00,207:DEBUG:debug_parsing : True
+2022-06-26 16:03:00,208:DEBUG:debug_out_comms : False
+2022-06-26 16:03:00,208:DEBUG:debug_in_comms : False
+2022-06-26 16:03:00,208:DEBUG:debug_resolution : False
+2022-06-26 16:03:00,208:DEBUG:debug_manual_comms : False
+2022-06-26 16:03:00,208:DEBUG:with_gui : True
+2022-06-26 16:03:00,322:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001A3885A3850>]
+2022-06-26 16:03:41,993:INFO:Opened App
+2022-06-26 16:03:41,995:DEBUG:debug_test : True
+2022-06-26 16:03:41,995:DEBUG:debug_parsing : True
+2022-06-26 16:03:41,995:DEBUG:debug_out_comms : False
+2022-06-26 16:03:41,995:DEBUG:debug_in_comms : False
+2022-06-26 16:03:41,995:DEBUG:debug_resolution : False
+2022-06-26 16:03:41,996:DEBUG:debug_manual_comms : False
+2022-06-26 16:03:41,996:DEBUG:with_gui : True
+2022-06-26 16:03:42,087:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000256637D3850>]
+2022-06-26 16:03:44,467:INFO:Looking for open serial ports:
+2022-06-26 16:03:44,477:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000256633B94B0>]
+2022-06-26 16:03:44,478:INFO:Serial devices found: [Serial<id=0x256633b9510, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:03:44,478:WARNING:Didn't find any open serial port
+2022-06-26 16:03:44,487:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000256633B94B0>]
+2022-06-26 16:03:44,487:INFO:Serial devices found: [Serial<id=0x256633b9480, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:03:44,487:WARNING:comport Arduino Micro (COM4) not found in serial_ports
+2022-06-26 16:03:44,497:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000256633B94B0>]
+2022-06-26 16:03:44,497:INFO:Serial devices found: [Serial<id=0x256633b9510, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:03:44,497:WARNING:comport Arduino Micro (COM4) not found in serial_ports
+2022-06-26 16:05:12,590:INFO:Opened App
+2022-06-26 16:05:12,592:DEBUG:debug_test : True
+2022-06-26 16:05:12,593:DEBUG:debug_parsing : True
+2022-06-26 16:05:12,593:DEBUG:debug_out_comms : False
+2022-06-26 16:05:12,593:DEBUG:debug_in_comms : False
+2022-06-26 16:05:12,593:DEBUG:debug_resolution : False
+2022-06-26 16:05:12,593:DEBUG:debug_manual_comms : False
+2022-06-26 16:05:12,593:DEBUG:with_gui : True
+2022-06-26 16:05:12,695:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000026738763880>]
+2022-06-26 16:05:15,390:INFO:Looking for open serial ports:
+2022-06-26 16:05:15,397:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000267383494B0>]
+2022-06-26 16:05:15,397:INFO:Serial devices found: [Serial<id=0x26738349510, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:05:15,397:WARNING:Didn't find any open serial port
+2022-06-26 16:05:15,405:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000267383494B0>]
+2022-06-26 16:05:15,405:INFO:Serial devices found: [Serial<id=0x26738349480, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:05:15,405:WARNING:comport Arduino Micro (COM4) not found in serial_ports
+2022-06-26 16:05:15,411:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000267383494B0>]
+2022-06-26 16:05:15,411:INFO:Serial devices found: [Serial<id=0x26738349510, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:05:15,411:WARNING:comport Arduino Micro (COM4) not found in serial_ports
+2022-06-26 16:07:45,418:INFO:Opened App
+2022-06-26 16:07:45,420:DEBUG:debug_test : True
+2022-06-26 16:07:45,420:DEBUG:debug_parsing : True
+2022-06-26 16:07:45,420:DEBUG:debug_out_comms : False
+2022-06-26 16:07:45,420:DEBUG:debug_in_comms : False
+2022-06-26 16:07:45,420:DEBUG:debug_resolution : False
+2022-06-26 16:07:45,421:DEBUG:debug_manual_comms : False
+2022-06-26 16:07:45,421:DEBUG:with_gui : True
+2022-06-26 16:07:45,517:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000012D50E23880>]
+2022-06-26 16:07:47,693:INFO:Looking for open serial ports:
+2022-06-26 16:07:47,703:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000012D50E094B0>]
+2022-06-26 16:07:47,703:INFO:Serial devices found: [Serial<id=0x12d50e09510, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:07:47,703:WARNING:Didn't find any open serial port
+2022-06-26 16:07:47,711:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000012D50E094B0>]
+2022-06-26 16:07:47,711:INFO:Serial devices found: [Serial<id=0x12d50e09480, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:07:47,711:WARNING:comport Arduino Micro (COM4) not found in serial_ports
+2022-06-26 16:07:47,719:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000012D50E094B0>]
+2022-06-26 16:07:47,719:INFO:Serial devices found: [Serial<id=0x12d50e09510, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:07:47,719:WARNING:comport Arduino Micro (COM4) not found in serial_ports
+2022-06-26 16:09:02,286:INFO:Opened App
+2022-06-26 16:09:02,288:DEBUG:debug_test : True
+2022-06-26 16:09:02,288:DEBUG:debug_parsing : True
+2022-06-26 16:09:02,289:DEBUG:debug_out_comms : False
+2022-06-26 16:09:02,289:DEBUG:debug_in_comms : False
+2022-06-26 16:09:02,289:DEBUG:debug_resolution : False
+2022-06-26 16:09:02,289:DEBUG:debug_manual_comms : False
+2022-06-26 16:09:02,289:DEBUG:with_gui : True
+2022-06-26 16:09:02,404:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000028EE26C3880>]
+2022-06-26 16:09:04,731:INFO:Looking for open serial ports:
+2022-06-26 16:09:04,742:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000028EE22A94B0>]
+2022-06-26 16:09:04,742:INFO:Serial devices found: [Serial<id=0x28ee22a9510, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:09:04,742:WARNING:Didn't find any open serial port
+2022-06-26 16:09:04,749:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000028EE22A94B0>]
+2022-06-26 16:09:04,749:INFO:Serial devices found: [Serial<id=0x28ee22a9480, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:09:04,749:WARNING:comport Arduino Micro (COM4) not found in serial_ports
+2022-06-26 16:09:04,756:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000028EE22A94B0>]
+2022-06-26 16:09:04,756:INFO:Serial devices found: [Serial<id=0x28ee22a9510, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:09:04,756:WARNING:comport Arduino Micro (COM4) not found in serial_ports
+2022-06-26 16:12:07,940:INFO:Opened App
+2022-06-26 16:12:07,943:DEBUG:debug_test : True
+2022-06-26 16:12:07,943:DEBUG:debug_parsing : True
+2022-06-26 16:12:07,943:DEBUG:debug_out_comms : False
+2022-06-26 16:12:07,943:DEBUG:debug_in_comms : False
+2022-06-26 16:12:07,943:DEBUG:debug_resolution : False
+2022-06-26 16:12:07,943:DEBUG:debug_manual_comms : False
+2022-06-26 16:12:07,944:DEBUG:with_gui : True
+2022-06-26 16:12:08,041:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000018D73143880>]
+2022-06-26 16:12:10,295:INFO:Looking for open serial ports:
+2022-06-26 16:12:10,304:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000018D72D294B0>]
+2022-06-26 16:12:10,304:INFO:Serial devices found: [Serial<id=0x18d72d29510, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:12:10,304:WARNING:Didn't find any open serial port
+2022-06-26 16:12:10,313:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000018D72D294B0>]
+2022-06-26 16:12:10,313:INFO:Serial devices found: [Serial<id=0x18d72d29480, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:12:10,313:WARNING:comport COM4 - Arduino Micro (COM4) not found in serial_ports
+2022-06-26 16:12:10,322:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000018D72D294B0>]
+2022-06-26 16:12:10,322:INFO:Serial devices found: [Serial<id=0x18d72d29510, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:12:10,322:WARNING:comport COM4 - Arduino Micro (COM4) not found in serial_ports
+2022-06-26 16:13:25,120:INFO:Opened App
+2022-06-26 16:13:25,123:DEBUG:debug_test : True
+2022-06-26 16:13:25,123:DEBUG:debug_parsing : True
+2022-06-26 16:13:25,123:DEBUG:debug_out_comms : False
+2022-06-26 16:13:25,124:DEBUG:debug_in_comms : False
+2022-06-26 16:13:25,124:DEBUG:debug_resolution : False
+2022-06-26 16:13:25,124:DEBUG:debug_manual_comms : False
+2022-06-26 16:13:25,124:DEBUG:with_gui : True
+2022-06-26 16:13:25,223:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001D5E7313880>]
+2022-06-26 16:13:27,727:INFO:Looking for open serial ports:
+2022-06-26 16:13:27,737:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001D5E72F94B0>]
+2022-06-26 16:13:27,737:INFO:Serial devices found: [Serial<id=0x1d5e72f9510, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:13:27,737:WARNING:Didn't find any open serial port
+2022-06-26 16:13:27,746:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001D5E72F94B0>]
+2022-06-26 16:13:27,746:INFO:Serial devices found: [Serial<id=0x1d5e72f9480, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:16:57,423:INFO:Opened App
+2022-06-26 16:16:57,425:DEBUG:debug_test : True
+2022-06-26 16:16:57,425:DEBUG:debug_parsing : True
+2022-06-26 16:16:57,426:DEBUG:debug_out_comms : False
+2022-06-26 16:16:57,426:DEBUG:debug_in_comms : False
+2022-06-26 16:16:57,426:DEBUG:debug_resolution : False
+2022-06-26 16:16:57,426:DEBUG:debug_manual_comms : False
+2022-06-26 16:16:57,426:DEBUG:with_gui : True
+2022-06-26 16:16:57,538:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000013D51ECE200>]
+2022-06-26 16:16:59,705:INFO:Looking for open serial ports:
+2022-06-26 16:16:59,714:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000013D51EFA980>]
+2022-06-26 16:16:59,715:INFO:Serial devices found: [Serial<id=0x13d51efa9e0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:16:59,715:WARNING:Didn't find any open serial port
+2022-06-26 16:16:59,721:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000013D51EFA980>]
+2022-06-26 16:16:59,721:INFO:Serial devices found: [Serial<id=0x13d51efa920, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:16:59,724:INFO:successfully opened serial port at: COM4
+2022-06-26 16:16:59,724:INFO:querying arduino. tries left:3
+2022-06-26 16:19:46,649:INFO:Opened App
+2022-06-26 16:19:46,652:DEBUG:debug_test : True
+2022-06-26 16:19:46,652:DEBUG:debug_parsing : True
+2022-06-26 16:19:46,652:DEBUG:debug_out_comms : False
+2022-06-26 16:19:46,652:DEBUG:debug_in_comms : False
+2022-06-26 16:19:46,652:DEBUG:debug_resolution : False
+2022-06-26 16:19:46,652:DEBUG:debug_manual_comms : False
+2022-06-26 16:19:46,652:DEBUG:with_gui : True
+2022-06-26 16:19:46,750:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000023A2C17E170>]
+2022-06-26 16:19:49,018:INFO:Looking for open serial ports:
+2022-06-26 16:19:49,028:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000023A2C1AA8F0>]
+2022-06-26 16:19:49,028:INFO:Serial devices found: [Serial<id=0x23a2c1aa950, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:19:49,028:WARNING:Didn't find any open serial port
+2022-06-26 16:19:49,038:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000023A2C1AA8F0>]
+2022-06-26 16:19:49,038:INFO:Serial devices found: [Serial<id=0x23a2c1aa890, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:19:49,041:INFO:successfully opened serial port at: COM4
+2022-06-26 16:19:49,041:INFO:querying arduino. tries left:3
+2022-06-26 16:27:29,440:INFO:Opened App
+2022-06-26 16:27:29,442:DEBUG:debug_test : True
+2022-06-26 16:27:29,443:DEBUG:debug_parsing : True
+2022-06-26 16:27:29,443:DEBUG:debug_out_comms : False
+2022-06-26 16:27:29,443:DEBUG:debug_in_comms : False
+2022-06-26 16:27:29,443:DEBUG:debug_resolution : False
+2022-06-26 16:27:29,443:DEBUG:debug_manual_comms : False
+2022-06-26 16:27:29,443:DEBUG:with_gui : True
+2022-06-26 16:27:29,545:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000177D411E170>]
+2022-06-26 16:27:31,553:INFO:Looking for open serial ports:
+2022-06-26 16:27:31,565:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000177D414A8F0>]
+2022-06-26 16:27:31,566:INFO:Serial devices found: [Serial<id=0x177d414a950, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:27:31,566:WARNING:Didn't find any open serial port
+2022-06-26 16:27:31,574:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000177D414A8F0>]
+2022-06-26 16:27:31,574:INFO:Serial devices found: [Serial<id=0x177d414a890, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:27:31,577:INFO:successfully opened serial port at: COM4
+2022-06-26 16:27:31,577:INFO:querying arduino. tries left:3
+2022-06-26 16:27:32,645:INFO:AMK ready!
+2022-06-26 16:33:03,143:INFO:Closing AMKAPP
+2022-06-26 16:33:03,381:INFO:Opened App
+2022-06-26 16:33:03,384:DEBUG:debug_test : True
+2022-06-26 16:33:03,384:DEBUG:debug_parsing : True
+2022-06-26 16:33:03,384:DEBUG:debug_out_comms : False
+2022-06-26 16:33:03,384:DEBUG:debug_in_comms : False
+2022-06-26 16:33:03,385:DEBUG:debug_resolution : False
+2022-06-26 16:33:03,385:DEBUG:debug_manual_comms : False
+2022-06-26 16:33:03,385:DEBUG:with_gui : True
+2022-06-26 16:33:03,480:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000020963023CA0>]
+2022-06-26 16:33:05,367:INFO:Looking for open serial ports:
+2022-06-26 16:33:05,377:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000209630692D0>]
+2022-06-26 16:33:05,377:INFO:Serial devices found: [Serial<id=0x20963069270, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:33:05,377:WARNING:Didn't find any open serial port
+2022-06-26 16:33:05,385:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000209630692D0>]
+2022-06-26 16:33:05,386:INFO:Serial devices found: [Serial<id=0x20963069330, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:33:05,388:INFO:successfully opened serial port at: COM4
+2022-06-26 16:33:05,389:INFO:querying arduino. tries left:3
+2022-06-26 16:33:06,455:INFO:Arduino: AMK ready!
+2022-06-26 16:33:07,521:INFO:successfully switched to device: Yo Mama
+2022-06-26 16:43:44,493:INFO:Closing AMKAPP
+2022-06-26 16:43:44,792:INFO:Starting AMK companion app
+2022-06-26 16:43:44,793:DEBUG:debug_test : True
+2022-06-26 16:43:44,793:DEBUG:debug_parsing : False
+2022-06-26 16:43:44,793:DEBUG:debug_out_comms : False
+2022-06-26 16:43:44,793:DEBUG:debug_in_comms : False
+2022-06-26 16:43:44,794:DEBUG:debug_resolution : False
+2022-06-26 16:43:44,794:DEBUG:debug_manual_comms : False
+2022-06-26 16:43:44,794:DEBUG:with_gui : True
+2022-06-26 16:43:44,907:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002295FFE3BE0>]
+2022-06-26 16:43:44,907:INFO:Loading GUI
+2022-06-26 16:43:47,407:INFO:Looking for open serial ports:
+2022-06-26 16:43:47,415:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002295FBC94B0>]
+2022-06-26 16:43:47,415:INFO:Serial devices found: [Serial<id=0x2295fbc9510, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:43:47,415:WARNING:Didn't find any open serial port
+2022-06-26 16:43:47,422:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002295FBC94B0>]
+2022-06-26 16:43:47,422:INFO:Serial devices found: [Serial<id=0x2295fbc9480, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:43:47,425:INFO:successfully opened serial port at: COM4
+2022-06-26 16:43:47,426:INFO:querying arduino. tries left:3
+2022-06-26 16:43:48,489:INFO:Arduino: AMK device ready!
+2022-06-26 16:43:49,564:INFO:successfully switched to device: Yo Mama
+2022-06-26 16:44:42,951:INFO:Closing AMKAPP
+2022-06-26 16:44:43,299:INFO:Starting AMK companion app
+2022-06-26 16:44:43,302:DEBUG:debug_test : True
+2022-06-26 16:44:43,302:DEBUG:debug_parsing : False
+2022-06-26 16:44:43,302:DEBUG:debug_out_comms : False
+2022-06-26 16:44:43,302:DEBUG:debug_in_comms : False
+2022-06-26 16:44:43,302:DEBUG:debug_resolution : False
+2022-06-26 16:44:43,302:DEBUG:debug_manual_comms : False
+2022-06-26 16:44:43,302:DEBUG:with_gui : True
+2022-06-26 16:44:43,397:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000019A01C43BE0>]
+2022-06-26 16:44:43,398:INFO:Loading GUI
+2022-06-26 16:44:45,573:INFO:Looking for open serial ports:
+2022-06-26 16:44:45,581:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000019A018294B0>]
+2022-06-26 16:44:45,581:INFO:Serial devices found: [Serial<id=0x19a01829510, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:44:45,581:WARNING:Didn't find any open serial port
+2022-06-26 16:44:45,587:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000019A018294B0>]
+2022-06-26 16:44:45,587:INFO:Serial devices found: [Serial<id=0x19a01829480, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:44:45,590:INFO:successfully opened serial port at: COM4
+2022-06-26 16:44:45,591:INFO:querying arduino. tries left:3
+2022-06-26 16:44:46,656:INFO:Arduino: AMK device ready!
+2022-06-26 16:44:47,733:INFO:successfully switched to device: Yo Mama
+2022-06-26 16:46:53,897:INFO:Closing AMKAPP
+2022-06-26 16:46:55,444:INFO:Starting AMK companion app
+2022-06-26 16:46:55,446:DEBUG:debug_test : True
+2022-06-26 16:46:55,446:DEBUG:debug_parsing : False
+2022-06-26 16:46:55,446:DEBUG:debug_out_comms : False
+2022-06-26 16:46:55,446:DEBUG:debug_in_comms : False
+2022-06-26 16:46:55,446:DEBUG:debug_resolution : False
+2022-06-26 16:46:55,447:DEBUG:debug_manual_comms : False
+2022-06-26 16:46:55,447:DEBUG:with_gui : True
+2022-06-26 16:46:55,548:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001864CE43BE0>]
+2022-06-26 16:46:55,548:INFO:Loading GUI
+2022-06-26 16:46:57,439:INFO:Looking for open serial ports:
+2022-06-26 16:46:57,446:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001864CA294B0>]
+2022-06-26 16:46:57,446:INFO:Serial devices found: [Serial<id=0x1864ca29510, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:46:57,446:WARNING:Didn't find any open serial port
+2022-06-26 16:46:57,454:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001864CA294B0>]
+2022-06-26 16:46:57,454:INFO:Serial devices found: [Serial<id=0x1864ca29480, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 16:46:57,457:INFO:successfully opened serial port at: COM4
+2022-06-26 16:46:57,458:INFO:querying arduino. tries left:3
+2022-06-26 16:46:58,528:INFO:Arduino: AMK device ready!
+2022-06-26 16:46:59,607:INFO:successfully switched to device: Yo Mama
+2022-06-26 17:15:21,036:INFO:Closing AMKAPP
+2022-06-26 17:50:08,492:INFO:Starting AMK companion app
+2022-06-26 17:50:08,492:DEBUG:Debug parameters:
+2022-06-26 17:50:08,492:DEBUG:debug_test : False
+2022-06-26 17:50:08,492:DEBUG:debug_parsing : False
+2022-06-26 17:50:08,492:DEBUG:debug_out_comms : False
+2022-06-26 17:50:08,492:DEBUG:debug_in_comms : False
+2022-06-26 17:50:08,492:DEBUG:debug_resolution : False
+2022-06-26 17:50:08,492:DEBUG:manual_comms : False
+2022-06-26 17:50:08,492:DEBUG:with_gui : True
+2022-06-26 17:50:08,583:INFO:Scanning for Arduino COM devices...
+2022-06-26 17:50:08,594:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000221DED87670>]
+2022-06-26 17:50:08,595:INFO:Loading GUI
+2022-06-26 17:50:55,283:INFO:Starting AMK companion app
+2022-06-26 17:50:55,283:DEBUG:Debug parameters:
+2022-06-26 17:50:55,283:DEBUG:debug_test : False
+2022-06-26 17:50:55,283:DEBUG:debug_parsing : False
+2022-06-26 17:50:55,283:DEBUG:debug_out_comms : False
+2022-06-26 17:50:55,283:DEBUG:debug_in_comms : False
+2022-06-26 17:50:55,283:DEBUG:debug_resolution : False
+2022-06-26 17:50:55,283:DEBUG:manual_comms : False
+2022-06-26 17:50:55,283:DEBUG:with_gui : True
+2022-06-26 17:50:55,356:INFO:Scanning for Arduino COM devices...
+2022-06-26 17:50:55,365:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001BF8C8DDDE0>]
+2022-06-26 17:50:55,365:INFO:Loading GUI
+2022-06-26 17:51:41,589:INFO:Starting AMK companion app
+2022-06-26 17:51:41,589:DEBUG:Debug parameters:
+2022-06-26 17:51:41,589:DEBUG:debug_test : False
+2022-06-26 17:51:41,589:DEBUG:debug_parsing : False
+2022-06-26 17:51:41,589:DEBUG:debug_out_comms : False
+2022-06-26 17:51:41,589:DEBUG:debug_in_comms : False
+2022-06-26 17:51:41,589:DEBUG:debug_resolution : False
+2022-06-26 17:51:41,589:DEBUG:manual_comms : False
+2022-06-26 17:51:41,589:DEBUG:with_gui : True
+2022-06-26 17:51:41,681:INFO:Scanning for Arduino COM devices...
+2022-06-26 17:51:41,691:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000150D944DD80>]
+2022-06-26 17:51:41,691:INFO:Loading GUI
+2022-06-26 17:51:45,875:INFO:Looking for the active serial port:
+2022-06-26 17:51:45,875:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 17:51:45,875:INFO:Scanning for Arduino COM devices...
+2022-06-26 17:51:45,875:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000150D947E590>]
+2022-06-26 17:51:45,875:INFO:Serial ports found: [Serial<id=0x150d947e5f0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 17:51:45,875:WARNING:Didn't find any open serial port
+2022-06-26 17:51:45,875:INFO:Opening serial port for device: COM4
+2022-06-26 17:51:45,875:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 17:51:45,875:INFO:Scanning for Arduino COM devices...
+2022-06-26 17:51:45,890:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000150D947E590>]
+2022-06-26 17:51:45,890:INFO:Serial ports found: [Serial<id=0x150d947e530, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 17:51:45,890:INFO:Success
+2022-06-26 17:51:45,890:INFO:querying arduino. tries left:3
+2022-06-26 17:51:46,961:INFO:Arduino: AMK device ready!
+2022-06-26 17:51:48,037:INFO:successfully switched to device: Yo Mama
+2022-06-26 17:58:48,177:INFO:Closing AMKAPP
+2022-06-26 17:59:12,015:INFO:Starting AMK companion app
+2022-06-26 17:59:12,015:DEBUG:Debug parameters:
+2022-06-26 17:59:12,015:DEBUG:debug_test : False
+2022-06-26 17:59:12,015:DEBUG:debug_parsing : False
+2022-06-26 17:59:12,015:DEBUG:debug_out_comms : False
+2022-06-26 17:59:12,015:DEBUG:debug_in_comms : False
+2022-06-26 17:59:12,015:DEBUG:debug_resolution : False
+2022-06-26 17:59:12,015:DEBUG:manual_comms : False
+2022-06-26 17:59:12,015:DEBUG:with_gui : True
+2022-06-26 17:59:12,080:INFO:Scanning for Arduino COM devices...
+2022-06-26 17:59:12,095:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001E975B6DD80>]
+2022-06-26 17:59:12,095:INFO:Loading GUI
+2022-06-26 17:59:14,316:INFO:Looking for the active serial port:
+2022-06-26 17:59:14,316:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 17:59:14,316:INFO:Scanning for Arduino COM devices...
+2022-06-26 17:59:14,316:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001E975B9E590>]
+2022-06-26 17:59:14,316:INFO:Serial ports found: [Serial<id=0x1e975b9e5f0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 17:59:14,316:WARNING:Didn't find any open serial port
+2022-06-26 17:59:14,316:INFO:Opening serial port for device: COM4
+2022-06-26 17:59:14,316:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 17:59:14,316:INFO:Scanning for Arduino COM devices...
+2022-06-26 17:59:14,316:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001E975B9E590>]
+2022-06-26 17:59:14,316:INFO:Serial ports found: [Serial<id=0x1e975b9e530, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 17:59:14,331:INFO:Success
+2022-06-26 17:59:14,331:INFO:querying arduino. tries left:3
+2022-06-26 17:59:15,415:INFO:Arduino: AMK device ready!
+2022-06-26 17:59:16,481:INFO:successfully switched to device: Yo Mama
+2022-06-26 18:00:06,252:INFO:Saving AMK config to arduino
+2022-06-26 18:00:07,338:INFO:AMK config saved
+2022-06-26 18:00:13,073:INFO:Closing AMKAPP
+2022-06-26 18:00:20,624:INFO:Starting AMK companion app
+2022-06-26 18:00:20,624:DEBUG:Debug parameters:
+2022-06-26 18:00:20,625:DEBUG:debug_test : False
+2022-06-26 18:00:20,625:DEBUG:debug_parsing : False
+2022-06-26 18:00:20,625:DEBUG:debug_out_comms : False
+2022-06-26 18:00:20,625:DEBUG:debug_in_comms : False
+2022-06-26 18:00:20,625:DEBUG:debug_resolution : False
+2022-06-26 18:00:20,625:DEBUG:manual_comms : False
+2022-06-26 18:00:20,625:DEBUG:with_gui : True
+2022-06-26 18:00:20,714:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:00:20,726:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000123F8C4DD80>]
+2022-06-26 18:00:20,726:INFO:Loading GUI
+2022-06-26 18:00:23,259:INFO:Looking for the active serial port:
+2022-06-26 18:00:23,259:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:00:23,259:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:00:23,266:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000123F8C7E590>]
+2022-06-26 18:00:23,267:INFO:Serial ports found: [Serial<id=0x123f8c7e5f0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:00:23,267:WARNING:Didn't find any open serial port
+2022-06-26 18:00:23,267:INFO:Opening serial port for device: COM4
+2022-06-26 18:00:23,267:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:00:23,267:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:00:23,273:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000123F8C7E590>]
+2022-06-26 18:00:23,273:INFO:Serial ports found: [Serial<id=0x123f8c7e530, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:00:23,277:INFO:Success
+2022-06-26 18:00:23,277:INFO:querying arduino. tries left:3
+2022-06-26 18:00:24,338:INFO:Arduino: AMK device ready!
+2022-06-26 18:00:25,412:INFO:successfully switched to device: Yo Mama
+2022-06-26 18:00:34,051:INFO:Saving AMK config to arduino
+2022-06-26 18:00:35,130:INFO:AMK config saved
+2022-06-26 18:07:22,507:INFO:Closing AMKAPP
+2022-06-26 18:16:17,262:INFO:Starting AMK companion app
+2022-06-26 18:16:17,263:DEBUG:Debug parameters:
+2022-06-26 18:16:17,263:DEBUG:debug_test : False
+2022-06-26 18:16:17,263:DEBUG:debug_parsing : False
+2022-06-26 18:16:17,263:DEBUG:debug_out_comms : False
+2022-06-26 18:16:17,263:DEBUG:debug_in_comms : False
+2022-06-26 18:16:17,263:DEBUG:debug_resolution : False
+2022-06-26 18:16:17,263:DEBUG:manual_comms : False
+2022-06-26 18:16:17,263:DEBUG:with_gui : True
+2022-06-26 18:16:17,361:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:16:17,376:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002C9A2FA7940>]
+2022-06-26 18:16:17,376:INFO:Loading GUI
+2022-06-26 18:16:22,710:INFO:Looking for the active serial port:
+2022-06-26 18:16:22,710:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:16:22,710:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:16:22,710:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002C9A2B8BAC0>]
+2022-06-26 18:16:22,710:INFO:Serial ports found: [Serial<id=0x2c9a2b8bb20, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:16:22,710:WARNING:Didn't find any open serial port
+2022-06-26 18:16:22,710:INFO:Opening serial port for device: COM4
+2022-06-26 18:16:22,710:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:16:22,710:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:16:22,710:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002C9A2B8BAC0>]
+2022-06-26 18:16:22,710:INFO:Serial ports found: [Serial<id=0x2c9a2b8ba90, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:16:22,726:INFO:Success
+2022-06-26 18:16:22,726:INFO:querying arduino. tries left:3
+2022-06-26 18:16:23,793:INFO:Arduino: AMK device ready!
+2022-06-26 18:16:24,865:INFO:successfully switched to device: Yo Mama
+2022-06-26 18:17:12,747:INFO:Closing AMKAPP
+2022-06-26 18:17:13,665:INFO:Starting AMK companion app
+2022-06-26 18:17:13,665:DEBUG:Debug parameters:
+2022-06-26 18:17:13,665:DEBUG:debug_test : False
+2022-06-26 18:17:13,665:DEBUG:debug_parsing : False
+2022-06-26 18:17:13,665:DEBUG:debug_out_comms : False
+2022-06-26 18:17:13,665:DEBUG:debug_in_comms : False
+2022-06-26 18:17:13,665:DEBUG:debug_resolution : False
+2022-06-26 18:17:13,665:DEBUG:manual_comms : False
+2022-06-26 18:17:13,665:DEBUG:with_gui : True
+2022-06-26 18:17:13,744:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:17:13,756:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000181FAC17970>]
+2022-06-26 18:17:13,756:INFO:Loading GUI
+2022-06-26 18:17:18,686:INFO:Looking for the active serial port:
+2022-06-26 18:17:18,686:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:17:18,686:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:17:18,693:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000181FA7FBAF0>]
+2022-06-26 18:17:18,693:INFO:Serial ports found: [Serial<id=0x181fa7fbb50, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:17:18,693:WARNING:Didn't find any open serial port
+2022-06-26 18:17:18,693:INFO:Opening serial port for device: COM4
+2022-06-26 18:17:18,693:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:17:18,693:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:17:18,700:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000181FA7FBAF0>]
+2022-06-26 18:17:18,700:INFO:Serial ports found: [Serial<id=0x181fa7fbac0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:17:18,703:INFO:Success
+2022-06-26 18:17:18,703:INFO:querying arduino. tries left:3
+2022-06-26 18:17:19,757:INFO:Arduino: AMK device ready!
+2022-06-26 18:17:20,827:INFO:successfully switched to device: Yo Mama
+2022-06-26 18:17:44,852:INFO:Closing AMKAPP
+2022-06-26 18:17:45,069:INFO:Starting AMK companion app
+2022-06-26 18:17:45,069:DEBUG:Debug parameters:
+2022-06-26 18:17:45,069:DEBUG:debug_test : False
+2022-06-26 18:17:45,069:DEBUG:debug_parsing : False
+2022-06-26 18:17:45,069:DEBUG:debug_out_comms : False
+2022-06-26 18:17:45,069:DEBUG:debug_in_comms : False
+2022-06-26 18:17:45,070:DEBUG:debug_resolution : False
+2022-06-26 18:17:45,070:DEBUG:manual_comms : False
+2022-06-26 18:17:45,070:DEBUG:with_gui : True
+2022-06-26 18:17:45,150:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:17:45,158:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000020031547970>]
+2022-06-26 18:17:45,158:INFO:Loading GUI
+2022-06-26 18:17:47,501:INFO:Looking for the active serial port:
+2022-06-26 18:17:47,501:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:17:47,501:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:17:47,508:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002003112BAF0>]
+2022-06-26 18:17:47,508:INFO:Serial ports found: [Serial<id=0x2003112bb50, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:17:47,508:WARNING:Didn't find any open serial port
+2022-06-26 18:17:47,508:INFO:Opening serial port for device: COM4
+2022-06-26 18:17:47,508:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:17:47,508:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:17:47,514:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002003112BAF0>]
+2022-06-26 18:17:47,515:INFO:Serial ports found: [Serial<id=0x2003112bac0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:17:47,518:INFO:Success
+2022-06-26 18:17:47,518:INFO:querying arduino. tries left:3
+2022-06-26 18:17:48,584:INFO:Arduino: AMK device ready!
+2022-06-26 18:17:49,660:INFO:successfully switched to device: Yo Mama
+2022-06-26 18:18:22,509:INFO:Closing AMKAPP
+2022-06-26 18:18:22,731:INFO:Starting AMK companion app
+2022-06-26 18:18:22,731:DEBUG:Debug parameters:
+2022-06-26 18:18:22,731:DEBUG:debug_test : False
+2022-06-26 18:18:22,731:DEBUG:debug_parsing : False
+2022-06-26 18:18:22,731:DEBUG:debug_out_comms : False
+2022-06-26 18:18:22,732:DEBUG:debug_in_comms : False
+2022-06-26 18:18:22,732:DEBUG:debug_resolution : False
+2022-06-26 18:18:22,732:DEBUG:manual_comms : False
+2022-06-26 18:18:22,732:DEBUG:with_gui : True
+2022-06-26 18:18:22,845:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:18:22,859:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000202E7F07940>]
+2022-06-26 18:18:22,859:INFO:Loading GUI
+2022-06-26 18:18:24,802:INFO:Looking for the active serial port:
+2022-06-26 18:18:24,802:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:18:24,802:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:18:24,810:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000202E7AEBB50>]
+2022-06-26 18:18:24,810:INFO:Serial ports found: [Serial<id=0x202e7aebbb0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:18:24,810:WARNING:Didn't find any open serial port
+2022-06-26 18:18:24,810:INFO:Opening serial port for device: COM4
+2022-06-26 18:18:24,810:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:18:24,810:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:18:24,817:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000202E7AEBB50>]
+2022-06-26 18:18:24,817:INFO:Serial ports found: [Serial<id=0x202e7aebb20, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:18:24,819:INFO:Success
+2022-06-26 18:18:24,819:INFO:querying arduino. tries left:3
+2022-06-26 18:18:25,893:INFO:Arduino: AMK device ready!
+2022-06-26 18:18:26,959:INFO:successfully switched to device: Yo Mama
+2022-06-26 18:19:04,192:INFO:Closing AMKAPP
+2022-06-26 18:19:13,368:INFO:Starting AMK companion app
+2022-06-26 18:19:13,370:DEBUG:Debug parameters:
+2022-06-26 18:19:13,370:DEBUG:debug_test : False
+2022-06-26 18:19:13,370:DEBUG:debug_parsing : False
+2022-06-26 18:19:13,370:DEBUG:debug_out_comms : False
+2022-06-26 18:19:13,370:DEBUG:debug_in_comms : False
+2022-06-26 18:19:13,370:DEBUG:debug_resolution : False
+2022-06-26 18:19:13,370:DEBUG:manual_comms : False
+2022-06-26 18:19:13,370:DEBUG:with_gui : True
+2022-06-26 18:19:13,459:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:19:13,473:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000222BCFF7910>]
+2022-06-26 18:19:13,473:INFO:Loading GUI
+2022-06-26 18:19:15,321:INFO:Looking for the active serial port:
+2022-06-26 18:19:15,321:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:19:15,321:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:19:15,328:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000222BCBDBB20>]
+2022-06-26 18:19:15,328:INFO:Serial ports found: [Serial<id=0x222bcbdbb80, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:19:15,328:WARNING:Didn't find any open serial port
+2022-06-26 18:19:15,328:INFO:Opening serial port for device: COM4
+2022-06-26 18:19:15,328:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:19:15,328:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:19:15,335:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000222BCBDBB20>]
+2022-06-26 18:19:15,335:INFO:Serial ports found: [Serial<id=0x222bcbdbaf0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:19:15,338:INFO:Success
+2022-06-26 18:19:15,338:INFO:querying arduino. tries left:3
+2022-06-26 18:19:16,407:INFO:Arduino: AMK device ready!
+2022-06-26 18:19:17,470:INFO:successfully switched to device: Yo Mama
+2022-06-26 18:19:29,136:INFO:Closing AMKAPP
+2022-06-26 18:20:06,858:INFO:Starting AMK companion app
+2022-06-26 18:20:06,858:DEBUG:Debug parameters:
+2022-06-26 18:20:06,858:DEBUG:debug_test : False
+2022-06-26 18:20:06,858:DEBUG:debug_parsing : False
+2022-06-26 18:20:06,859:DEBUG:debug_out_comms : False
+2022-06-26 18:20:06,859:DEBUG:debug_in_comms : False
+2022-06-26 18:20:06,859:DEBUG:debug_resolution : False
+2022-06-26 18:20:06,859:DEBUG:manual_comms : False
+2022-06-26 18:20:06,859:DEBUG:with_gui : True
+2022-06-26 18:20:06,948:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:20:06,958:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002355B747970>]
+2022-06-26 18:20:06,958:INFO:Loading GUI
+2022-06-26 18:20:10,436:INFO:Looking for the active serial port:
+2022-06-26 18:20:10,436:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:20:10,436:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:20:10,436:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002355B32BAC0>]
+2022-06-26 18:20:10,436:INFO:Serial ports found: [Serial<id=0x2355b32bb20, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:20:10,436:WARNING:Didn't find any open serial port
+2022-06-26 18:20:10,436:INFO:Opening serial port for device: COM4
+2022-06-26 18:20:10,436:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:20:10,436:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:20:10,452:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002355B32BAC0>]
+2022-06-26 18:20:10,452:INFO:Serial ports found: [Serial<id=0x2355b32ba90, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:20:10,452:INFO:Success
+2022-06-26 18:20:10,452:INFO:querying arduino. tries left:3
+2022-06-26 18:20:11,525:INFO:Arduino: AMK device ready!
+2022-06-26 18:20:12,595:INFO:successfully switched to device: Yo Mama
+2022-06-26 18:20:36,256:INFO:Closing AMKAPP
+2022-06-26 18:22:08,760:INFO:Starting AMK companion app
+2022-06-26 18:22:08,760:DEBUG:Debug parameters:
+2022-06-26 18:22:08,760:DEBUG:debug_test : False
+2022-06-26 18:22:08,760:DEBUG:debug_parsing : False
+2022-06-26 18:22:08,760:DEBUG:debug_out_comms : False
+2022-06-26 18:22:08,760:DEBUG:debug_in_comms : False
+2022-06-26 18:22:08,760:DEBUG:debug_resolution : False
+2022-06-26 18:22:08,760:DEBUG:manual_comms : False
+2022-06-26 18:22:08,760:DEBUG:with_gui : True
+2022-06-26 18:22:08,835:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:22:08,844:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000020BF488DCF0>]
+2022-06-26 18:22:08,844:INFO:Loading GUI
+2022-06-26 18:22:20,572:INFO:Looking for the active serial port:
+2022-06-26 18:22:20,572:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:22:20,572:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:22:20,577:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000020BF48BE500>]
+2022-06-26 18:22:20,577:INFO:Serial ports found: [Serial<id=0x20bf48be560, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:22:20,577:WARNING:Didn't find any open serial port
+2022-06-26 18:22:20,577:INFO:Opening serial port for device: COM4
+2022-06-26 18:22:20,577:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:22:20,577:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:22:20,577:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000020BF48BE500>]
+2022-06-26 18:22:20,577:INFO:Serial ports found: [Serial<id=0x20bf48be4a0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:22:20,577:INFO:Success
+2022-06-26 18:22:20,577:INFO:querying arduino. tries left:3
+2022-06-26 18:22:21,646:INFO:Arduino: AMK device ready!
+2022-06-26 18:22:22,716:INFO:successfully switched to device: Yo Mama
+2022-06-26 18:23:33,137:INFO:Closing AMKAPP
