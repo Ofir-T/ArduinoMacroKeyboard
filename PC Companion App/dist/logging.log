@@ -132,3 +132,39 @@ NameError: name 'arduino_comports' is not defined
 2022-06-26 18:30:26,503:INFO:Saving AMK config to arduino
 2022-06-26 18:30:27,588:INFO:AMK config saved
 2022-06-26 18:30:29,997:INFO:Closing AMKAPP
+2022-06-27 18:40:04,676:INFO:Starting AMK companion app
+2022-06-27 18:40:04,676:DEBUG:Debug parameters:
+2022-06-27 18:40:04,676:DEBUG:debug_test : False
+2022-06-27 18:40:04,676:DEBUG:debug_parsing : False
+2022-06-27 18:40:04,676:DEBUG:debug_out_comms : False
+2022-06-27 18:40:04,676:DEBUG:debug_in_comms : False
+2022-06-27 18:40:04,676:DEBUG:debug_resolution : False
+2022-06-27 18:40:04,676:DEBUG:manual_comms : False
+2022-06-27 18:40:04,676:DEBUG:with_gui : True
+2022-06-27 18:40:04,755:INFO:Scanning for Arduino COM devices...
+2022-06-27 18:40:04,765:INFO:Arduino COM devices found: []
+2022-06-27 18:40:04,766:INFO:Loading GUI
+2022-06-28 11:02:05,124:INFO:Starting AMK companion app
+2022-06-28 11:02:05,124:DEBUG:Debug parameters:
+2022-06-28 11:02:05,132:DEBUG:debug_test : False
+2022-06-28 11:02:05,132:DEBUG:debug_parsing : False
+2022-06-28 11:02:05,132:DEBUG:debug_out_comms : False
+2022-06-28 11:02:05,132:DEBUG:debug_in_comms : False
+2022-06-28 11:02:05,132:DEBUG:debug_resolution : False
+2022-06-28 11:02:05,132:DEBUG:manual_comms : False
+2022-06-28 11:02:05,132:DEBUG:with_gui : True
+2022-06-28 11:02:05,283:INFO:Scanning for Arduino COM devices...
+2022-06-28 11:02:05,357:INFO:Arduino COM devices found: []
+2022-06-28 11:02:05,357:INFO:Loading GUI
+2022-06-28 11:03:15,540:INFO:Starting AMK companion app
+2022-06-28 11:03:15,540:DEBUG:Debug parameters:
+2022-06-28 11:03:15,540:DEBUG:debug_test : False
+2022-06-28 11:03:15,540:DEBUG:debug_parsing : False
+2022-06-28 11:03:15,540:DEBUG:debug_out_comms : False
+2022-06-28 11:03:15,540:DEBUG:debug_in_comms : False
+2022-06-28 11:03:15,540:DEBUG:debug_resolution : False
+2022-06-28 11:03:15,540:DEBUG:manual_comms : False
+2022-06-28 11:03:15,540:DEBUG:with_gui : True
+2022-06-28 11:03:15,655:INFO:Scanning for Arduino COM devices...
+2022-06-28 11:03:15,667:INFO:Arduino COM devices found: []
+2022-06-28 11:03:15,668:INFO:Loading GUI

@@ -48,17 +48,17 @@ In instructions.pdf
 - [V] Fix tx rx leds
 - [V] Create a rotation function for use with an IMU (e.g. mpu6050), so that so that key bindings appear the same in all orientations(wheel on left, right, top ,bottom).
 - [V] Persistent profiles (eeprom).
-- [] Design snap-on lid, and board mount to replace the bolts.
-- [] upload .step files
+- [ ] Design snap-on lid, and board mount to replace the bolts.
+- [ ] upload .step files
 
 # Key remapping:
 - ~~[X] maybe a good idea to set a maximum number of sets pre-compilation, to ensure enough heap space is reserved~~
 > Even now, with many features added, only 20% of ram and 50% of flash are used. Theres a lot of wiggle room.
-- [] enable the use of consumer keycodes as well.
+- [ ] enable the use of consumer keycodes as well. (maybe an array of pointes to actions to do on key press)
 
 # Testing mode:
-- [V] latency test on the fly.
-- []  key press higlighting in the app
+- [ ] latency test on the fly.
+- [ ] key press higlighting in the app
 
 # First setup:
 - ~~[X] test to find switch-pin correlation (maybe make scanPad() return return button data instead of doing action)~~
@@ -70,12 +70,11 @@ In instructions.pdf
 
 # Arduino:
 - longrepeatedhold also triggers held (at least one time)
-- seems like seial communications is constantly on when emulating hid.
-- changing encoder bindings is only supported for single-click right now. may be improved in the future.
-- orientation doesn't check for square key grid (nXn). so it might act weird for non square layouts.
+- Seems like seial communications is constantly on when emulating hid.
+- Changing encoder bindings is only supported for single-click right now. May be improved in the future.
+- orientation doesn't check for square key grid (nXn). so it might act weird for non square layouts. (maybe just make a reorientation function that re-slices the lists)
 
 # App:
-- The app will recognize your device only if you plug it in BEFORE starting the app.
 
 ## Notes
 - separate main.cpp into a header and source?
@@ -84,5 +83,4 @@ In instructions.pdf
 
 ## App notes
 - The attached executable is only compiled for Windows 10, but the source is available for you to compile on your own system. 
-- The exectutables with multidevice in the name will allow you to choose between arduino COM devices. I haven't tested it with more than one device yet.
 - Application GUI was only tested on my laptop wih 1920x1080 resolution, so weridness might happen on other resolutions/aspect ratios.
