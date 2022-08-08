@@ -52,6 +52,15 @@ class MainFrame:
                 # label['text'] = f'{i},{j}'
         self.frame.pack(side='top', fill='both', expand=True)
 
+        self.test_entry_frame = tk.Frame(master=self.frame, borderwidth=0)
+        entry = tk.Entry(self.test_entry_frame)
+        entry.bind('<FocusIn>', self.clear_entry)
+        entry.bind('<FocusOut>', self.fill_entry)
+        entry.insert(0, 'Click here to test your macros')
+        entry.pack(fill='both', expand=True)
+        self.test_entry = entry
+        self.test_entry_frame.grid(row=1, column=2, columnspan=8, sticky='NSEW')
+
         self.save_button = tk.Button(self.frame, text ="Save Changes")
         self.save_button.grid(row=9, column=12, columnspan=4, sticky='NSEW')
 
@@ -60,6 +69,7 @@ class MainFrame:
         self.device_selector = DeviceSelector(
             self.frame, self, update_devices_callback=kwargs.get('update_devices_callback', None),
             selected_callback=kwargs.get('switch_device_callback', None))
+
         self.subscribers = [
             self.keyboard,
             self.set_selector,
@@ -103,12 +113,12 @@ class MainFrame:
         self.set_selector.refresh_with(self.AMK)
         self.save_button.configure(command=self.save_button_callback)
         self.device_selector.refresh_with()
-        self.master.update()
+        self.master.update_idletasks()
 
     def refresh_window(self): #NTS: maybe redundant?
         # for sub in self.subscribers:
-        #     sub.update()
-        self.master.update()
+        #     sub.update_idletasks()
+        self.master.update_idletasks()
 
     def reveal_cells(self): #NTS: To test
         # if(debug_layout):
@@ -133,6 +143,12 @@ class MainFrame:
     def save_button_callback(self):
         tk.messagebox.showinfo(title=None, message='Changes Saved')
         self.AMK.save_to_arduino()
+
+    def clear_entry(self, event):
+        self.test_entry.delete(0, 'end')
+
+    def fill_entry(self, event):
+        self.test_entry.insert(0, 'Click here to test your macros')
 
     # def pub_vars(self):
     #     """Gives the variable names of our instance we want to expose
@@ -223,7 +239,7 @@ class DeviceSelector:
         if(not self.combobox['values']):
             self.combobox.set('')
         self.controller.notify({'refresh':self.combobox.get()})
-        self.frame.update()
+        self.frame.update_idletasks()
 
     def notify_device_changed(self, event):
         """Set the app's active device to the selected device."""
@@ -234,6 +250,47 @@ class DeviceSelector:
                 active_device = self.selected_callback(device.name)
         self.controller.notify({'active_device_changed':active_device})
         
+class TestEntry:
+    """GUI element for selecting the binding set to present/edit."""
+    def __init__(self, master, controller, selector_values=[],
+                 default_value='', pos_x=12, pos_y=6, state='readonly'):
+        """Constructs a SetSelector object.""" #NTS: more details
+        logging.debug(f'Building SetSelector...')
+        self.controller = controller
+        self.master = master
+
+        self.frame = tk.Frame(master=self.master, relief=tk.GROOVE, borderwidth=1)
+        self.frame.columnconfigure(0, weight=1, uniform="set")
+        self.frame.columnconfigure(1, weight=1, uniform="set")
+
+        self.label = tk.Label(master=self.frame, text='Set:', relief=tk.GROOVE, borderwidth=0)
+        self.label.grid(row=0, column=0, sticky='E')
+
+        self.stringvar = tk.StringVar()
+        self.combobox = ttk.Combobox(master=self.frame, textvariable=self.stringvar, width=4)
+        self.combobox['values'], self.combobox['state'] = selector_values, state
+        self.combobox.set(default_value)
+        self.combobox.grid(row=0,column=1, columnspan=2, sticky="E")
+        self.combobox.bind('<<ComboboxSelected>>', self.notify_set_changed)
+
+        self.frame.grid(row=pos_y, column=pos_x, sticky='NSEW', columnspan=4)
+
+    def set_controller(self, controller: object):
+        self.controller = controller
+        self.controller.add_subscriber(self)
+
+    def refresh_with(self, AMK):
+        """Updates GUI element with data from AMK""" #NTS: more details
+        selector_values = list(range(AMK['num_sets']))
+        default_value = AMK['active_set']
+        self.combobox['values'] = selector_values
+        self.combobox.set(default_value)
+
+    def notify_set_changed(self, event):
+        """Set the macro keyboard's active set to the selected set"""
+        active_set = int(self.stringvar.get())
+        self.controller.notify({'active_set_changed':active_set})
+        logging.debug(f'changed active set to: {stringvar_set.get()}')
 
 class MacroKeyboard:
     """GUI element representing the AMK device.""" #NTS: more details
@@ -269,6 +326,7 @@ class Keypad: # maybe make it a disposable obj, to be destroyed and re-built on 
             self.controller = controller
             self.frame = tk.Frame(master=self.master, relief=tk.GROOVE, borderwidth=1)
             self.key_labels = []
+            self.key_buttons = []
             self.key_cbbx = []
             self.key_stringvar = []
             self.active_set = AMK['active_set']
@@ -277,7 +335,7 @@ class Keypad: # maybe make it a disposable obj, to be destroyed and re-built on 
             self.style = ttk.Style()
             self.style.configure('Key.TCombobox',
                                  postoffset=(0, 0, self.dropdown_width, 0))
-            
+
             # Goes over the bindings for the active_set,
             # and creates a combobox for each button
             for i in range(AMK['num_rows']):
@@ -287,17 +345,35 @@ class Keypad: # maybe make it a disposable obj, to be destroyed and re-built on 
                     self.frame.columnconfigure(j, weight=1, uniform='key_width')
                     key_code = AMK['bindings'][AMK['active_set']][key_index]
                     key_name = amk.Keycodes.get_name_of(key_code).split("_",1)[1] # Remove the prefix
-                    # self.key_labels.append(tk.Label(master=self.frame, text=key_name))
-                    # self.key_labels[key_index].grid(row=i, column=j, sticky='NSEW')
-                    # self.key_labels[key_index].update()
+
+                    # Create a button to show the current binding
+                    self.key_buttons.append(tk.Button(master=self.frame, text=key_name,
+                                            command=lambda arg=key_index:self.show_combobox(key_index=arg)))
+                    self.key_buttons[key_index].grid(row=i, column=j, sticky='NSEW')
+
+                    # Create comboboxes to show when editing a key
                     combobox_key, stringvar_key = self.create_key_combobox(self.frame, key_name)
+                    # combobox_key.bind('<FocusOut>', 
+                    #                   lambda event, idx=key_index,:self.cbbx_focus_out(event, idx))
                     self.key_cbbx.append(combobox_key)
                     self.key_stringvar.append(stringvar_key)
                     self.key_cbbx[key_index].grid(row=i, column=j, sticky='NSEW')
-                    self.key_cbbx[key_index].update()
-                
+                    self.key_cbbx[key_index].grid_remove()
+
             self.frame.grid(row=1, column=0, sticky='NSEW')
                 
+    def show_combobox(self, key_index):
+        self.key_buttons[key_index].grid_remove()
+        self.key_cbbx[key_index].grid()
+        self.key_cbbx[key_index].event_generate('<Button-1>') # Show the list
+
+    def show_button(self, key_index):
+        self.key_cbbx[key_index].grid_remove()
+        self.key_buttons[key_index].grid()
+                
+    def cbbx_focus_out(self, event, key_index):
+        self.show_button(key_index)
+
     def create_key_combobox(self, key_code, key_name):
         stringvar = tk.StringVar()
         combobox = ttk.Combobox(self.frame, textvariable=stringvar, width=6, style='Key.TCombobox')
@@ -310,7 +386,8 @@ class Keypad: # maybe make it a disposable obj, to be destroyed and re-built on 
     def notify_key_changed(self, event, combobox):
         key_name = combobox.get()
         key_code = amk.Keycodes.get_code_of(key_name)
-        self.controller.notify({'key_changed':[self.active_set, self.key_cbbx.index(combobox), key_code]})
+        self.controller.notify({'key_changed':[self.active_set,
+                                               self.key_cbbx.index(combobox), key_code]})
         logging.info(f'binding for key: ({self.active_set},{self.key_cbbx.index(combobox)}) changed to: {key_name} (code: {key_code})')
 
     def refresh_with(self, AMK):
@@ -321,8 +398,8 @@ class Keypad: # maybe make it a disposable obj, to be destroyed and re-built on 
                 key_index = j + (i*AMK["num_cols"])
                 key_code = AMK["bindings"][AMK["active_set"]][key_index]
                 key_name = amk.Keycodes.get_key_name(key_code).split("_",1)[1] # Remove the prefix
-                self.key_labels[key_index]['text'] = key_name
-                # frame_keyboard.pack()
+                self.key_buttons[key_index]['text'] = key_name
+                self.show_button(key_index)
             
 class Encoder:
     """GUI element representing the AMK's encoder."""

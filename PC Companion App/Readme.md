@@ -15,6 +15,7 @@ The companion app for the [Arduino Macro Keyboard](https://github.com/Ofir-T/Ard
 - [V] Notifications: save successful/failed etc. (forward the arduino messages to a messagebox?)
 - [ ] Change the on-close msgbox to: save changes? yes/no/cancel
 - [ ] Disable SetSelector while no device is connected
+- [ ] Undo changes button
 
 ## Known Issues
 

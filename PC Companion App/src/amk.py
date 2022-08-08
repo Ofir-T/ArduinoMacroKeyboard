@@ -48,8 +48,7 @@ class AMK: #ArduinoMacroKeyboard:
         uninitialized_attributes = [k for k, v in vars(self).items()
                                     if (not k.startswith('_')) and v==None]
         if uninitialized_attributes:
-            print(f'AMK object has uninitialized attributes: \
-                  {uninitialized_attributes}')
+            print(f'AMK object has uninitialized attributes: {uninitialized_attributes}')
         return True if len(uninitialized_attributes) == 0 else False
 #endregion
 

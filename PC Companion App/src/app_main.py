@@ -12,6 +12,7 @@ import time
 import tkinter as tk
 from tkinter import ttk, messagebox
 import logging
+import inspect
 import amk
 import amk_gui
 #endregion
@@ -132,8 +133,7 @@ def open_serial_at(comport_name):
             logging.info(f'Serial port opened successfully')
             # wait_for_arduino() # handshake with AMK #NTS: what's the best location for this?
             return port
-    logging.warning(f'Failed. Comport {comport_name} not found in \
-                    serial_ports')
+    logging.warning(f'Failed. Comport {comport_name} not found in serial_ports')
     return None
 
 def current_serial_port(): #NTS: maybe check arduino ready? to prevent redundant scanning
@@ -247,8 +247,7 @@ def close_window(app_window):
     :type app_window: amk_gui.MainFrame object.
     """
     logging.info(f'Closing AMKAPP...')
-    if tk.messagebox.askokcancel("Quit", "Do you want to quit? \
-                                 Unsaved changes will be discarded"):
+    if tk.messagebox.askokcancel("Quit", 'Do you want to quit? Unsaved changes will be discarded'):
         close_serial_at(current_amk.serial_port)
         logging.info(f'Closed serial port')
         app_window.destroy()
@@ -371,14 +370,14 @@ def parse_message(message, target_amk): #NTS: make target_amk optional, and a co
                         target_amk["name"] = parse_string(content)
                     else:
                         error = True
-                        logging.error(f'Received unknown header from \
-                                      AMK: {header}')
+                        logging.error(f'Received unknown '
+                                      'header from AMK: {header}')
                 elif(op_code == 'p'):
                     print(f'Arduino says: {str(content)}')
                 elif(op_code == 'e'):
                     error = True
-                    logging.error(f'Received error from AMK: header: \
-                                  {header}, content: {str(content)}')
+                    logging.error(f'Received error from AMK: header: {header},'
+                                  ' content: {str(content)}')
 
                 if(debug_parsing):
                     print(target_amk)
@@ -390,8 +389,7 @@ def parse_message(message, target_amk): #NTS: make target_amk optional, and a co
         logging.error(f'Received empty reply from AMK!')
 
     if(error):
-        print(f'An error has occured while parsing. See logging.log \
-              for more information')
+        print(f'An error has occured while parsing. See logging.log for more information')
         
 
 # def int_to_bytes(i: int, *, signed: bool = False) -> bytes:
@@ -468,7 +466,8 @@ def save_to_arduino(amk_data: dict, amk):
 #endregion
 
 def update_device_list(app_window, period=3000):
-    """Refreshes the devices list on the gui. Happens every <period> seconds"""
+    """Refreshes the devices list on the gui. Happens every <period> \
+        seconds"""
     app_window.device_selector.refresh_with(list_comports())
     logging.info(f'Refreshing device list')
     # root.after(period, update_device_list)
@@ -477,8 +476,7 @@ def update_device_list(app_window, period=3000):
 def ask_for_userinput():
     """Manual communication with AMK.  Legal input is get function names"""
     # user_input = raw_input("Give me your command! Just type \"exit\" to close: ")
-    user_input = input("Enter a command (i.e. wait_for_arduino, \
-                       get_keypad etc.): ") # Take input from user
+    user_input = input('Enter a command (i.e. wait_for_arduino, get_keypad etc.): ') # Take input from user
     if user_input == "exit":
         root.quit()
     else:
