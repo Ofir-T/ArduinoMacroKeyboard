@@ -1,0 +1,5 @@
+- [ ] only hold in ram 1 keypad set. and re-load from memory every time set switcvh is executed
+- [ ] remove padding strings/commands.
+- [ ] protect against null command values.
+- find start address of set- by terminator or by counting commands?
+- start with fixed set sizes (because fragmentation), before going for dynamic memory management & fragmentation.
