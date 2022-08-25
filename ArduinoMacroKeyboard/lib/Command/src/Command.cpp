@@ -6,7 +6,7 @@
 #include "Command.h"
 #include <HID-Project.h>
 
-// -----------class cpp implementation----------- //why not do all in just the header file?
+// -----------class cpp implementation-----------
 void Command::Replace(Command *&oldCommand, Command *newCommand)// pointer-reference headace, C++ is weird.
 {
   delete oldCommand;

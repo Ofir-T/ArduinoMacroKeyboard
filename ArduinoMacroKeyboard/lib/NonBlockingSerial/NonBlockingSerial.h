@@ -73,7 +73,7 @@ class NonBlockingSerial2
     byte dataTotalSend = 0; // the number of bytes to send to PC taking account of encoded bytes
 
     boolean inProgress = false;
-    boolean allReceived = false; // set to false!
+    boolean allReceived = false; // default true is ok?
 
     void encodeHighBytes();
     void decodeHighBytes();

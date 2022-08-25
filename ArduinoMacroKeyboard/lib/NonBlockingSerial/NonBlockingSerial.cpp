@@ -84,7 +84,7 @@ void NonBlockingSerial::checkInit()
 
 //============================
 
-void NonBlockingSerial::getSerialData() {
+void NonBlockingSerial::getSerialData() { //static_assert(serialInit, "Serial not initialized");
 
      // Receives data into tempBuffer[]
      //   saves the number of bytes that the PC said it sent - which will be in tempBuffer[1]
