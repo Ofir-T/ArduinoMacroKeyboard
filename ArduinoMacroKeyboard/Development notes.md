@@ -1,5 +1,30 @@
 - [ ] only hold in ram 1 keypad set. and re-load from memory every time set switcvh is executed
+    - how to handle orientation? (maybe store always data in default orientation, and rotate when loading)
 - [ ] remove padding strings/commands.
 - [ ] protect against null command values.
-- find start address of set- by terminator or by counting commands?
+- find start address of set: by terminator or by counting commands?
 - start with fixed set sizes (because fragmentation), before going for dynamic memory management & fragmentation.
+- ~~Setting useMemory to true crashes arduino. why??~~ Found it: problem with the pointers in keypadset not being initialized before being "replaced". the problem probably lies in the Command library.
+- allReceived in NonBlockingSerial is default false, and set to false after every sent message. that prevent arduino from sending messages without receiving first.
+- for now assuming encoded message isn't larger than max size of keypad byte-string.
+- ~~something about the encoder becomes unstable after disconnecting from serial monitor. seems like after a few key presses it disappears. maybe something related to keyboard.release()? also, volume up/down triggers the DoubleClicked event for some reason.~~ was just a loose connector/bolt touching where it shouldn't. note to self: new board mount.
+- longpressrepeat is weird as of now.
+- byteArrayFromEeprom() depends on knowing set length in advance, but it is not always known in advance.
+- change scan memory by X commands null-seperated sets?
+- replace serial prints with nBSerial's
+- implement debugToPc() and sendMessage() that can receive F()'d strings.
+- [ ] confirmation messages => debugToPC()
+- #pragma message(": warning<put what you like here>: blah blah blah")
+- [ ] debugToPc debug levels
+- [ ] boolean option to print device info to serial in setup
+- [ ] use a different buffer than tmpBuffer for general stuff. it can mess up serial comm.
+- keypadFromByteArray(tmpBuffer,...): set default to null pointer, and if so, read from eeprom instead.
+- NBS buffers are not protected.
+## Conversion to Command:
+- [V] convert array rotation functions. now it's an array of pointers instead of numbers
+- [V] deal with printArray(). maybe not necessary anymore?
+
+## Last Task - Next Task
+- [V] adapt gui to bindstr
+- [ ] adapt comms PC -> Arduino (save data)
+- [ ] add string input to gui bindings

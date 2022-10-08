@@ -92,8 +92,8 @@ class MainFrame:
                 self.AMK['active_set'] = data
                 self.refresh_with(self.AMK)
             if event == 'key_changed':
-                set_index, key_index, key_code = data
-                self.AMK['bindings'][set_index][key_index] = key_code
+                set_index, key_index, key_bind = data
+                self.AMK['bindings'][set_index][key_index] = key_bind
                 self.refresh_with(self.AMK)
             if event == 'active_device_changed': #in progress
                 logging.info(f'Active device changed to: {data.name} at {data.serial_port}')
@@ -343,8 +343,8 @@ class Keypad: # maybe make it a disposable obj, to be destroyed and re-built on 
                     key_index = j + (i*AMK['num_cols'])
                     self.frame.rowconfigure(i, weight=1, uniform='key_height')
                     self.frame.columnconfigure(j, weight=1, uniform='key_width')
-                    key_code = AMK['bindings'][AMK['active_set']][key_index]
-                    key_name = amk.Keycodes.get_name_of(key_code).split("_",1)[1] # Remove the prefix
+                    key_bind = AMK['bindings'][AMK['active_set']][key_index]
+                    key_name = amk.Keycodes.get_name_of(ord(key_bind[1])) if (key_bind[0] != 's') else ('"' + ''.join(key_bind[1:]) + '"')
 
                     # Create a button to show the current binding
                     self.key_buttons.append(tk.Button(master=self.frame, text=key_name,
@@ -352,7 +352,7 @@ class Keypad: # maybe make it a disposable obj, to be destroyed and re-built on 
                     self.key_buttons[key_index].grid(row=i, column=j, sticky='NSEW')
 
                     # Create comboboxes to show when editing a key
-                    combobox_key, stringvar_key = self.create_key_combobox(self.frame, key_name)
+                    combobox_key, stringvar_key = self.create_key_combobox(key_name)
                     # combobox_key.bind('<FocusOut>', 
                     #                   lambda event, idx=key_index,:self.cbbx_focus_out(event, idx))
                     self.key_cbbx.append(combobox_key)
@@ -374,7 +374,7 @@ class Keypad: # maybe make it a disposable obj, to be destroyed and re-built on 
     def cbbx_focus_out(self, event, key_index):
         self.show_button(key_index)
 
-    def create_key_combobox(self, key_code, key_name):
+    def create_key_combobox(self, key_name):
         stringvar = tk.StringVar()
         combobox = ttk.Combobox(self.frame, textvariable=stringvar, width=6, style='Key.TCombobox')
         combobox['values'] = amk.Keycodes.get_key_names()
@@ -385,10 +385,17 @@ class Keypad: # maybe make it a disposable obj, to be destroyed and re-built on 
 
     def notify_key_changed(self, event, combobox):
         key_name = combobox.get()
-        key_code = amk.Keycodes.get_code_of(key_name)
+        key_bind = amk.Keycodes.get_bind_of(key_name)
+        # print('KEYNAME(&%(&%$#')
+        # print(key_name)
+        # print('KEYCODE(&%(&%$#')
+        # print(amk.Keycodes.get_code_of(key_name))
+        # print('KEYBIND%$*%$')
+        # print(key_bind)
+
         self.controller.notify({'key_changed':[self.active_set,
-                                               self.key_cbbx.index(combobox), key_code]})
-        logging.info(f'binding for key: ({self.active_set},{self.key_cbbx.index(combobox)}) changed to: {key_name} (code: {key_code})')
+                                               self.key_cbbx.index(combobox), key_bind]})
+        logging.info(f'binding for key: ({self.active_set},{self.key_cbbx.index(combobox)}) changed to: {key_name} (bindstr: {key_bind})')
 
     def refresh_with(self, AMK):
         """Updates GUI element with data from AMK""" #NTS: more details
@@ -396,8 +403,8 @@ class Keypad: # maybe make it a disposable obj, to be destroyed and re-built on 
         for i in range(AMK["num_rows"]):
             for j in range(AMK["num_cols"]):
                 key_index = j + (i*AMK["num_cols"])
-                key_code = AMK["bindings"][AMK["active_set"]][key_index]
-                key_name = amk.Keycodes.get_key_name(key_code).split("_",1)[1] # Remove the prefix
+                key_bind = AMK['bindings'][AMK['active_set']][key_index]
+                key_name = amk.Keycodes.get_name_of(ord(key_bind[1])) if (key_bind[0] != 's') else ('"' + ''.join(key_bind[1:]) + '"')
                 self.key_buttons[key_index]['text'] = key_name
                 self.show_button(key_index)
             

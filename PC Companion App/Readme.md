@@ -9,13 +9,14 @@ The companion app for the [Arduino Macro Keyboard](https://github.com/Ofir-T/Ard
 
 ## To-Do:
 - [] Key press higlighting. (maybe add a textbox to test changes in, and whenever that's in focus, highlight keys)
-- [V] Re-scan com ports (button/interval?)
+- [V] Re-scan com ports (button/interval?) {on every time set selector comes to focus}
 - [/] Automatic device recognition (boards.txt) (somewhat happens with list_comports(keyword))
 - ~~[] Save conf vs. try conf (eeprom vs. ram)?~~
 - [V] Notifications: save successful/failed etc. (forward the arduino messages to a messagebox?)
+- [ ] Update serial communication for compatibility with arduino sketch 2.0.
+- [ ] Pass debug message to log file.
 - [ ] Change the on-close msgbox to: save changes? yes/no/cancel
 - [ ] Disable SetSelector while no device is connected
-- [ ] Undo changes button
 
 ## Known Issues
 
