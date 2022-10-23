@@ -1,6 +1,9 @@
 """
 Arduino Macro Keyboard Companion App - AMKAPP
 Ofir Temelman
+
+version number: 2.x
+version date: 23102022
 """
 
 #region Imports
@@ -58,13 +61,13 @@ logging.debug(f'MANUAL_COMMS : {MANUAL_COMMS}')
 logging.debug(f'WITH_GUI : {WITH_GUI}')
 #endregion
 
-if WITH_GUI: # maybe move this to gui?
-    def grid_hide(widget):
-        widget._grid_info = widget.grid_info()
-        widget.grid_remove()
+# if WITH_GUI: # maybe move this to gui?
+#     def grid_hide(widget):
+#         widget._grid_info = widget.grid_info()
+#         widget.grid_remove()
 
-    def grid_show(widget):
-        widget.grid(**widget._grid_info)
+#     def grid_show(widget):
+#         widget.grid(**widget._grid_info)
 
 #region serial communication
 """
@@ -116,54 +119,54 @@ def chuncks(lst, n):
 #     data =   CURRENT_AMK.serial_port.readlines()
 #     return data
 
-def write_readlines(message):
-    """Writes a message on serial, expecting an anwser.  \
-    Reads multiple lines, if available.
+# def write_readlines(message):
+#     """Writes a message on serial, expecting an anwser.  \
+#     Reads multiple lines, if available.
 
-    :param message: A message to AMK in the specified protocol.
-    :returns: The reply from AMK device
-    """
-    global   CURRENT_AMK
-    message_type = type(message) #NTS: maybe just write type(message)? or match-case?
+#     :param message: A message to AMK in the specified protocol.
+#     :returns: The reply from AMK device
+#     """
+#     global   CURRENT_AMK
+#     message_type = type(message) #NTS: maybe just write type(message)? or match-case?
 
-    if message_type == str:
-        message = bytes(message, ENCODING)
-    elif message_type == bytes:
-        message = message
+#     if message_type == str:
+#         message = bytes(message, ENCODING)
+#     elif message_type == bytes:
+#         message = message
 
-    CURRENT_AMK.serial_port.write(message)
-    time.sleep(0.05)
-    data =   CURRENT_AMK.serial_port.readlines()
+#     CURRENT_AMK.serial_port.write(message)
+#     time.sleep(0.05)
+#     data =   CURRENT_AMK.serial_port.readlines()
 
-    if DEBUG_OUT_COMMS:
-        print(f'request: {message}')
-    if DEBUG_IN_COMMS:
-        print(f'reply: {data}')
+#     if DEBUG_OUT_COMMS:
+#         print(f'request: {message}')
+#     if DEBUG_IN_COMMS:
+#         print(f'reply: {data}')
 
-    return data
+#     return data
 
-def wait_for_arduino(num_tries=3, delay=0.5): #NTS: maybe change name to handshake/wait_for_handshake?
-    """Tells the AMK device to get ready for communication, and waits \
-        for a reply
+# def wait_for_arduino(num_tries=3, delay=0.5): #NTS: maybe change name to handshake/wait_for_handshake?
+#     """Tells the AMK device to get ready for communication, and waits \
+#         for a reply
     
-    :param num_tries: The number of time to try the handshake.
-    :param delay: Time to wait between tries.
-    """
-    global arduino_ready
+#     :param num_tries: The number of time to try the handshake.
+#     :param delay: Time to wait between tries.
+#     """
+#     global arduino_ready
     
-    while((not arduino_ready) and (num_tries > 0)):
-        logging.info(f'Querying arduino. tries left:{num_tries}')
-        reply = write_readlines('ao0'+end_marker)
-        reply = reply[0].decode(ENCODING) if len(reply)>0 else ''
-        if ('ready' in reply):
-            arduino_ready = True
-            logging.info(f'Arduino: AMK device ready!')
-        else:
-            num_tries -= 1
-            time.sleep(0.5)
+#     while((not arduino_ready) and (num_tries > 0)):
+#         logging.info(f'Querying arduino. tries left:{num_tries}')
+#         reply = write_readlines('ao0'+end_marker)
+#         reply = reply[0].decode(ENCODING) if len(reply)>0 else ''
+#         if ('ready' in reply):
+#             arduino_ready = True
+#             logging.info(f'Arduino: AMK device ready!')
+#         else:
+#             num_tries -= 1
+#             time.sleep(0.5)
     
-    if num_tries == 0 and not arduino_ready:
-        logging.error(f'No answer from AMK device')
+#     if num_tries == 0 and not arduino_ready:
+#         logging.error(f'No answer from AMK device')
 
 def close_window(app_window):
     """Closes the GUI window, and informs the AMK Device.
@@ -172,6 +175,8 @@ def close_window(app_window):
     :type app_window: gui.MainFrame object.
     """
     logging.info(f'Closing AMKAPP...')
+    # parse_message(com_arduino.send_recv2('ac'), CURRENT_AMK)
+    com_arduino.send_recv2('ac')
     if tk.messagebox.askokcancel("Quit", 'Do you want to quit? Unsaved changes will be discarded'):
         com_arduino.close_serial_at(  CURRENT_AMK.serial_port)
         logging.info(f'Closed serial port')
@@ -335,8 +340,6 @@ def get_keypad():
     com_arduino.message_queue += ['gc', 'go', 'ga', 'gb']
     return com_arduino.send_recv2('gn')
 
-    
-
 def get_layout():
     """Asks AMK device for it's layout data over serial.  \
         Expects an answer"""
@@ -370,13 +373,20 @@ def send_bindings(bindings, amk):
     :param bindings: Key binding data.
     :param amk: amk.AMK object to recieve reply.
     """
-    op_code = b's'
-    header = b'b'
-    content = list_to_bytearray(bindings)
-    length = b''#bytes([len(content)])
-    message = b'' + op_code + header + length + content + bytes('\n', 'utf-8')
-    # print(message)
-    parse_message(write_readlines(message), amk) # Send data, echo back #NTS: maybe enable sending without target_amk?
+    op_code = 's'
+    header = 'b'
+
+    flat_list = []
+    for sublist in bindings: # "Flatten" the list to 1d
+        flat_list.extend(sublist)
+    flat_list = [bind+'\x00' for bind in flat_list] # null-terminate bindings
+    content = ''.join(flat_list)
+    print(content)
+    # content = list_to_bytearray(null_term_bindings)
+    # length = b''#bytes([len(content)])
+    message = op_code + header + content
+    print(message)
+    parse_message(com_arduino.send_recv2(message), amk) # Send data, echo back #NTS: maybe enable sending without target_amk?
     logging.info(f'AMK config saved') # check if saving was correct?
 
 def save_to_arduino(amk_data: dict, amk):

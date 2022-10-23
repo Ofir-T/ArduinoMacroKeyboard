@@ -215,7 +215,7 @@ def send_recv1(message, proc_func=None, print_message=True): # NTS: return true 
 
 message_queue = []
 
-def send_recv2(message, print_message=True): # NTS: return true for success? timeout?
+def send_recv2(message='', print_message=False): # NTS: return true for success? timeout?
   """Adds message to queue, sends messages in queue, and directs replies\
   to the processing function.
 
@@ -226,7 +226,9 @@ def send_recv2(message, print_message=True): # NTS: return true for success? tim
 
   answer_queue = []
 
-  message_queue.append(message)
+  if message:
+    message_queue.append(message)
+
   numLoops = len(message_queue)
   n = 0
   waitingForReply = False
@@ -266,6 +268,18 @@ def send_recv2(message, print_message=True): # NTS: return true for success? tim
       time.sleep(0.3)
   message_queue = []
   return answer_queue
+
+
+def enqueue_message(message):
+    message_queue.append(message)
+
+# def enqueue_message(header, opcode, message):
+#   if type(message) == list: # "Flatten" the list to 1d
+#     temp_list = []
+#     for sublist in lst:
+#         temp_list.extend(sublist)
+#     message_queue.append('sb' + ''.join(''.join('shi'+chr(0)) for n in range(18)))
+
 
 #=====================================
 

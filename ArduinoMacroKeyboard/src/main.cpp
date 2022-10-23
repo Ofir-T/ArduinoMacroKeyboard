@@ -96,7 +96,7 @@ constexpr byte MAX_COMMAND_SIZE = Command::STRING_LENGTH+2; // 1B type, 1B seper
 constexpr uint16_t MAX_COMMANDS = commandMemory/MAX_COMMAND_SIZE; //(useMemory) ? ((EEPROM.length()-reservedMemory)/MAX_STRING_LENGTH):(960/MAX_STRING_LENGTH);
 
 boolean debugEEPROM = false;
-boolean useMemory = false; // set to false if you don't want to store data in EEPROM.
+boolean useMemory = true; // set to false if you don't want to store data in EEPROM.
 
 // constexpr int numcommands = NUM_SETS*(NUM_ENC_CMD + (NUM_ROWS*NUM_COLS));
 // static_assert((numcommands <= MAX_COMMANDS), "Number of commands defined exceeds reserved memory");
@@ -143,6 +143,7 @@ const char *commandTypeError= "commandTypeError";
 const char *waitingForApp= "Waiting for app";
 const char *arduinoReady= "Arduino Ready";//"AMK ready";
 const char *appIsClosing= "App is closing";
+const char *acknowledgement= "ACK";
 
 // ----------------------------------------------------------------------------
 // Keypad rotation
@@ -273,7 +274,6 @@ void scanPad() // Check if any of the keypad buttons was pressed & send the keys
         if(appIsOpen)
           // sendMessage('p', 'k', i);
           nBSerial.debugToPC("key pressed: " + char(i)); // tell app that a key was pressed. doesn't actuate command.
-          //  Serial.println("Pitz and Danzi 4 years +2 days anniversary!!");
         else
           keypad[activeSet][i]->Send(); // actuate command
       }
@@ -417,10 +417,12 @@ void parseMessage(byte *pRecvBuffer, int recvLength)
         {
           case 'o':
             nBSerial.debugToPC(arduinoReady);
+            nBSerial.echoToPC();
             break;
           case 'c':
             appIsOpen = false;
             nBSerial.debugToPC(appIsClosing);
+            nBSerial.echoToPC();
             break;
           default:
             header = (header < '0') ? 'u' : header;
@@ -448,7 +450,7 @@ void parseMessage(byte *pRecvBuffer, int recvLength)
             length = keypadToByteArray(tmpBuffer, false, true);
             nBSerial.sendMessage('s', 'b', tmpBuffer, length);
             break;
-          case 'c':
+          case 'c': 
             sprintf((char*)tmpBuffer, "%d%d%d",NUM_ROWS, NUM_COLS, NUM_SETS);
             nBSerial.sendMessage('s', 'c', tmpBuffer, 3);
             break;
@@ -483,8 +485,9 @@ void parseMessage(byte *pRecvBuffer, int recvLength)
             if(useMemory)
               byteArrToEeprom(tmpBuffer, reservedMemory + (activeSet)*(commandMemory/NUM_SETS), length);
 
-            tmpBuffer[length] = 0;
-            nBSerial.debugToPC((char*)tmpBuffer); // confirmation message
+            // tmpBuffer[length] = 0;
+            // nBSerial.debugToPC((char*)tmpBuffer); // confirmation message
+            nBSerial.sendMessage('s', 'b', tmpBuffer, length);
             break;
           case 'o':
             currentOrientation = *pRecvBuffer;
@@ -598,30 +601,30 @@ int commandFromByteArray(Command *&dest, byte data[]) // creates a Command from 
   return strlen((char*)data) + int(dest->nullTerm());
 }
 
-int byteArrToKeypad(byte pSource[], Command ***pDest)
-{
-  byte temp[MAX_COMMAND_SIZE];
-  byte *nextNull;
-  Command *newCommand;
-  int count=0;
-  // int count=0; //for data validation? make sure the full array is used?
+// int byteArrToKeypad(byte pSource[], Command ***pDest)
+// {
+//   byte temp[MAX_COMMAND_SIZE];
+//   byte *nextNull;
+//   Command *newCommand;
+//   int count=0;
+//   // int count=0; //for data validation? make sure the full array is used?
 
-  //for each key...
-  for (int k = 0; k < NUM_SETS; k++)
-  {
-    for(int i=0; i<NUM_ROWS*NUM_COLS; i++)
-    {
-      nextNull = (byte*) memchr(pSource, 0, MAX_COMMAND_SIZE); // read data untill null(incl.)
-      memcpy(temp, pSource, (nextNull-pSource)); //insert command data into temp array
-      temp[(nextNull-pSource)] = 0;
-      count += commandFromByteArray(newCommand, temp);
-      if(count > 0)
-        Command::Replace(pDest[k][i], newCommand);
-      pSource = nextNull+1;
-    }
-  }
-  return count;
-}
+//   //for each key...
+//   for (int k = 0; k < NUM_SETS; k++)
+//   {
+//     for(int i=0; i<NUM_ROWS*NUM_COLS; i++)
+//     {
+//       nextNull = (byte*) memchr(pSource, 0, MAX_COMMAND_SIZE); // read data untill null(incl.)
+//       memcpy(temp, pSource, (nextNull-pSource)); //insert command data into temp array
+//       temp[(nextNull-pSource)] = 0;
+//       count += commandFromByteArray(newCommand, temp);
+//       if(count > 0)
+//         Command::Replace(pDest[k][i], newCommand);
+//       pSource = nextNull+1;
+//     }
+//   }
+//   return count;
+// }
 
 // ----------------------------------------------------------------------------
 // Keypad Rotation

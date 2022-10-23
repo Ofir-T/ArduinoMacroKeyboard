@@ -38,7 +38,7 @@ class MainFrame:
         # set window size
         self.master.geometry(f'{width}x{height}')
         master.title('Macro Keyboard Companion App')
-        
+
         # create main grid for placing the widgets
         self.frame = tk.Frame(master=self.master, borderwidth=0)
         for i in range (self.grid_rows):
@@ -52,6 +52,7 @@ class MainFrame:
                 # label['text'] = f'{i},{j}'
         self.frame.pack(side='top', fill='both', expand=True)
 
+        # test entry for bindings/macros
         self.test_entry_frame = tk.Frame(master=self.frame, borderwidth=0)
         entry = tk.Entry(self.test_entry_frame)
         entry.bind('<FocusIn>', self.clear_entry)
@@ -59,11 +60,13 @@ class MainFrame:
         entry.insert(0, 'Click here to test your macros')
         entry.pack(fill='both', expand=True)
         self.test_entry = entry
-        self.test_entry_frame.grid(row=1, column=2, columnspan=8, sticky='NSEW')
+        # self.test_entry_frame.grid(row=1, column=2, columnspan=8, sticky='NSEW')
 
+        # save changes button
         self.save_button = tk.Button(self.frame, text ="Save Changes")
         self.save_button.grid(row=9, column=12, columnspan=4, sticky='NSEW')
 
+        # macro keyboard widget
         self.keyboard = MacroKeyboard(self.frame, self)
         self.set_selector = SetSelector(self.frame, self)
         self.device_selector = DeviceSelector(
@@ -126,7 +129,7 @@ class MainFrame:
             for j in range(self.grid_cols):
                 self.grid_labels[i][j].config(text=f'{i},{j}', borderwidth=1)
                 print(self.grid_labels[i][j]['text'])
-        
+
         self.refresh_window()
 
     def hide_cells(self):
@@ -139,7 +142,7 @@ class MainFrame:
         self_str = f"""this object is a {type(self)} with attributes:
                     {attributes_str}"""
         return inspect.cleandoc(self_str)
-    
+
     def save_button_callback(self):
         tk.messagebox.showinfo(title=None, message='Changes Saved')
         self.AMK.save_to_arduino()
@@ -249,7 +252,7 @@ class DeviceSelector:
             if(chosen_device == device.description):
                 active_device = self.selected_callback(device.name)
         self.controller.notify({'active_device_changed':active_device})
-        
+
 class TestEntry:
     """GUI element for selecting the binding set to present/edit."""
     def __init__(self, master, controller, selector_values=[],
@@ -352,16 +355,18 @@ class Keypad: # maybe make it a disposable obj, to be destroyed and re-built on 
                     self.key_buttons[key_index].grid(row=i, column=j, sticky='NSEW')
 
                     # Create comboboxes to show when editing a key
-                    combobox_key, stringvar_key = self.create_key_combobox(key_name)
-                    # combobox_key.bind('<FocusOut>', 
+                    combobox_key, stringvar_key = self.create_key_combobox(key_name) # default: key_name
+                    # combobox_key.bind('<FocusOut>',
                     #                   lambda event, idx=key_index,:self.cbbx_focus_out(event, idx))
                     self.key_cbbx.append(combobox_key)
                     self.key_stringvar.append(stringvar_key)
                     self.key_cbbx[key_index].grid(row=i, column=j, sticky='NSEW')
                     self.key_cbbx[key_index].grid_remove()
 
+                    # Create text entry to show when editing a key
+
             self.frame.grid(row=1, column=0, sticky='NSEW')
-                
+
     def show_combobox(self, key_index):
         self.key_buttons[key_index].grid_remove()
         self.key_cbbx[key_index].grid()
@@ -370,29 +375,39 @@ class Keypad: # maybe make it a disposable obj, to be destroyed and re-built on 
     def show_button(self, key_index):
         self.key_cbbx[key_index].grid_remove()
         self.key_buttons[key_index].grid()
-                
+
     def cbbx_focus_out(self, event, key_index):
         self.show_button(key_index)
 
+
+    def clear_entry(self, event, combobox):
+        combobox.delete(0, 'end')
+
+    def fill_entry(self, event, combobox):
+        combobox.delete(0, 'end')
+        combobox.insert(0, '""')
+        combobox.icursor(1)
+
     def create_key_combobox(self, key_name):
+        """Creates a combobox to choose bindings from."""
         stringvar = tk.StringVar()
+
         combobox = ttk.Combobox(self.frame, textvariable=stringvar, width=6, style='Key.TCombobox')
         combobox['values'] = amk.Keycodes.get_key_names()
-        combobox['state'] = 'readonly'
+        combobox['state'] = 'normal'
         combobox.set(key_name)
+
         combobox.bind('<<ComboboxSelected>>',lambda event, arg=combobox: self.notify_key_changed(event, arg))
+        combobox.bind('<Return>',lambda event, arg=combobox: self.notify_key_changed(event, arg))
+        combobox.bind('<FocusIn>', lambda event, arg=combobox: self.fill_entry(event, arg))
+        # combobox.bind('<FocusOut>', lambda event, arg=combobox: self.clear_entry(event, arg))
+
         return combobox, stringvar
 
     def notify_key_changed(self, event, combobox):
+        """Sends a message to controller object that a bind has changed"""
         key_name = combobox.get()
         key_bind = amk.Keycodes.get_bind_of(key_name)
-        # print('KEYNAME(&%(&%$#')
-        # print(key_name)
-        # print('KEYCODE(&%(&%$#')
-        # print(amk.Keycodes.get_code_of(key_name))
-        # print('KEYBIND%$*%$')
-        # print(key_bind)
-
         self.controller.notify({'key_changed':[self.active_set,
                                                self.key_cbbx.index(combobox), key_bind]})
         logging.info(f'binding for key: ({self.active_set},{self.key_cbbx.index(combobox)}) changed to: {key_name} (bindstr: {key_bind})')
@@ -407,7 +422,7 @@ class Keypad: # maybe make it a disposable obj, to be destroyed and re-built on 
                 key_name = amk.Keycodes.get_name_of(ord(key_bind[1])) if (key_bind[0] != 's') else ('"' + ''.join(key_bind[1:]) + '"')
                 self.key_buttons[key_index]['text'] = key_name
                 self.show_button(key_index)
-            
+
 class Encoder:
     """GUI element representing the AMK's encoder."""
     def __init__(self, master, controller, AMK):
@@ -444,4 +459,4 @@ if __name__ == '__main__':
     app_window = MainFrame(root, WINDOW_WIDTH, WINDOW_HEIGHT)
     app_window.refresh_with(keypad)
     root.mainloop()
-    
+

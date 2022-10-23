@@ -1005,7 +1005,7 @@ class Keycodes: #consumer keys are not handled yet
     def get_key_names(cls) -> list:
         """Returns the names of all keys supported by AMK."""
         names_list = []
-        for name in cls.keyboard_keycode.keys():
+        for name in list(cls.keyboard_keycode.keys()) + list(cls.consumer_keycode.keys()):
             names_list.append(name)#name.split("_",1)[1])
         return names_list
 
@@ -1028,7 +1028,7 @@ class Keycodes: #consumer keys are not handled yet
         elif name in cls.consumer_keycode:
             return 'c' + chr(cls.consumer_keycode[name])
         elif name.startswith('"') and name.endswith('"'):
-            return 's' + name
+            return 's' + name[1:-1]
         return None
     
 
