@@ -26,5 +26,7 @@
 
 ## Last Task - Next Task
 - [V] adapt gui to bindstr
-- [ ] adapt comms PC -> Arduino (save data)
-- [ ] add string input to gui bindings
+- [V] adapt comms PC -> Arduino (save data)
+- [V] resolve debug message on app close (maybe acknowledgement message? and stop using debug messages when not debugging)
+- [V] add string input to gui bindings
+- [ ] rethink the acknoledgements
