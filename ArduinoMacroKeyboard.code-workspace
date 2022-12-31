@@ -7,5 +7,12 @@
 			"path": "PC Companion App"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"[python]": {
+			"editor.rulers": [
+				72,
+				79
+			]
+		},
+	}
 }

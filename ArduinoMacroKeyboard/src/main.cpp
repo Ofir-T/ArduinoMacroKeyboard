@@ -1,24 +1,29 @@
 /*
 Hello! this is the Arduino-Macro-Keyboard program,
 Project Details on Thingiverse @ https://www.thingiverse.com/thing:4628023.
-List of available action is TBD.
+List of available actions is TBD.
 by Ofir Temelman 19/04/22.
 */
 
+// version number: 2.x
+// version date: 10082022
+
 // Required libraries - don't forget to add them to your IDE!
 #include <Arduino.h>
+// #include <MemoryUsage.h>
+// #include "Configuration.h"
 #include <ClickEncoder.h> // by Schallbert
 #include <TimerOne.h>
 #include <HID-Project.h>
 #include <Blink.h>
-//#include <RawByteSerial.h>
-//#include <EEPROM.h>
-
+#include <EEPROM.h>
+#include <NonBlockingSerial.h>
+#include <Command.h>
 
 // ----------------------------------------------------------------------------
 // Name. This is the name of your AMK.
 //
-const char *amkName = "Yo Mama";
+const char *amkName= "Yo Mama";
 
 // ----------------------------------------------------------------------------
 // Encoder. A# is the analog pin number on the arduino that would get input from the encoder
@@ -37,208 +42,205 @@ void timer1_isr();
 // ----------------------------------------------------------------------------
 // Buttons & pins
 //
- void scanPad();
-//void pressRelease(int (*func)());
-//int scanPad();
-void scanEncoder();
-const int NUM_ROWS = 3;                                         // the size of the button grid: 3x3, 4x2, etc.
-const int NUM_COLS = 3;                                         // the size of the button grid: 3x3, 4x2, etc.
-int buttonPins[NUM_ROWS*NUM_COLS] = {   4, 3, 2,     // This defines the pins on the arduino, make it a const?
-                                        10, 6, 5,      // that will recieve the key presses
-                                        9, 7, 8   };                                                                 
-
+constexpr int NUM_ROWS = 3;                                    // the size of the button grid: 3x3, 4x2, etc.
+constexpr int NUM_COLS = 3;                                    // the size of the button grid: 3x3, 4x2, etc.
+constexpr int buttonPins[NUM_ROWS*NUM_COLS] = {   4, 3, 2,     // [1] [2] [3]
+                                                  10, 6, 5,    // [4] [5] [6]
+                                                  9, 7, 8   }; // [7] [8] [9]
 int buttonState[NUM_ROWS*NUM_COLS] = {LOW};
 int prevButtonState[NUM_ROWS*NUM_COLS] = {HIGH};
+boolean encoderHeld = false;
 
+void scanPad();
+void scanEncoder();
 // ----------------------------------------------------------------------------
 // LED - WIP
 //
-Blink statusLed(LED_BUILTIN_RX, 250);
+// Blink statusLed(LED_BUILTIN_RX, 250);
 
 // ----------------------------------------------------------------------------
 // Command Sets
 //
 int Toggle(int, int);
-const int NUM_SETS = 2;
-const int NUM_ENC_CMD = 5; // command to enter programming mode should be considered seperately, and excluded here
+constexpr int NUM_SETS = 2; // <=16 for Arduino micro because of eeprom size. 
+constexpr int NUM_ENC_CMD = 5;
 int activeSet = 0; // this determines the default command set that will be used when powered up.
 
-KeyboardKeycode keypadSets[NUM_SETS][NUM_ROWS*NUM_COLS] = 
-  {
-    {KEY_F13, KEY_F14, KEY_F15, KEY_F16, KEY_F17, KEY_F18, KEY_F19, KEY_F20, KEY_F21}, // Generic example of usually unused keys. works well with AutoHotKey
-    {KEY_1, KEY_Q, KEY_F, KEY_D, KEY_4, KEY_W, KEY_B, KEY_E, KEY_R}  // Example League of Legends set ;)
-  };
+Command *keypad[NUM_SETS][NUM_ROWS*NUM_COLS];
+Command *tempKeypad[NUM_SETS][NUM_ROWS*NUM_COLS];
+Command *encoderSet[NUM_SETS][NUM_ENC_CMD];
 
-KeyboardKeycode encoderSets[NUM_SETS][NUM_ENC_CMD] =
-{
-  {KEY_A, KEY_B, KEY_F22, KEY_F23, KEY_F24},
-  {KEYPAD_A, KEYPAD_B, KEY_F22, KEY_F23, KEY_F24}
-};
+// ----------------------------------------------------------------------------
+// Memory - SRAM & EEPROM
+// 
+/*
+  An Arduino Pro Micro has 1024 Bytes of EEPROM memory, and 2560 bytes of SRAM.
+  Command memory usage is as follows:
+  Chr - 2 Bytes
+  Cons - 2 Bytes
+  CStr - length + 2 Bytes
+
+Storage Addresses:
+  [0: firstBoot, 64->1024: Commands]
+
+*/
+
+const uint16_t reservedMemory = 64; // for future use
+constexpr uint16_t reservedRam = 1000; // according to rest of the program
+constexpr uint16_t keysetMem = reservedRam/4;
+constexpr uint16_t commandMemory = 1024-reservedMemory;
+const uint16_t sizePerSet = (960/NUM_SETS)-(NUM_ROWS*NUM_COLS)-NUM_ENC_CMD-1; // subtract null terminators
+uint16_t availableCommandMemory = 960;
+constexpr uint16_t BUFFER_SIZE = keysetMem+5; // +startMarker, endMarker, length, tag(2B)
+constexpr byte MAX_COMMAND_SIZE = Command::STRING_LENGTH+2; // 1B type, 1B seperator. Change STRING_LENGTH in Command.h to change this
+constexpr uint16_t MAX_COMMANDS = commandMemory/MAX_COMMAND_SIZE; //(useMemory) ? ((EEPROM.length()-reservedMemory)/MAX_STRING_LENGTH):(960/MAX_STRING_LENGTH);
+
+boolean debugEEPROM = false;
+boolean useMemory = true; // set to false if you don't want to store data in EEPROM.
+
+// constexpr int numcommands = NUM_SETS*(NUM_ENC_CMD + (NUM_ROWS*NUM_COLS));
+// static_assert((numcommands <= MAX_COMMANDS), "Number of commands defined exceeds reserved memory");
+
+int keypadStartAdress(int setIndex);
+int keypadMemSize(int setIndex);
+void printEepromAt(int addr);
+void byteArrToEeprom(byte [], int, int);
+void byteArrFromEeprom(byte pDest[], int startAddr, int length=keypadMemSize(activeSet));
 
 // ----------------------------------------------------------------------------
 // Serial communication
 //
-const int MAX_INPUT_LENGTH = 2 + max((NUM_ROWS*NUM_COLS), (NUM_ENC_CMD)) * NUM_SETS;
-char buffer[MAX_INPUT_LENGTH+1], content[MAX_INPUT_LENGTH+1]; // +1 for null terminator of character string
-char opCode, header;
-int end;
-byte endOfLine = '\n'; // as-is, \n collides with keyboardkeycode of 'g', which is also 0x0A
+constexpr long SERIAL_BAUDRATE = 56700;  // unnecessary since hid opens serial port anyway?
+byte inBuffer[BUFFER_SIZE], outBuffer[BUFFER_SIZE], tmpBuffer[BUFFER_SIZE];
+NonBlockingSerial2 nBSerial(BUFFER_SIZE, inBuffer, outBuffer, tmpBuffer);
 
 // ----------------------------------------------------------------------------
 // Companion app
 //
+
 boolean appIsOpen = false;                    
-void waitForApp();
-constexpr uint16_t SERIAL_BAUDRATE = 9600;  // unnecessary since hid opens serial port anyway?
-void readLine();
-void sendLayout();
-void sendKeyBinding();
-void setAppState(boolean);
-void sendMessage(char, char, const char *);
-void sendMessage(char, char, int);
-void setBindings(const char *);
+void parseMessage(byte*, int);
+void sendMessage(byte (*) (byte*));
+// void sendKeyBinding(Command *cmd);
+void keypadFromByteArray(byte*);
+int keypadToByteArray(byte *pDest, boolean fillString=false, boolean nullSeparation=true); // change to return int
+// int keypadFromByteArray(byte pSource[]);
+int commandFromByteArray(Command*&, byte[]);
 
 // ----------------------------------------------------------------------------
 // Debug Information
 //
-boolean debugSerialIn = false;
-boolean debugSerialOut = false;
-const char *opCodeError = "opCodeError";
-const char *headerError = "headerError";
-const char *unknownError = "unknownError";
-const char *lengthError = "lengthError";
-const char *contentError = "contentError";
-const char *notAFeatureError = "notAFeatureError";
-const char *waitingForApp = "waiting for app";
-const char *arduinoReady = "AMK ready";
-const char *appIsClosing = "app is closing";
+// boolean debugSerialIn = false;
+// boolean debugSerialOut = false;
 
+// commonly used strings. defining them this way reduces ram useage
+const char *opCodeError= "opCodeError";
+const char *headerError= "headerError";
+const char *unknownError= "unknownError";
+const char *lengthError= "lengthError";
+const char *contentError= "contentError";
+const char *commandTypeError= "commandTypeError";
+const char *waitingForApp= "Waiting for app";
+const char *arduinoReady= "Arduino Ready";//"AMK ready";
+const char *appIsClosing= "App is closing";
+const char *acknowledgement= "ACK";
 
-void latencyTest(void (*func)());
-constexpr float TEST_REPITITIONS = 100.0;   // number of times to test the function and take the average
 // ----------------------------------------------------------------------------
 // Keypad rotation
 //
-KeyboardKeycode tempArray[NUM_SETS][NUM_ROWS*NUM_COLS];
 
-int currentOrientation = 3; // 0,1,2,3 -> top, left, bottom, right
-int lastOrientation = 3;
-int delta = currentOrientation - lastOrientation;
+byte currentOrientation = 3; // 0,1,2,3 -> top, left, bottom, right
+byte lastOrientation = 3;
+byte delta = currentOrientation - lastOrientation;
 
-typedef KeyboardKeycode (*accessfn)(int k, int x, int y);
+typedef Command*& (*accessfn)(int k, int x, int y);
+Command*& normalK( int k, int x, int y){ return keypad[k][(NUM_COLS*x)+y]; }
+Command*& rotateCW( int k, int x, int y){ return keypad[k][(NUM_COLS-1-x)+3*y]; }   // <<<<<< This is the main thing
+Command*& rotateCCW( int k, int x, int y){ return keypad[k][3*(NUM_COLS-1-y)+x]; }
 
-KeyboardKeycode normal( int k, int x, int y){ return keypadSets[k][(NUM_COLS*x)+y]; }
-KeyboardKeycode rotateCW( int k, int x, int y){ return keypadSets[k][(NUM_COLS-1-x)+3*y]; }   // <<<<<< This is the main thing
-KeyboardKeycode rotateCCW( int k, int x, int y){ return keypadSets[k][3*(NUM_COLS-1-y)+x]; }
-
-void cloneArray()
-{
-  for (int k = 0; k < NUM_SETS; k++)
-    for (int i = 0; i < NUM_ROWS*NUM_COLS; i++)
-      keypadSets[k][i] = tempArray[k][i];
-}
-
-void rotateMatrix( accessfn afn)
-{
-  for (int k = 0; k < NUM_SETS; k++)
-  {
-    for (int x=0; x<NUM_ROWS; x++)
-    {
-      for(int y=0; y<NUM_COLS; y++)
-      {
-        tempArray[k][(NUM_COLS*x)+y] = afn(k,x,y); // now lets try and only pass the pointers
-      }
-    }
-  }
-  cloneArray();
-}
-
-void initTempArray()
-{
-  for (int k = 0; k < NUM_SETS; k++)
-    for (int i = 0; i < NUM_ROWS*NUM_COLS; i++)
-    {
-        tempArray[k][i] = keypadSets[k][i];
-    }
-}
-
-// void printArray()
-// {
-//   for (int k = 0; k < NUM_SETS; k++)
-//   {
-//     Serial.println("Set " + String(k) + ":");
-//     for(int i=0; i<NUM_COLS*NUM_ROWS; i++)
-//     {
-//       Serial.print(keypadSets[k][i]);
-      
-//       if((i+1) % NUM_COLS == 0) 
-//         Serial.println("");
-//       else
-//         Serial.print(" ");
-
-//       // delay(100);
-//     }
-//     Serial.println("");
-//   }
-//   Serial.println("");
-// }
-
-void checkOrientation()
-{ 
-  //currentOrientation = INPUT;
-  delta = currentOrientation - lastOrientation;
-
-  if(delta != 0)
-  {
-    if(delta > 0)
-    {
-      for(int j=0; j<delta; j++)
-        rotateMatrix(rotateCW);
-      // Serial.println("Rotating keypad clockwise");
-      // printArray();
-    }
-    else
-    {
-      for(int j=0; j>delta; j--)
-        rotateMatrix(rotateCCW);
-      // Serial.println("Rotating keypad counter-clockwise");
-      // printArray();
-    }
-  }
-
-  lastOrientation = currentOrientation;
-}
+void copyKeypad(Command *pSource[NUM_SETS][NUM_ROWS*NUM_COLS], Command *pDest[NUM_SETS][NUM_ROWS*NUM_COLS]);
+void rotateKeypad( accessfn afn);
+void checkOrientation();
 
 // ----------------------------------------------------------------------------
 // Initial setup of the encoder, buttons, led, and communication.
-// This is a one-time pre-run of stuff we need to get the code running as we planned
+// This is a one-time pre-run of stuff we need to get the code running as planned
 //
 void setup()
 {
-  pinMode(LED_BUILTIN_TX, INPUT);               // this is a trick to turn off the tx/rx onboard leds
-  //pinMode(LED_BUILTIN_RX, INPUT);
+  Serial.begin(SERIAL_BAUDRATE);
+  nBSerial.debugToPC("Serial.begin()");
+  delay(10000);
+  // NonBlockingSerial::initSerial(BUFFER_SIZE, SERIAL_BAUDRATE);
 
-//initialize the keypad buttons
-  for (int i = 0; i < NUM_ROWS*NUM_COLS ; i++)
+  // // print device data
+  sprintf((char*)tmpBuffer, "%s%s%s%s", ("firstBoot: "), (EEPROM.read(0)==255) ? ("true") : ("false"), (" usesMemory: "), (EEPROM.read(1)==255) ? ("true") : ("false"));
+  nBSerial.debugToPC((char*)tmpBuffer);
+
+  if(debugEEPROM)
   {
-    pinMode(buttonPins[i], INPUT_PULLUP); // this goes over every button-pin we defined earlier, and initializes them as input - 
-    digitalWrite(buttonPins[i], HIGH);    // so they can recieve signals and pullup, so we can connect them directly to the board without resistors
+    //commandMemory
+    Serial.println(F("commandMemory: "));
+    int startAddr = reservedMemory;
+    for(int i=0; i < int(commandMemory); i++)
+    {
+      printEepromAt(startAddr+i);
+      Serial.println(F(", "));
+    }
+    Serial.println();
   }
 
-  initTempArray();
-  buffer[0] = 0; // zero initialize
+  Serial.println(F("Using default keypad"));
+  for(int i=0; i<NUM_SETS;i++)
+  {
+    for(int j=0; j<NUM_ROWS*NUM_COLS; j++)
+    {
+      keypad[i][j] = new Chr((KEY_A+(i*NUM_ROWS*NUM_COLS)+j));
+    }
+  }
+  
+  if(useMemory)
+  {
+    int length=0;
+    if(EEPROM.read(0)==0)
+    {
+      // insert default keypad to eeprom
+      length = keypadToByteArray(tmpBuffer);
+      byteArrToEeprom(tmpBuffer, reservedMemory + (activeSet)*(commandMemory/NUM_SETS), length);
+    }
+    Serial.println(F("Retrieveing keypad"));
+    byteArrFromEeprom(tmpBuffer, (activeSet)*(commandMemory/NUM_SETS) + reservedMemory, 59); //maybe recursive function that constructes the keypad?
 
-// Encoder features
-  encoder.setAccelerationEnabled(true); // Comment/delete this line to disable acceleration. Adjusting acceleration values can be done in the ClickEncoder.h file
+    // print keypad
+    length = keypadToByteArray(tmpBuffer);
+    tmpBuffer[length] = 0;
+    nBSerial.debugToPC((char*)tmpBuffer);
+  }
+
+  // pinMode(LED_BUILTIN_TX, INPUT);               // this is a trick to turn off the tx/rx onboard leds
+  //pinMode(LED_BUILTIN_RX, INPUT);
+
+  //initialize arduino pins
+  for (int i = 0; i < NUM_ROWS*NUM_COLS ; i++)
+  {
+    pinMode(buttonPins[i], INPUT_PULLUP);
+    digitalWrite(buttonPins[i], HIGH); // because of pullup resistor
+  }
+
+  // Encoder features:
+  //  Comment/delete any line to disable the feature, or adjust values in ClickEncoder.h
+  encoder.setAccelerationEnabled(true);
   encoder.setDoubleClickEnabled(true);
   encoder.setLongPressRepeatEnabled(true);
 
-// initialize the timer, which the rotary encoder uses to detect rotation
+  // initialize the timer, which the rotary encoder uses to detect rotation
   timer1.attachInterrupt(timer1_isr);
   timer1.initialize(ENC_SERVICE_US);
 
-//initialize the hid Communication - From the next line onwards, the computer should see the arduino as a keyboard
-  Keyboard.begin(); 
+  //initialize the hid Communication - From the next line onwards, the computer should see the arduino as a keyboard
+  Keyboard.begin();
+
+  nBSerial.debugToPC(arduinoReady);
 }
 
 // ----------------------------------------------------------------------------
@@ -246,35 +248,15 @@ void setup()
 //
 void loop() 
 {
-//---------------------------------THIS---------------------------------
+  // NonBlockingSerial::getSerialData();
+  // if(NonBlockingSerial::allReceived)
+  //   parseMessage(NonBlockingSerial::dataRecvd, &NonBlockingSerial::dataSendCount);
+  nBSerial.getSerialData(); // if available
+  // nBSerial.echoToPC();
+  nBSerial.processData(parseMessage);
 
-  if (Serial.available() > 0) // Check for messages from the app
-  {
-    if(appIsOpen)
-        readLine();
-    else
-      waitForApp();
-  }
-  else // otherwise, keep scanning the buttons
-  {
-    scanPad();
-    scanEncoder();
-    checkOrientation();
-  }
-
-//---------------------------------OR THIS------------------------------
-
-  // if (Serial.available() > 0) // Check for messages from the app
-  // {
-  //   readLine(); 
-  // }
-  // else // otherwise, keep scanning the buttons
-  // {
-  //   //pressRelease(scanPad);
-  //   scanPad();
-  //   scanEncoder();
-  //   checkOrientation();
-  // }
+  scanPad();
+  scanEncoder();
 }
 
 // ----------------------------------------------------------------------------
@@ -282,76 +264,85 @@ void loop()
 //
 void scanPad() // Check if any of the keypad buttons was pressed & send the keystroke if needed
 {
-  for (int i = 0; i < NUM_ROWS*NUM_COLS ; i++) // goes over every button pin we defined
+  for (int i = 0; i < NUM_ROWS*NUM_COLS ; i++)
   {
-    buttonState[i] = digitalRead(buttonPins[i]); // reads current button state
+    buttonState[i] = digitalRead(buttonPins[i]); // read current button state
     if ((buttonState[i] != prevButtonState[i])) // button changed state
     {
       if(buttonState[i] == LOW) // button was pressed
       {
         if(appIsOpen)
-          sendMessage('p', 'k', i); // send the index of the button that was pressed, blocks the key action.
+          // sendMessage('p', 'k', i);
+          nBSerial.debugToPC("key pressed: " + char(i)); // tell app that a key was pressed. doesn't actuate command.
         else
-          Keyboard.press(keypadSets[activeSet][i]); // send the button's action
+          keypad[activeSet][i]->Send(); // actuate command
       }
       else // button was released
-        Keyboard.release(keypadSets[activeSet][i]); // release the button
+        keypad[activeSet][i]->Release();
     }
-    prevButtonState[i] = buttonState[i]; // this remebers the button's current state, so we can compare to it on the next round of the loop.
+    prevButtonState[i] = buttonState[i];
   } 
 
-  //delay(5); // a small delay after reading the buttons helps prevent accidental double-presses.
+  //delay(1); // a small delay after reading the buttons helps prevent accidental double-presses.
 }
 
 void scanEncoder()
 {
   static int16_t lastValue{0};
-    int16_t value = encoder.getAccumulate();
-    if (value != lastValue) // Encoder Rotation
-    {
-      if(lastValue>value) // Detecting the direction of rotation
-      { //clockwise rotation
-        Consumer.write(MEDIA_VOLUME_UP); // Replace this line to have a different function when rotating counter-clockwise
-        //Keyboard.press(encoderSets[activeSet][0]);
-        Keyboard.releaseAll();
-      }
-      else
-      { // counter-clockwise rotation
-        Consumer.write(MEDIA_VOLUME_DOWN); // Replace this line to have a different function when rotating clockwise
-        //Keyboard.press(encoderSets[activeSet][1]);
-        Keyboard.releaseAll();
-      }
+  int16_t value = encoder.getAccumulate();
+  if (value != lastValue) // Encoder Rotation
+  {
+    if(lastValue>value) // clockwise
+    { 
+      Consumer.write(MEDIA_VOLUME_UP);
+      Keyboard.releaseAll();
+      // encoderSet[activeSet][0]->Send();
+      // encoderSet[activeSet][0]->Release();
     }
-    lastValue = value;
-    
-    switch (encoder.getButton()) // Encoder Clicks
-    {
+    else // counter-clockwise rotation
+    { 
+      Consumer.write(MEDIA_VOLUME_DOWN);
+      Keyboard.releaseAll();
+      // encoderSet[activeSet][1]->Send();
+      // encoderSet[activeSet][1]->Release();
+    }
+  }
+  lastValue = value;
+  
+  switch (encoder.getButton()) // Encoder Clicks
+  {
     case Button::Clicked: // single click
-        Keyboard.press(encoderSets[activeSet][2]);
-        Keyboard.releaseAll();
-        break;
+      Consumer.write(MEDIA_PLAY_PAUSE);
+      // encoderSet[activeSet][2]->Send();
+      // encoderSet[activeSet][2]->Release();
+      break;
     case Button::DoubleClicked: // double click
-        currentOrientation = Toggle(currentOrientation, 4);
-        checkOrientation();
-        sendMessage('s', 'o', currentOrientation);
-        break;
-    case Button::LongPressRepeat: // right now, getting to long press repeat also triggers held command
-        break;
+      currentOrientation = Toggle(currentOrientation, 4);
+      checkOrientation();
+      nBSerial.debugToPC("orientation changed to " + char(currentOrientation));
+      break;
     case Button::Held:
-        if (!appIsOpen)
-        {
-          activeSet = Toggle(activeSet, NUM_SETS);
-          statusLed.sequence(3, 150);
-        }
-        // if (appIsOpen)
-        //     Serial.println("key set: " + String(activeSet));
-        break;
+      encoderHeld = true;// see Released.
+      // if (appIsOpen)
+      //     Serial.println("key set: " + String(activeSet));
+      break;
+    case Button::LongPressRepeat: // right now, getting to long press repeat also triggers held command
+      encoderHeld = false; // to prevent trigerring both held & longpressrepeat at the same time.
+      // encoderSet[activeSet][4]->Send();
+      // encoderSet[activeSet][4]->Release();
+      break;
     case Button::Released:
-        break;
+      if (!appIsOpen && encoderHeld) //this happens on encoder hold
+      {
+        activeSet = Toggle(activeSet, NUM_SETS);
+        // statusLed.sequence(3, 150);
+      }
+      encoderHeld = false;
+      break;
     default:
         // no output for "Open" or "Closed" to not spam the console.
         break;
-    }
+  }
 
   //delay(0.5); // a small delay after reading the buttons helps prevent accidental double-presses. Un-comment if you're having ghosting issues.
 }
@@ -361,6 +352,10 @@ void timer1_isr()
     // This is the Encoder's worker routine. It will physically read the hardware.
     // and all most of the logic happens here. Recommended interval for this method is 1ms.
     encoder.service();
+    /*
+      READ IMU
+    // readOrientationSensor();
+    */
 }
 
 // returns selector+1 over specified range. i.e. 0->1, 1->2,...,(range-2)->(range-1), (range-1)->0,...
@@ -374,209 +369,426 @@ int Toggle(int selector, int range)
   return selector;
 }
 
-//Start app communication
-void waitForApp()
+// ----------------------------------------------------------------------------
+// Communication Functions
+//
+
+// void sendMessage(byte (*procFunction) (byte *pSendBuffer)) // alternative to processData() to accept custom processing function
+// {
+//     // processes the data that is in dataRecvd[]
+//   NonBlockingSerial::checkInit();
+//   if (NonBlockingSerial::allReceived) {
+  
+//     NonBlockingSerial::debugToPC("processData()");
+//     NonBlockingSerial::dataSendCount = procFunction(NonBlockingSerial::dataSend);
+
+//     NonBlockingSerial::dataToPC();
+//     NonBlockingSerial::allReceived = false; 
+//   }
+// }
+
+void parseMessage(byte *pRecvBuffer, int recvLength)
 {
-  // read a 'line' from the serial into buffer, then split it to opCode, header, and content
-  end = Serial.readBytesUntil('\n', buffer, MAX_INPUT_LENGTH+2);
-  buffer[end] = '\0';
-  opCode = buffer[0];
-  header = buffer[1];
-  // something to do if buffer has less than 3 bytes in it. i.e. end < 3 ?
+  // process message and choose corresponding action
+  // nBSerial.debugToPC(__func__);
 
-  //not reading content because it is not important in this instance
+  byte opCode = *pRecvBuffer++;
+  byte header = *pRecvBuffer++;
+  int length;
 
-  // if the right message was recieved, signal ready
-  if(opCode == 'a' && header == 'o')
+  if(!appIsOpen)
   {
-    appIsOpen = true;
-    sendMessage('p', 'r', arduinoReady);
+    if(opCode == 'a' && header == 'o')
+    {
+      appIsOpen = true;
+      nBSerial.debugToPC(arduinoReady);
+    }
+    else
+      nBSerial.debugToPC(waitingForApp);
   }
   else
-    sendMessage('p', 'm', waitingForApp);
-}
-
-//measures execution time in milliseconds for any given void func(). used to estimate the keyboards latency.
-void latencyTest(void (*func)())
-{
-  unsigned long startMillis = millis();
-    for (int n = 0; n < TEST_REPITITIONS; n++) {
-      (*func)();
-    }
-    unsigned long endMillis = millis();
-    float delta = (endMillis - startMillis)/TEST_REPITITIONS;
-    Serial.println("Execution time: " + String(delta, 6) + "ms");
-}
-
-void readLine()
-{ 
-  // read a 'line' from the serial into buffer, then split it to opCode, header, and content
-  end = Serial.readBytesUntil('\n', buffer, MAX_INPUT_LENGTH+5);
-  buffer[end] = '\0';
-  opCode = buffer[0];
-  header = buffer[1];
-  //byte length = buffer[2]; //ignoring length for the time being
-  // something to do if buffer has less than 3 bytes in it. i.e. end < 3?
-  
-  for(byte i=2; i < strlen(buffer); i++)
   {
-    content[i-2] = buffer[i]; //-'0;
-  }
-
-  if(debugSerialIn == true) // "return to sender"
-      sendMessage('p', header, content);
-
-  // process message and choose corresponding action
-  switch(opCode)
-  {
-    case 'a': // app related requests
-      if(header == 'o')
-        sendMessage('e', header, arduinoReady);
-      else
-        if(header == 'c')
+    // parse message
+    switch(opCode)
+    {
+      // app start/stop
+      case 'a':
+        switch(header)
         {
-          sendMessage('p', opCode, appIsClosing);
-          appIsOpen = false;
-        }
-      break;
-    case 'g': // get requests
-      switch(header)
-      {
-        case 'e':
-          sendMessage('p', header, appIsOpen);
-          break;
-        case 'b':
-          sendKeyBinding();
-          break;
-        case 'c':
-          sendLayout();
-          break;
-        case 'o':
-          sendMessage('s', header, currentOrientation);
-          // sendKeyBinding();
-          break;
-        case 'a':
-          sendMessage('s', 'a', activeSet);
-          break;
-        case 'n':
-          sendMessage('s', 'n', amkName);
-          break;
-        default:
-        header = (header < '0') ? 'u' : header;
-        sendMessage('e', header, headerError);
-      }
-      break;//end get requests
-
-    case 's': // set requests 
-      switch(header)
-        {
-
-          case 'b':
-            setBindings(content);
-            sendKeyBinding();
+          case 'o':
+            nBSerial.debugToPC(arduinoReady);
+            nBSerial.echoToPC();
             break;
           case 'c':
-            sendMessage('e', header, headerError);
-            break;
-          case 'o':
-            currentOrientation = atoi(content);
-            checkOrientation();
-            sendMessage('s', header, currentOrientation);
-            //sendKeyBinding();
+            appIsOpen = false;
+            nBSerial.debugToPC(appIsClosing);
+            nBSerial.echoToPC();
             break;
           default:
             header = (header < '0') ? 'u' : header;
-            sendMessage('e', header, headerError);
+            nBSerial.debugToPC(headerError);
         }
-        break;  //end set requests
+        break;
 
-    case 't': // test requests
-      switch(header)
+      // get data from arduino
+      case 'g': 
+        switch(header)
+        {
+          case 'e':
+          {
+            Serial.println(F("commandMemory: "));
+            int startAddr = reservedMemory;
+            for(int i=0; i < int(commandMemory); i++)
+            {
+              printEepromAt(startAddr+i);
+              Serial.println(F(", "));
+            }
+            Serial.println();
+          }
+            break;
+          case 'b':
+            length = keypadToByteArray(tmpBuffer, false, true);
+            nBSerial.sendMessage('s', 'b', tmpBuffer, length);
+            break;
+          case 'c': 
+            sprintf((char*)tmpBuffer, "%d%d%d",NUM_ROWS, NUM_COLS, NUM_SETS);
+            nBSerial.sendMessage('s', 'c', tmpBuffer, 3);
+            break;
+          case 'o':
+            tmpBuffer[0] = currentOrientation;
+            nBSerial.sendMessage('s', 'o', tmpBuffer, 1);
+            // keypadToByteArray();
+            break;
+          case 'a':
+            tmpBuffer[0] = activeSet;
+            nBSerial.sendMessage('s', 'a', tmpBuffer, 1);
+            break;
+          case 'n':
+            memcpy(tmpBuffer, amkName, strlen(amkName)-1);
+            nBSerial.sendMessage('s', 'n', tmpBuffer, strlen(amkName)-1);
+            break;
+          default:
+            header = (header < '0') ? 'u' : header;
+            nBSerial.debugToPC(headerError);
+            // sendMessage('e', header, headerError);
+        }
+        break;//end get
+
+      // set data on arduino
+      case 's':
+        switch(header)
+        {
+          case 'b':
+            keypadFromByteArray(pRecvBuffer);
+            length = keypadToByteArray(tmpBuffer);
+
+            if(useMemory)
+              byteArrToEeprom(tmpBuffer, reservedMemory + (activeSet)*(commandMemory/NUM_SETS), length);
+
+            // tmpBuffer[length] = 0;
+            // nBSerial.debugToPC((char*)tmpBuffer); // confirmation message
+            nBSerial.sendMessage('s', 'b', tmpBuffer, length);
+            break;
+          case 'o':
+            currentOrientation = *pRecvBuffer;
+            checkOrientation();
+            tmpBuffer[0] = currentOrientation;
+            nBSerial.sendMessage('s', 'o', tmpBuffer, 1);
+            //keypadToByteArray();
+            break;
+          default:
+            header = (header < '0') ? 'u' : header; // maybe unnecessary?
+            nBSerial.debugToPC(headerError);
+            // sendMessage('e', header, headerError);
+        }
+        break;  //end set
+      break; // end processing requests
+      default:
+        nBSerial.debugToPC(headerError);
+        // sendMessage('e', header, opCodeError);
+    }
+  }
+}
+
+int keypadToByteArray(byte *pDest, boolean fillString, boolean nullSeparation) //message format: <(key_type,key_value),....>
+{ //NTS: should work for variable type sizes?.
+  // nBSerial.debugToPC(__func__);
+
+  byte temp[MAX_COMMAND_SIZE];
+  byte commandSize;
+  byte padding;
+  int startAddr = int(pDest);
+
+  for (byte k=0; k < NUM_SETS; k++)
+  {
+    for(byte i=0; i < NUM_COLS*NUM_ROWS; i++)
+    {
+      //command to byte array
+      commandSize = keypad[k][i]->toByteArray(temp);
+
+      //append command to dest/buffer
+      for(int n=0; n<commandSize; n++)
       {
-        case 'l':
-          latencyTest(scanPad);
-          latencyTest(scanEncoder);
-          sendMessage('e', header, "<latency test results>");
-          break;
-        case 'o':
-          sendMessage('s', header, currentOrientation);
-          //sendKeyBinding();
-          break;
-        default:
-        header = (header < '0') ? 'u' : header;
-        sendMessage('e', header, headerError);
+        *pDest++ = temp[n];
       }
-      break;//end test requests
-    break; // end processing requests
+
+      //add padding if needed
+      padding = 0;
+      if(fillString)
+        padding += MAX_COMMAND_SIZE-commandSize;
+      else
+        padding += (nullSeparation && !(keypad[k][i]->nullTerm())) ? 1 : 0;
+
+      while(padding-- > 0)
+      {
+        *pDest++ = 0;
+      }
+    }
+  }
+  // Serial.println(int(pDest)-startAddr);
+  return int(pDest)-startAddr; // return array length
+}
+
+// void sendKeyBinding(Command *cmd) // sends a single binding over serial
+// { 
+//   content[0]=0; // 'empty' content
+//   char temp[sizeof(cmd)+1]; // NTS: not sure what size it gives
+//   cmd->toCString(temp);
+//   strcat(content, temp);
+//   sendMessage('p', 'q', content);
+// }
+
+void keypadFromByteArray(byte *pSource)
+{
+  byte temp[MAX_COMMAND_SIZE];
+  byte *nextNull;
+  Command *newCommand;
+  // int count=0; //for data validation? make sure the full array is used?
+
+  //for each key...
+  for (int k = 0; k < NUM_SETS; k++)
+  {
+    for(int i=0; i<NUM_ROWS*NUM_COLS; i++)
+    {
+      nextNull = (byte*) memchr(pSource, 0, MAX_COMMAND_SIZE); // read data untill null(incl.)
+      memcpy(temp, pSource, (nextNull-pSource)); //insert command data into temp array
+      temp[(nextNull-pSource)] = 0;
+      if(commandFromByteArray(newCommand, temp)) // make temp array into command
+        Command::Replace(keypad[k][i], newCommand); // replace command in key // make sure it doesn't destroy the wrong object
+      pSource = nextNull+1;
+    }
+  }
+}
+
+
+int commandFromByteArray(Command *&dest, byte data[]) // creates a Command from and array of bytes
+{
+  switch(data[0])
+  {
+    case 'k':
+      dest = new Chr(data[1]);
+      break;
+    case 'c':
+      dest = new Cons(data[1]);
+      break;
+    case 's':
+      data++;
+      dest = new CStr((char*)data);
+      break;
     default:
-        sendMessage('e', header, opCodeError);
+      return 0;
   }
-  
-  if(debugSerialOut == true) // "return to sender"
-    sendMessage('p', header, content);
-} // end readline
-
-// sends to serial a message in the defined format. for message that is a character or a character string
-void sendMessage(char opCode, char header, const char *content)
-{
-  byte length = strlen(content);
-
-  Serial.write(opCode);
-  Serial.write(header);
-  Serial.write(length); // length of message in bytes
-  Serial.write(content);
-  Serial.write('\n');
+  return strlen((char*)data) + int(dest->nullTerm());
 }
 
-// sends to serial a message in the defined format. for messages that are an integer
-void sendMessage(char opCode, char header, int message)
-{
-  itoa(message, content, 10);
-  byte length = strlen(content);
+// int byteArrToKeypad(byte pSource[], Command ***pDest)
+// {
+//   byte temp[MAX_COMMAND_SIZE];
+//   byte *nextNull;
+//   Command *newCommand;
+//   int count=0;
+//   // int count=0; //for data validation? make sure the full array is used?
 
-  Serial.write(opCode);
-  Serial.write(header);
-  Serial.write(length);// length of message in bytes
-  Serial.write(content);
-  Serial.write('\n');
+//   //for each key...
+//   for (int k = 0; k < NUM_SETS; k++)
+//   {
+//     for(int i=0; i<NUM_ROWS*NUM_COLS; i++)
+//     {
+//       nextNull = (byte*) memchr(pSource, 0, MAX_COMMAND_SIZE); // read data untill null(incl.)
+//       memcpy(temp, pSource, (nextNull-pSource)); //insert command data into temp array
+//       temp[(nextNull-pSource)] = 0;
+//       count += commandFromByteArray(newCommand, temp);
+//       if(count > 0)
+//         Command::Replace(pDest[k][i], newCommand);
+//       pSource = nextNull+1;
+//     }
+//   }
+//   return count;
+// }
+
+// ----------------------------------------------------------------------------
+// Keypad Rotation
+//
+
+void copyKeypad(Command *pSource[NUM_SETS][NUM_ROWS*NUM_COLS], Command *pDest[NUM_SETS][NUM_ROWS*NUM_COLS])
+{
+  for (int k = 0; k < NUM_SETS; k++)
+    for (int i = 0; i < NUM_ROWS*NUM_COLS; i++)
+      pDest[k][i] = *&pSource[k][i];
 }
 
-void sendLayout() // sends the physical layout of the keyboard: number of key rows, number of key columns, number of key sets.
+void rotateKeypad( accessfn afn)
 {
-  sprintf(content, "%d%d%d",NUM_ROWS, NUM_COLS, NUM_SETS);
-  sendMessage('s', 'c', content);
+  copyKeypad(keypad, tempKeypad);
+  for (int k = 0; k < NUM_SETS; k++)
+  {
+    for (int x=0; x<NUM_ROWS; x++)
+    {
+      for(int y=0; y<NUM_COLS; y++)
+      {
+        tempKeypad[k][(NUM_COLS*x)+y] = afn(k,x,y);
+      }
+    }
+  }
+  copyKeypad(tempKeypad, keypad);
 }
 
-void sendKeyBinding() //message format: 
+
+void checkOrientation()
 { 
-  int buttonsPerSet = NUM_COLS*NUM_ROWS;
-  for (int k = 0; k < NUM_SETS; k++)
+  // if not in app mode!!
+  delta = currentOrientation - lastOrientation;
+
+  if(delta > 0)
   {
-    for(int i=0; i<NUM_COLS*NUM_ROWS; i++)
-    {
-      content[(k*buttonsPerSet) + i] = keypadSets[k][i];
-    }
+    for(int j=0; j<delta; j++)
+      rotateKeypad(rotateCW);
+    // Serial.println("Rotating keypad clockwise");
   }
-  sendMessage('s', 'b', content);
+  else if(delta < 0)
+  {
+    for(int j=0; j>delta; j--)
+      rotateKeypad(rotateCCW);
+    // Serial.println("Rotating keypad counter-clockwise");
+  }
+
+  lastOrientation = currentOrientation;
 }
 
-void setAppState(boolean value) // unused right now
+// ----------------------------------------------------------------------------
+// Memory Functions
+//
+void printEepromAt(int addr)//reads the specified EEPROM address and prints result to serial monitor
 {
-  appIsOpen = value;
+  byte value = EEPROM.read(addr);
+  Serial.print(addr);
+  Serial.print(F(":"));
+  Serial.print(value);
 }
 
-// sets the AMK's keybindings to those conatined in content (c-string).
-void setBindings(const char *content)
+void byteArrFromEeprom(byte pDest[], int startAddr, int length)
 {
-  int buttonsPerSet = NUM_COLS*NUM_ROWS;
-  for (int k = 0; k < NUM_SETS; k++)
+  // nBSerial.debugToPC(__func__);
+  // length = keypadMemSize(activeSet);
+  for (int i=0; i < length; i++)
   {
-    for(int i=0; i<buttonsPerSet; i++)
-    {
-      keypadSets[k][i] = KeyboardKeycode(content[(k*buttonsPerSet) + i]);
-    }
+    *pDest = EEPROM.read(startAddr+i);
+    pDest++;
   }
 }
+
+void byteArrToEeprom(byte source[], int startAddr, int length)
+{
+  if(length <= int(sizePerSet))
+    for(int i=0; i<length; i++)
+    {
+      EEPROM.update(startAddr+i, source[i]);
+    }
+  else
+    nBSerial.debugToPC("Source exceeds allowed size");
+}
+
+int keypadStartAdress(int setIndex)
+{
+  int count=0;
+  for(int i=0; i<=int(commandMemory)-1; i++)
+  {
+    if(count==setIndex)
+      return reservedMemory+i;
+    else if(EEPROM[reservedMemory+i]==0 && EEPROM[reservedMemory+i+1]==0)
+      count++;
+  }
+  return -1;
+}
+
+int keypadMemSize(int setIndex)
+{
+  int startAddr = keypadStartAdress(setIndex), addr=startAddr;
+  int count=0;
+
+  if(startAddr < 0)
+    return 0;
+
+  while(count < (NUM_ROWS*NUM_ROWS)) // find the #(buttonsPerSet) terminator
+  {
+    count+= (EEPROM.read(addr)==0) ? 1 : 0;
+    addr++;
+  }
+  return addr-startAddr;
+  // for(int i=0; i<sizePerSet; i++)
+  // {
+  //   count+= (EEPROM.read(startAddr+i)==0) ? 1 : 0;
+  //   if(count==(NUM_ROWS*NUM_COLS))
+  //     addr = startAddr+i;
+  // }
+  // return addr;
+}
+
+// //demonstrate keypad roation
+  // for(int i=0; i<4; i++)
+  // {
+  //   for(int j=0; j<NUM_ROWS*NUM_COLS; j++)
+  //   {
+  //     keypad[0][j]->Send();
+  //     delay(1);
+  //     keypad[0][j]->Release();
+  //     if((j+1)%NUM_COLS==0)
+  //       Keyboard.write(KEY_ENTER);
+  //     else
+  //       Keyboard.write(KEY_SPACE);
+  //   }
+  //   Keyboard.write(KEY_ENTER);
+  //   currentOrientation = Toggle(currentOrientation, 4);
+  //   checkOrientation();
+  // }
+
+// void saveKeypadToEeprom(Command* keypad[NUM_SETS][NUM_ROWS*NUM_COLS]) // seems mostly fine. add memory check
+// {
+//   byte temp[MAX_COMMAND_SIZE];
+//   byte commandSize;
+//   byte buttonsPerSet = NUM_COLS*NUM_ROWS;
+//   int index = reservedMemory;// uint_16?
+
+//   if(debugEEPROM)
+//     Serial.println(__func__); //debugToPc(__func__);
+
+//   for (byte k=0; k < NUM_SETS; k++)
+//   {
+//     for(byte i=0; i < buttonsPerSet; i++)
+//     {
+//       commandSize = keypad[k][i]->toByteArray(temp);// check that temp is actually written to
+
+//       // write array to EEPROM
+//       for(byte n=0; n<MAX_COMMAND_SIZE; n++)
+//       {
+//         EEPROM.update(index+n, temp[n]);
+//       }
+
+//       index += MAX_COMMAND_SIZE-commandSize+1; // supposed to add up to MAX_COMMAND_SIZE
+//       // printEepromAt(address);
+//     }
+//   }
+// }
 
 // ----------------------------------------------------------------------------
 // Work In Progress
@@ -646,54 +858,5 @@ void setBindings(const char *content)
 //       }
 //       prevButtonState[i] = buttonState[i]; // this remebers the button's current state, so we can compare to it on the next round of the loop.
 //     } 
-//   }
-// }
-
-
-// void rotator(int buttonPins, byte wantedOrientation)
-// {
-  
-// }
-//----------------------------------------------------------------------------------------
-//experimental scanning function
-
-// void scanPad(void (*func)(int button)) // Check if any of the keypad buttons was pressed & send the keystroke if needed
-// {
-//   for (int i = 0; i < NUM_ROWS * NUM_COLS ; i++) // goes over every button pin we defined
-//   {
-//     buttonState[i] = digitalRead(buttonPins[i]); // reads current button state
-//     if ((buttonState[i] != prevButtonState[i])) // if the button changed state, and is now pressed, do what's inside the statement
-//     {
-//       (*func)(i);
-//     }
-//     prevButtonState[i] = buttonState[i]; // this remebers the button's current state, so we can compare to it on the next round of the loop.
-//   }
-// }
-// Exclusive Button Hold: a flag/ function of holding a button prevents the inital click from actuating
-
-// void pressRelease()
-// {
-//   int button = scanPad();
-//   if(buttonState[button] == LOW)
-//     Keyboard.press(keypadSets[activeSet][button]);
-//   else
-//     Keyboard.release(keypadSets[activeSet][button]);
-// }
-
-// int getPin(int button)
-// {
-//   if(buttonState[button] == LOW)
-//     return buttonPins[button];
-// }
-
-// void rotateKeypad(int buttonPins, int lastOrientation)
-// {
-//   int currentOrientation = getOrientation();
-//   switch(currentOrientation-lastOrientation)
-//   {
-//     case 0:
-//       break;
-//     case 1:
-
 //   }
 // }

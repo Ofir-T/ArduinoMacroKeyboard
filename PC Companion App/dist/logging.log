@@ -1,0 +1,170 @@
+2022-06-26 12:57:17,862:INFO:Opened App
+2022-06-26 12:57:17,863:DEBUG:debug_test : True
+2022-06-26 12:57:17,863:DEBUG:debug_parsing : True
+2022-06-26 12:57:17,863:DEBUG:debug_out_comms : False
+2022-06-26 12:57:17,863:DEBUG:debug_in_comms : False
+2022-06-26 12:57:17,863:DEBUG:debug_resolution : False
+2022-06-26 12:57:17,863:DEBUG:debug_manual_comms : False
+2022-06-26 12:57:17,863:DEBUG:with_gui : True
+2022-06-26 12:57:17,873:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001E0875B30A0>]
+2022-06-26 12:57:17,874:INFO:Serial devices found: [Serial<id=0x1e0875b3550, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 12:57:17,874:INFO:AMK list: [<amk.AMK object at 0x000001E0875B3250>]
+2022-06-26 12:57:17,882:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001E0875B3040>]
+2022-06-26 12:57:17,889:INFO:COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001E0875B3580>]
+2022-06-26 12:57:20,125:ERROR:Uncaught exception
+Traceback (most recent call last):
+  File "main.py", line 400, in <module>
+  File "amk_gui.py", line 42, in open_window
+NameError: name 'arduino_comports' is not defined
+2022-06-26 18:25:17,811:INFO:Starting AMK companion app
+2022-06-26 18:25:17,811:DEBUG:Debug parameters:
+2022-06-26 18:25:17,811:DEBUG:debug_test : False
+2022-06-26 18:25:17,811:DEBUG:debug_parsing : False
+2022-06-26 18:25:17,811:DEBUG:debug_out_comms : False
+2022-06-26 18:25:17,811:DEBUG:debug_in_comms : False
+2022-06-26 18:25:17,811:DEBUG:debug_resolution : False
+2022-06-26 18:25:17,811:DEBUG:manual_comms : False
+2022-06-26 18:25:17,811:DEBUG:with_gui : True
+2022-06-26 18:25:17,889:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:25:17,889:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001A1B96C20D0>]
+2022-06-26 18:25:17,889:INFO:Loading GUI
+2022-06-26 18:25:23,977:INFO:Looking for the active serial port:
+2022-06-26 18:25:23,977:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:25:23,977:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:25:23,984:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001A1B974DA00>]
+2022-06-26 18:25:23,984:INFO:Serial ports found: [Serial<id=0x1a1b974da60, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:25:23,984:WARNING:Didn't find any open serial port
+2022-06-26 18:25:23,984:INFO:Opening serial port for device: COM4
+2022-06-26 18:25:23,984:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:25:23,984:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:25:23,991:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001A1B974DA00>]
+2022-06-26 18:25:23,991:INFO:Serial ports found: [Serial<id=0x1a1b974d9a0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:25:23,994:INFO:Success
+2022-06-26 18:25:23,994:INFO:querying arduino. tries left:3
+2022-06-26 18:25:25,065:INFO:Arduino: AMK device ready!
+2022-06-26 18:25:26,131:INFO:successfully switched to device: Yo Mama
+2022-06-26 18:25:42,139:INFO:Closing AMKAPP
+2022-06-26 18:27:02,790:INFO:Starting AMK companion app
+2022-06-26 18:27:02,790:DEBUG:Debug parameters:
+2022-06-26 18:27:02,790:DEBUG:debug_test : False
+2022-06-26 18:27:02,790:DEBUG:debug_parsing : False
+2022-06-26 18:27:02,790:DEBUG:debug_out_comms : False
+2022-06-26 18:27:02,790:DEBUG:debug_in_comms : False
+2022-06-26 18:27:02,790:DEBUG:debug_resolution : False
+2022-06-26 18:27:02,790:DEBUG:manual_comms : False
+2022-06-26 18:27:02,790:DEBUG:with_gui : True
+2022-06-26 18:27:02,868:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:27:02,868:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000019E32C19580>]
+2022-06-26 18:27:02,868:INFO:Loading GUI
+2022-06-26 18:27:07,963:INFO:Looking for the active serial port:
+2022-06-26 18:27:07,963:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:27:07,963:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:27:07,970:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000019E339CD910>]
+2022-06-26 18:27:07,970:INFO:Serial ports found: [Serial<id=0x19e339cd970, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:27:07,970:WARNING:Didn't find any open serial port
+2022-06-26 18:27:07,970:INFO:Opening serial port for device: COM4
+2022-06-26 18:27:07,970:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:27:07,970:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:27:07,977:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000019E339CD910>]
+2022-06-26 18:27:07,977:INFO:Serial ports found: [Serial<id=0x19e339cd8b0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:27:07,980:INFO:Success
+2022-06-26 18:27:07,980:INFO:querying arduino. tries left:3
+2022-06-26 18:27:09,050:INFO:Arduino: AMK device ready!
+2022-06-26 18:27:10,138:INFO:successfully switched to device: Yo Mama
+2022-06-26 18:27:38,067:INFO:Closing AMKAPP
+2022-06-26 18:29:37,298:INFO:Starting AMK companion app
+2022-06-26 18:29:37,298:DEBUG:Debug parameters:
+2022-06-26 18:29:37,298:DEBUG:debug_test : False
+2022-06-26 18:29:37,298:DEBUG:debug_parsing : False
+2022-06-26 18:29:37,298:DEBUG:debug_out_comms : False
+2022-06-26 18:29:37,298:DEBUG:debug_in_comms : False
+2022-06-26 18:29:37,298:DEBUG:debug_resolution : False
+2022-06-26 18:29:37,298:DEBUG:manual_comms : False
+2022-06-26 18:29:37,298:DEBUG:with_gui : True
+2022-06-26 18:29:37,377:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:29:37,392:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000021EF70A9580>]
+2022-06-26 18:29:37,392:INFO:Loading GUI
+2022-06-26 18:29:44,967:INFO:Looking for the active serial port:
+2022-06-26 18:29:44,967:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:29:44,967:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:29:44,974:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000021EF7E5D910>]
+2022-06-26 18:29:44,974:INFO:Serial ports found: [Serial<id=0x21ef7e5d970, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:29:44,974:WARNING:Didn't find any open serial port
+2022-06-26 18:29:44,974:INFO:Opening serial port for device: COM4
+2022-06-26 18:29:44,974:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:29:44,974:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:29:44,982:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000021EF7E5D910>]
+2022-06-26 18:29:44,983:INFO:Serial ports found: [Serial<id=0x21ef7e5d8b0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:29:44,985:INFO:Success
+2022-06-26 18:29:44,985:INFO:querying arduino. tries left:3
+2022-06-26 18:29:46,052:INFO:Arduino: AMK device ready!
+2022-06-26 18:29:47,138:INFO:successfully switched to device: Yo Mama
+2022-06-26 18:30:01,239:INFO:Saving AMK config to arduino
+2022-06-26 18:30:02,317:INFO:AMK config saved
+2022-06-26 18:30:04,676:INFO:Closing AMKAPP
+2022-06-26 18:30:11,183:INFO:Starting AMK companion app
+2022-06-26 18:30:11,183:DEBUG:Debug parameters:
+2022-06-26 18:30:11,183:DEBUG:debug_test : False
+2022-06-26 18:30:11,184:DEBUG:debug_parsing : False
+2022-06-26 18:30:11,184:DEBUG:debug_out_comms : False
+2022-06-26 18:30:11,184:DEBUG:debug_in_comms : False
+2022-06-26 18:30:11,184:DEBUG:debug_resolution : False
+2022-06-26 18:30:11,184:DEBUG:manual_comms : False
+2022-06-26 18:30:11,184:DEBUG:with_gui : True
+2022-06-26 18:30:11,259:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:30:11,268:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000235B8E99580>]
+2022-06-26 18:30:11,269:INFO:Loading GUI
+2022-06-26 18:30:13,937:INFO:Looking for the active serial port:
+2022-06-26 18:30:13,937:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:30:13,937:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:30:13,944:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000235B903D910>]
+2022-06-26 18:30:13,944:INFO:Serial ports found: [Serial<id=0x235b903d970, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:30:13,944:WARNING:Didn't find any open serial port
+2022-06-26 18:30:13,944:INFO:Opening serial port for device: COM4
+2022-06-26 18:30:13,944:INFO:Scanning Arduino devices for serial ports...
+2022-06-26 18:30:13,944:INFO:Scanning for Arduino COM devices...
+2022-06-26 18:30:13,952:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000235B903D910>]
+2022-06-26 18:30:13,952:INFO:Serial ports found: [Serial<id=0x235b903d8b0, open=False>(port='COM4', baudrate=9600, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-06-26 18:30:13,954:INFO:Success
+2022-06-26 18:30:13,954:INFO:querying arduino. tries left:3
+2022-06-26 18:30:15,024:INFO:Arduino: AMK device ready!
+2022-06-26 18:30:16,101:INFO:successfully switched to device: Yo Mama
+2022-06-26 18:30:26,503:INFO:Saving AMK config to arduino
+2022-06-26 18:30:27,588:INFO:AMK config saved
+2022-06-26 18:30:29,997:INFO:Closing AMKAPP
+2022-06-27 18:40:04,676:INFO:Starting AMK companion app
+2022-06-27 18:40:04,676:DEBUG:Debug parameters:
+2022-06-27 18:40:04,676:DEBUG:debug_test : False
+2022-06-27 18:40:04,676:DEBUG:debug_parsing : False
+2022-06-27 18:40:04,676:DEBUG:debug_out_comms : False
+2022-06-27 18:40:04,676:DEBUG:debug_in_comms : False
+2022-06-27 18:40:04,676:DEBUG:debug_resolution : False
+2022-06-27 18:40:04,676:DEBUG:manual_comms : False
+2022-06-27 18:40:04,676:DEBUG:with_gui : True
+2022-06-27 18:40:04,755:INFO:Scanning for Arduino COM devices...
+2022-06-27 18:40:04,765:INFO:Arduino COM devices found: []
+2022-06-27 18:40:04,766:INFO:Loading GUI
+2022-06-28 11:02:05,124:INFO:Starting AMK companion app
+2022-06-28 11:02:05,124:DEBUG:Debug parameters:
+2022-06-28 11:02:05,132:DEBUG:debug_test : False
+2022-06-28 11:02:05,132:DEBUG:debug_parsing : False
+2022-06-28 11:02:05,132:DEBUG:debug_out_comms : False
+2022-06-28 11:02:05,132:DEBUG:debug_in_comms : False
+2022-06-28 11:02:05,132:DEBUG:debug_resolution : False
+2022-06-28 11:02:05,132:DEBUG:manual_comms : False
+2022-06-28 11:02:05,132:DEBUG:with_gui : True
+2022-06-28 11:02:05,283:INFO:Scanning for Arduino COM devices...
+2022-06-28 11:02:05,357:INFO:Arduino COM devices found: []
+2022-06-28 11:02:05,357:INFO:Loading GUI
+2022-06-28 11:03:15,540:INFO:Starting AMK companion app
+2022-06-28 11:03:15,540:DEBUG:Debug parameters:
+2022-06-28 11:03:15,540:DEBUG:debug_test : False
+2022-06-28 11:03:15,540:DEBUG:debug_parsing : False
+2022-06-28 11:03:15,540:DEBUG:debug_out_comms : False
+2022-06-28 11:03:15,540:DEBUG:debug_in_comms : False
+2022-06-28 11:03:15,540:DEBUG:debug_resolution : False
+2022-06-28 11:03:15,540:DEBUG:manual_comms : False
+2022-06-28 11:03:15,540:DEBUG:with_gui : True
+2022-06-28 11:03:15,655:INFO:Scanning for Arduino COM devices...
+2022-06-28 11:03:15,667:INFO:Arduino COM devices found: []
+2022-06-28 11:03:15,668:INFO:Loading GUI
