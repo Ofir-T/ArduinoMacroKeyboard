@@ -96,7 +96,7 @@ class MainFrame:
                 self.refresh_with(self.AMK)
             if event == 'key_changed':
                 set_index, key_index, key_bind = data
-                self.AMK['bindings'][set_index][key_index] = key_bind
+                self.AMK['bindings'][0][key_index] = key_bind
                 self.refresh_with(self.AMK)
             if event == 'active_device_changed': #in progress
                 logging.info(f'Active device changed to: {data.name} at {data.serial_port}')
@@ -346,7 +346,8 @@ class Keypad: # maybe make it a disposable obj, to be destroyed and re-built on 
                     key_index = j + (i*AMK['num_cols'])
                     self.frame.rowconfigure(i, weight=1, uniform='key_height')
                     self.frame.columnconfigure(j, weight=1, uniform='key_width')
-                    key_bind = AMK['bindings'][AMK['active_set']][key_index]
+                    print(AMK['bindings'])
+                    key_bind = AMK['bindings'][0][key_index]
                     key_name = amk.Keycodes.get_name_of(ord(key_bind[1])) if (key_bind[0] != 's') else ('"' + ''.join(key_bind[1:]) + '"')
 
                     # Create a button to show the current binding

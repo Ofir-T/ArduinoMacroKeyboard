@@ -7,7 +7,7 @@
 #define Command_h
 
 #include "Arduino.h"
-#include <HID-Project.h>
+#include <boardInterface.h>
 
 // class amk:command for internal commands
 

@@ -4,7 +4,8 @@
 */
 #include "Arduino.h"
 #include "Command.h"
-#include <HID-Project.h>
+
+#include <boardInterface.h>
 
 // -----------class cpp implementation-----------
 void Command::Replace(Command *&oldCommand, Command *newCommand)// pointer-reference headace, C++ is weird.
@@ -20,7 +21,7 @@ Chr::Chr(byte _code)
 
 void Chr::Send()
 {
-  Keyboard.press(KeyboardKeycode(code));
+  KEYBOARD_PRESS(code);
   // if(debug)
   // {
   //   Serial.print("Chr: ");
@@ -30,7 +31,7 @@ void Chr::Send()
 
 void Chr::Release()
 {
-  Keyboard.release(KeyboardKeycode(code));
+  KEYBOARD_RELEASE(code);
   // Serial.print("Chr: ");
   // Serial.println(code);
 }
@@ -61,7 +62,7 @@ Cons::Cons(byte _code)
 
 void Cons::Send()
 {
-  Consumer.write(ConsumerKeycode(code));
+  CONSUMER_PRESS(code);
   // if(debug)
   // {
   //   Serial.print("Cons: ");
@@ -71,7 +72,7 @@ void Cons::Send()
 
 void Cons::Release()
 {
-  Consumer.release(ConsumerKeycode(code));
+  CONSUMER_RELEASE(code);
   // Serial.print("Cons: ");
   // Serial.println(code);
 }
@@ -105,7 +106,7 @@ CStr::CStr(char source[]) //with padding
 
 void CStr::Send()
 {
-  Keyboard.print(cstr);
+  KEYBOARD_WRITE(cstr);
   // if(debug)
   // {
   //   Serial.print("CStr: ");

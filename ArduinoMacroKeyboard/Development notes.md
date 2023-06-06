@@ -29,4 +29,5 @@
 - [V] adapt comms PC -> Arduino (save data)
 - [V] resolve debug message on app close (maybe acknowledgement message? and stop using debug messages when not debugging)
 - [V] add string input to gui bindings
+- [ ] fix the gui bug introduced in the last commit, check amk['binding'] nested list situation
 - [ ] rethink the acknoledgements

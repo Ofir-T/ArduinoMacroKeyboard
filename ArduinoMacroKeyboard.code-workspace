@@ -5,6 +5,10 @@
 		},
 		{
 			"path": "PC Companion App"
+		},
+		{
+			"name": "Seeduino Xiao ESP32C3",
+			"path": "../../PlatformIO/Projects/Seeduino Xiao ESP32C3"
 		}
 	],
 	"settings": {
@@ -13,6 +17,10 @@
 				72,
 				79
 			]
+		},
+		"files.associations": {
+			"xmemory": "cpp",
+			"system_error": "cpp"
 		},
 	}
 }

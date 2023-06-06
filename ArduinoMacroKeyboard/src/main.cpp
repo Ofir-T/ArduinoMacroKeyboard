@@ -11,10 +11,17 @@ by Ofir Temelman 19/04/22.
 // Required libraries - don't forget to add them to your IDE!
 #include <Arduino.h>
 // #include <MemoryUsage.h>
-// #include "Configuration.h"
+#include <configuration.h>
 #include <ClickEncoder.h> // by Schallbert
-#include <TimerOne.h>
-#include <HID-Project.h>
+#include <boardInterface.h>
+#ifdef BOARD_ESP32C3
+  // #include <BleKeyboard.h>
+  #include <Ticker.h>
+#else 
+  #ifdef BOARD_AVR
+    #include <HID-Project.h>
+  #endif
+#endif
 #include <Blink.h>
 #include <EEPROM.h>
 #include <NonBlockingSerial.h>
@@ -28,31 +35,53 @@ const char *amkName= "Yo Mama";
 // ----------------------------------------------------------------------------
 // Encoder. A# is the analog pin number on the arduino that would get input from the encoder
 //
-constexpr uint8_t ENCODER_CLK = A0;
-constexpr uint8_t ENCODER_DT = A1;
-constexpr uint8_t ENCODER_SW = A2;
+constexpr uint8_t ENCODER_CLK = D7;
+constexpr uint8_t ENCODER_DT = D8;
+constexpr uint8_t ENCODER_SW = D9;
 constexpr uint8_t ENCODER_STEPSPERNOTCH = 4;
 constexpr boolean BTN_ACTIVESTATE = LOW;         // Type of encoder button. Either active LOW or active High
 constexpr uint16_t ENC_SERVICE_US = 1000;     // 1ms
 
 static ClickEncoder encoder{ENCODER_CLK, ENCODER_DT, ENCODER_SW, ENCODER_STEPSPERNOTCH, BTN_ACTIVESTATE};
-static TimerOne timer1;
+static Ticker timer1;
 void timer1_isr();
+
+// BleKeyboard bleKeyboard("Xiao ESP32C3", "Seeed Studio", 100);
+
+int led = D10; // for testing?
+
 
 // ----------------------------------------------------------------------------
 // Buttons & pins
 //
-constexpr int NUM_ROWS = 3;                                    // the size of the button grid: 3x3, 4x2, etc.
-constexpr int NUM_COLS = 3;                                    // the size of the button grid: 3x3, 4x2, etc.
-constexpr int buttonPins[NUM_ROWS*NUM_COLS] = {   4, 3, 2,     // [1] [2] [3]
-                                                  10, 6, 5,    // [4] [5] [6]
-                                                  9, 7, 8   }; // [7] [8] [9]
-int buttonState[NUM_ROWS*NUM_COLS] = {LOW};
-int prevButtonState[NUM_ROWS*NUM_COLS] = {HIGH};
+const int channel[] = {D1, D2, D3, D4};
+const int sigPin = D5;
+const int enPin = D6;
+
+constexpr int NUM_ROWS = 3;                              // the size of the button grid: 3x3, 4x2, etc.
+constexpr int NUM_COLS = 3;                              // the size of the button grid: 3x3, 4x2, etc.
+constexpr int NUM_BUTTONS = 3;//NUM_ROWS*NUM_COLS;
+
+// constexpr int buttonPins[NUM_BUTTONS] = {   4, 3, 2,     // [1] [2] [3]
+//                                             10, 6, 5,    // [4] [5] [6]
+//                                             9, 7, 8   }; // [7] [8] [9]
+
+int buttonState = LOW;
+int prevButtonState[NUM_BUTTONS] = {HIGH};
 boolean encoderHeld = false;
 
 void scanPad();
 void scanEncoder();
+void setChannel(int channelNumber)
+{ // sets the channel to read/write (0-15)
+  for (int inputPin = 0; inputPin < 4; inputPin++)
+  {
+    // converts dec channel number to binary (sort of)
+    int pinState = bitRead(channelNumber, inputPin);
+    // turn the pin on or off:
+    digitalWrite(channel[inputPin],pinState);
+  }
+}
 // ----------------------------------------------------------------------------
 // LED - WIP
 //
@@ -66,8 +95,8 @@ constexpr int NUM_SETS = 2; // <=16 for Arduino micro because of eeprom size.
 constexpr int NUM_ENC_CMD = 5;
 int activeSet = 0; // this determines the default command set that will be used when powered up.
 
-Command *keypad[NUM_SETS][NUM_ROWS*NUM_COLS];
-Command *tempKeypad[NUM_SETS][NUM_ROWS*NUM_COLS];
+Command *keypad[NUM_SETS][NUM_BUTTONS];
+Command *tempKeypad[NUM_SETS][NUM_BUTTONS];
 Command *encoderSet[NUM_SETS][NUM_ENC_CMD];
 
 // ----------------------------------------------------------------------------
@@ -89,16 +118,16 @@ const uint16_t reservedMemory = 64; // for future use
 constexpr uint16_t reservedRam = 1000; // according to rest of the program
 constexpr uint16_t keysetMem = reservedRam/4;
 constexpr uint16_t commandMemory = 1024-reservedMemory;
-const uint16_t sizePerSet = (960/NUM_SETS)-(NUM_ROWS*NUM_COLS)-NUM_ENC_CMD-1; // subtract null terminators
+const uint16_t sizePerSet = (960/NUM_SETS)-(NUM_BUTTONS)-NUM_ENC_CMD-1; // subtract null terminators
 uint16_t availableCommandMemory = 960;
 constexpr uint16_t BUFFER_SIZE = keysetMem+5; // +startMarker, endMarker, length, tag(2B)
 constexpr byte MAX_COMMAND_SIZE = Command::STRING_LENGTH+2; // 1B type, 1B seperator. Change STRING_LENGTH in Command.h to change this
 constexpr uint16_t MAX_COMMANDS = commandMemory/MAX_COMMAND_SIZE; //(useMemory) ? ((EEPROM.length()-reservedMemory)/MAX_STRING_LENGTH):(960/MAX_STRING_LENGTH);
 
 boolean debugEEPROM = false;
-boolean useMemory = true; // set to false if you don't want to store data in EEPROM.
+boolean useMemory = false; // set to false if you don't want to store data in EEPROM.
 
-// constexpr int numcommands = NUM_SETS*(NUM_ENC_CMD + (NUM_ROWS*NUM_COLS));
+// constexpr int numcommands = NUM_SETS*(NUM_ENC_CMD + (NUM_BUTTONS));
 // static_assert((numcommands <= MAX_COMMANDS), "Number of commands defined exceeds reserved memory");
 
 int keypadStartAdress(int setIndex);
@@ -110,7 +139,7 @@ void byteArrFromEeprom(byte pDest[], int startAddr, int length=keypadMemSize(act
 // ----------------------------------------------------------------------------
 // Serial communication
 //
-constexpr long SERIAL_BAUDRATE = 56700;  // unnecessary since hid opens serial port anyway?
+constexpr long SERIAL_BAUDRATE = 115200;  // unnecessary since hid opens serial port anyway?
 byte inBuffer[BUFFER_SIZE], outBuffer[BUFFER_SIZE], tmpBuffer[BUFFER_SIZE];
 NonBlockingSerial2 nBSerial(BUFFER_SIZE, inBuffer, outBuffer, tmpBuffer);
 
@@ -158,7 +187,7 @@ Command*& normalK( int k, int x, int y){ return keypad[k][(NUM_COLS*x)+y]; }
 Command*& rotateCW( int k, int x, int y){ return keypad[k][(NUM_COLS-1-x)+3*y]; }   // <<<<<< This is the main thing
 Command*& rotateCCW( int k, int x, int y){ return keypad[k][3*(NUM_COLS-1-y)+x]; }
 
-void copyKeypad(Command *pSource[NUM_SETS][NUM_ROWS*NUM_COLS], Command *pDest[NUM_SETS][NUM_ROWS*NUM_COLS]);
+void copyKeypad(Command *pSource[NUM_SETS][NUM_BUTTONS], Command *pDest[NUM_SETS][NUM_BUTTONS]);
 void rotateKeypad( accessfn afn);
 void checkOrientation();
 
@@ -168,10 +197,31 @@ void checkOrientation();
 //
 void setup()
 {
+  //----------------
+
+  pinMode(led, OUTPUT);
+  pinMode(D0, INPUT_PULLUP); // for test button
+
+  for(byte i=0; i<4; i++)
+    pinMode(channel[i], OUTPUT);
+  pinMode(enPin, OUTPUT); // for use with outputs
+  pinMode(sigPin, INPUT); // or in
+
+  for(int i=0; i<5; i++){
+      digitalWrite(led, HIGH);   // turn the LED on
+      delay(200);
+      digitalWrite(led, LOW);   // turn the LED on
+      delay(200);
+    }
+
+  timer1.attach_ms(ENC_SERVICE_US/1000, timer1_isr);
+
   Serial.begin(SERIAL_BAUDRATE);
   nBSerial.debugToPC("Serial.begin()");
   delay(10000);
   // NonBlockingSerial::initSerial(BUFFER_SIZE, SERIAL_BAUDRATE);
+
+  EEPROM_BEGIN;
 
   // // print device data
   sprintf((char*)tmpBuffer, "%s%s%s%s", ("firstBoot: "), (EEPROM.read(0)==255) ? ("true") : ("false"), (" usesMemory: "), (EEPROM.read(1)==255) ? ("true") : ("false"));
@@ -193,9 +243,9 @@ void setup()
   Serial.println(F("Using default keypad"));
   for(int i=0; i<NUM_SETS;i++)
   {
-    for(int j=0; j<NUM_ROWS*NUM_COLS; j++)
+    for(int j=0; j<NUM_BUTTONS; j++)
     {
-      keypad[i][j] = new Chr((KEY_A+(i*NUM_ROWS*NUM_COLS)+j));
+      keypad[i][j] = new Chr(KEY_MEDIA_VOLUME_UP);//(0x04+(i*NUM_BUTTONS)+j));
     }
   }
   
@@ -217,15 +267,12 @@ void setup()
     nBSerial.debugToPC((char*)tmpBuffer);
   }
 
-  // pinMode(LED_BUILTIN_TX, INPUT);               // this is a trick to turn off the tx/rx onboard leds
-  //pinMode(LED_BUILTIN_RX, INPUT);
-
-  //initialize arduino pins
-  for (int i = 0; i < NUM_ROWS*NUM_COLS ; i++)
-  {
-    pinMode(buttonPins[i], INPUT_PULLUP);
-    digitalWrite(buttonPins[i], HIGH); // because of pullup resistor
-  }
+  // //initialize arduino pins
+  // for (int i = 0; i < NUM_BUTTONS ; i++)
+  // {
+  //   pinMode(buttonPins[i], INPUT_PULLUP);
+  //   digitalWrite(buttonPins[i], HIGH); // because of pullup resistor
+  // }
 
   // Encoder features:
   //  Comment/delete any line to disable the feature, or adjust values in ClickEncoder.h
@@ -233,12 +280,13 @@ void setup()
   encoder.setDoubleClickEnabled(true);
   encoder.setLongPressRepeatEnabled(true);
 
-  // initialize the timer, which the rotary encoder uses to detect rotation
-  timer1.attachInterrupt(timer1_isr);
-  timer1.initialize(ENC_SERVICE_US);
+  // // initialize the timer, which the rotary encoder uses to detect rotation
+  // timer1.attachInterrupt(timer1_isr);
+  // timer1.initialize(ENC_SERVICE_US);
 
   //initialize the hid Communication - From the next line onwards, the computer should see the arduino as a keyboard
-  Keyboard.begin();
+  // bleKeyboard.begin();
+  KEYBOARD_BEGIN;
 
   nBSerial.debugToPC(arduinoReady);
 }
@@ -248,15 +296,15 @@ void setup()
 //
 void loop() 
 {
-  // NonBlockingSerial::getSerialData();
-  // if(NonBlockingSerial::allReceived)
-  //   parseMessage(NonBlockingSerial::dataRecvd, &NonBlockingSerial::dataSendCount);
-  nBSerial.getSerialData(); // if available
-  // nBSerial.echoToPC();
-  nBSerial.processData(parseMessage);
+  // // NonBlockingSerial::getSerialData();
+  // // if(NonBlockingSerial::allReceived)
+  // //   parseMessage(NonBlockingSerial::dataRecvd, &NonBlockingSerial::dataSendCount);
+  // nBSerial.getSerialData(); // if available
+  // // nBSerial.echoToPC();
+  // nBSerial.processData(parseMessage);
 
   scanPad();
-  scanEncoder();
+  // scanEncoder();
 }
 
 // ----------------------------------------------------------------------------
@@ -264,27 +312,43 @@ void loop()
 //
 void scanPad() // Check if any of the keypad buttons was pressed & send the keystroke if needed
 {
-  for (int i = 0; i < NUM_ROWS*NUM_COLS ; i++)
+
+  //iterate through the first <NUM_BUTTONS> channels of the multiplexer
+  for (int buttonIndex = 0; buttonIndex < NUM_BUTTONS; buttonIndex++)
   {
-    buttonState[i] = digitalRead(buttonPins[i]); // read current button state
-    if ((buttonState[i] != prevButtonState[i])) // button changed state
-    {
-      if(buttonState[i] == LOW) // button was pressed
+    //set the channel pins based on the channel you want
+    setChannel(buttonIndex);
+    buttonState = digitalRead(sigPin);
+    if ((buttonState != prevButtonState[buttonIndex])) // button changed state
+    { 
+      if(buttonState == LOW) // button was pressed
       {
         if(appIsOpen)
+        {
           // sendMessage('p', 'k', i);
-          nBSerial.debugToPC("key pressed: " + char(i)); // tell app that a key was pressed. doesn't actuate command.
+          // nBSerial.debugToPC("key pressed: " + char(buttonIndex)); // tell app that a key was pressed. doesn't actuate command.
+          digitalWrite(led, HIGH);
+          Serial.print("button ");
+          Serial.print(buttonIndex);
+          Serial.println(" pressed");
+        }
         else
-          keypad[activeSet][i]->Send(); // actuate command
+          keypad[activeSet][buttonIndex]->Send(); // actuate command
       }
       else // button was released
-        keypad[activeSet][i]->Release();
+      {
+        keypad[activeSet][buttonIndex]->Release();
+        // bleKeyboard.releaseAll();
+        digitalWrite(led, LOW);
+        Serial.println("button release");
+      }
     }
-    prevButtonState[i] = buttonState[i];
-  } 
-
-  //delay(1); // a small delay after reading the buttons helps prevent accidental double-presses.
+    prevButtonState[buttonIndex] = buttonState;
+  }
+// delay(1); // a small delay after reading the buttons helps prevent accidental double-presses.
 }
+
+
 
 void scanEncoder()
 {
@@ -294,15 +358,17 @@ void scanEncoder()
   {
     if(lastValue>value) // clockwise
     { 
-      Consumer.write(MEDIA_VOLUME_UP);
-      Keyboard.releaseAll();
+      Serial.println("clockwise");
+      // Consumer.write(MEDIA_VOLUME_UP);
+      // Keyboard.releaseAll();
       // encoderSet[activeSet][0]->Send();
       // encoderSet[activeSet][0]->Release();
     }
     else // counter-clockwise rotation
     { 
-      Consumer.write(MEDIA_VOLUME_DOWN);
-      Keyboard.releaseAll();
+      Serial.println("counter-clockwise");
+      // Consumer.write(MEDIA_VOLUME_DOWN);
+      // Keyboard.releaseAll();
       // encoderSet[activeSet][1]->Send();
       // encoderSet[activeSet][1]->Release();
     }
@@ -312,7 +378,7 @@ void scanEncoder()
   switch (encoder.getButton()) // Encoder Clicks
   {
     case Button::Clicked: // single click
-      Consumer.write(MEDIA_PLAY_PAUSE);
+      Serial.println("encoder click");
       // encoderSet[activeSet][2]->Send();
       // encoderSet[activeSet][2]->Release();
       break;
@@ -568,7 +634,7 @@ void keypadFromByteArray(byte *pSource)
   //for each key...
   for (int k = 0; k < NUM_SETS; k++)
   {
-    for(int i=0; i<NUM_ROWS*NUM_COLS; i++)
+    for(int i=0; i<NUM_BUTTONS; i++)
     {
       nextNull = (byte*) memchr(pSource, 0, MAX_COMMAND_SIZE); // read data untill null(incl.)
       memcpy(temp, pSource, (nextNull-pSource)); //insert command data into temp array
@@ -612,7 +678,7 @@ int commandFromByteArray(Command *&dest, byte data[]) // creates a Command from 
 //   //for each key...
 //   for (int k = 0; k < NUM_SETS; k++)
 //   {
-//     for(int i=0; i<NUM_ROWS*NUM_COLS; i++)
+//     for(int i=0; i<NUM_BUTTONS; i++)
 //     {
 //       nextNull = (byte*) memchr(pSource, 0, MAX_COMMAND_SIZE); // read data untill null(incl.)
 //       memcpy(temp, pSource, (nextNull-pSource)); //insert command data into temp array
@@ -630,10 +696,10 @@ int commandFromByteArray(Command *&dest, byte data[]) // creates a Command from 
 // Keypad Rotation
 //
 
-void copyKeypad(Command *pSource[NUM_SETS][NUM_ROWS*NUM_COLS], Command *pDest[NUM_SETS][NUM_ROWS*NUM_COLS])
+void copyKeypad(Command *pSource[NUM_SETS][NUM_BUTTONS], Command *pDest[NUM_SETS][NUM_BUTTONS])
 {
   for (int k = 0; k < NUM_SETS; k++)
-    for (int i = 0; i < NUM_ROWS*NUM_COLS; i++)
+    for (int i = 0; i < NUM_BUTTONS; i++)
       pDest[k][i] = *&pSource[k][i];
 }
 
@@ -702,7 +768,7 @@ void byteArrToEeprom(byte source[], int startAddr, int length)
   if(length <= int(sizePerSet))
     for(int i=0; i<length; i++)
     {
-      EEPROM.update(startAddr+i, source[i]);
+      EEPROM_UPDATE(startAddr+i, source[i]);
     }
   else
     nBSerial.debugToPC("Source exceeds allowed size");
@@ -715,7 +781,7 @@ int keypadStartAdress(int setIndex)
   {
     if(count==setIndex)
       return reservedMemory+i;
-    else if(EEPROM[reservedMemory+i]==0 && EEPROM[reservedMemory+i+1]==0)
+    else if(EEPROM.read(reservedMemory+i)==0 && EEPROM.read(reservedMemory+i+1)==0)
       count++;
   }
   return -1;
@@ -738,7 +804,7 @@ int keypadMemSize(int setIndex)
   // for(int i=0; i<sizePerSet; i++)
   // {
   //   count+= (EEPROM.read(startAddr+i)==0) ? 1 : 0;
-  //   if(count==(NUM_ROWS*NUM_COLS))
+  //   if(count==(NUM_BUTTONS))
   //     addr = startAddr+i;
   // }
   // return addr;
@@ -747,7 +813,7 @@ int keypadMemSize(int setIndex)
 // //demonstrate keypad roation
   // for(int i=0; i<4; i++)
   // {
-  //   for(int j=0; j<NUM_ROWS*NUM_COLS; j++)
+  //   for(int j=0; j<NUM_BUTTONS; j++)
   //   {
   //     keypad[0][j]->Send();
   //     delay(1);
@@ -762,7 +828,7 @@ int keypadMemSize(int setIndex)
   //   checkOrientation();
   // }
 
-// void saveKeypadToEeprom(Command* keypad[NUM_SETS][NUM_ROWS*NUM_COLS]) // seems mostly fine. add memory check
+// void saveKeypadToEeprom(Command* keypad[NUM_SETS][NUM_BUTTONS]) // seems mostly fine. add memory check
 // {
 //   byte temp[MAX_COMMAND_SIZE];
 //   byte commandSize;
@@ -814,7 +880,7 @@ int keypadMemSize(int setIndex)
 //   }
 
 //   // test pins
-//   int newPinsArray[NUM_ROWS*NUM_COLS];
+//   int newPinsArray[NUM_BUTTONS];
 //   for (int button = 0; button < NUM_ROWS * NUM_COLS ; button++)
 //   {
 //     newPinsArray[button] = findPin();
