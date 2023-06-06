@@ -1,0 +1,186 @@
+2022-12-31 10:47:22,649:INFO:Starting AMK companion app
+2022-12-31 10:47:22,649:INFO:Logging level: 20 (10: DEBUG, 20: INFO)
+2022-12-31 10:47:25,690:INFO:Scanning for Arduino COM devices...
+2022-12-31 10:47:25,712:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000248C1761F30>]
+2022-12-31 10:47:25,712:INFO:Refreshing window
+2022-12-31 10:47:27,273:INFO:Looking for the active serial port:
+2022-12-31 10:47:27,273:INFO:Scanning Arduino devices for serial ports...
+2022-12-31 10:47:27,273:INFO:Scanning for Arduino COM devices...
+2022-12-31 10:47:27,282:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000248C1762470>]
+2022-12-31 10:47:27,282:INFO:Serial ports found: [Serial<id=0x248c1762050, open=False>(port='COM4', baudrate=56700, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-12-31 10:47:27,291:WARNING:Didn't find any open serial port
+2022-12-31 10:47:27,291:INFO:Opening serial port for device: COM4
+2022-12-31 10:47:27,291:INFO:Scanning Arduino devices for serial ports...
+2022-12-31 10:47:27,291:INFO:Scanning for Arduino COM devices...
+2022-12-31 10:47:27,291:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x00000248C1762440>]
+2022-12-31 10:47:27,291:INFO:Serial ports found: [Serial<id=0x248c17620e0, open=False>(port='COM4', baudrate=56700, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-12-31 10:47:27,291:INFO:Serial port opened successfully
+2022-12-31 10:47:27,291:INFO:successfully switched port to: COM4
+2022-12-31 10:47:28,909:INFO:successfully switched device to: Yo Mam
+2022-12-31 10:47:28,909:INFO:Active device changed to: Yo Mam at Serial<id=0x248c17620e0, open=True>(port='COM4', baudrate=56700, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)
+2022-12-31 10:48:42,061:INFO:Closing AMKAPP...
+2022-12-31 10:48:44,631:INFO:Closing AMKAPP...
+2022-12-31 10:48:48,082:ERROR:Uncaught exception
+Traceback (most recent call last):
+  File "c:\Users\Ofir\Documents\GitHub\ArduinoMacroKeyboard\PC Companion App\src\main.py", line 482, in <module>
+    open_window()
+  File "c:\Users\Ofir\Documents\GitHub\ArduinoMacroKeyboard\PC Companion App\src\main.py", line 466, in open_window
+    root.mainloop() # Pass control to tkinter's handlers. Blocking function
+  File "C:\Users\Ofir\AppData\Local\Programs\Python\Python310\lib\tkinter\__init__.py", line 1458, in mainloop
+    self.tk.mainloop(n)
+KeyboardInterrupt
+2022-12-31 10:50:51,268:INFO:Starting AMK companion app
+2022-12-31 10:50:51,268:INFO:Logging level: 20 (10: DEBUG, 20: INFO)
+2022-12-31 10:50:53,772:INFO:Scanning for Arduino COM devices...
+2022-12-31 10:50:53,772:INFO:Arduino COM devices found: []
+2022-12-31 10:50:53,772:INFO:Refreshing window
+2022-12-31 10:51:09,069:INFO:Scanning for Arduino COM devices...
+2022-12-31 10:51:09,069:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000027EC34DEA40>]
+2022-12-31 10:51:09,069:INFO:Refreshing window
+2022-12-31 10:51:11,054:INFO:Looking for the active serial port:
+2022-12-31 10:51:11,054:INFO:Scanning Arduino devices for serial ports...
+2022-12-31 10:51:11,054:INFO:Scanning for Arduino COM devices...
+2022-12-31 10:51:11,061:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000027EC34DF0A0>]
+2022-12-31 10:51:11,061:INFO:Serial ports found: [Serial<id=0x27ec34deb60, open=False>(port='COM4', baudrate=56700, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-12-31 10:51:11,061:WARNING:Didn't find any open serial port
+2022-12-31 10:51:11,061:INFO:Opening serial port for device: COM4
+2022-12-31 10:51:11,062:INFO:Scanning Arduino devices for serial ports...
+2022-12-31 10:51:11,062:INFO:Scanning for Arduino COM devices...
+2022-12-31 10:51:11,069:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000027EC34DF010>]
+2022-12-31 10:51:11,069:INFO:Serial ports found: [Serial<id=0x27ec34debf0, open=False>(port='COM4', baudrate=56700, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-12-31 10:51:11,069:INFO:Serial port opened successfully
+2022-12-31 10:51:11,069:INFO:successfully switched port to: COM4
+2022-12-31 10:51:17,512:INFO:successfully switched device to: Yo Mam
+2022-12-31 10:51:17,512:INFO:Active device changed to: Yo Mam at Serial<id=0x27ec34debf0, open=True>(port='COM4', baudrate=56700, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)
+2022-12-31 10:51:17,536:INFO:Closing AMKAPP...
+2022-12-31 10:51:27,110:INFO:Closing AMKAPP...
+2022-12-31 10:51:41,110:INFO:Starting AMK companion app
+2022-12-31 10:51:41,110:INFO:Logging level: 20 (10: DEBUG, 20: INFO)
+2022-12-31 10:51:43,746:INFO:Scanning for Arduino COM devices...
+2022-12-31 10:51:43,761:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000022E71A7D5D0>]
+2022-12-31 10:51:43,761:INFO:Refreshing window
+2022-12-31 10:51:44,683:INFO:Looking for the active serial port:
+2022-12-31 10:51:44,683:INFO:Scanning Arduino devices for serial ports...
+2022-12-31 10:51:44,683:INFO:Scanning for Arduino COM devices...
+2022-12-31 10:51:44,691:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000022E71A7D6F0>]
+2022-12-31 10:51:44,691:INFO:Serial ports found: [Serial<id=0x22e71a7d780, open=False>(port='COM4', baudrate=56700, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-12-31 10:51:44,691:WARNING:Didn't find any open serial port
+2022-12-31 10:51:44,691:INFO:Opening serial port for device: COM4
+2022-12-31 10:51:44,691:INFO:Scanning Arduino devices for serial ports...
+2022-12-31 10:51:44,691:INFO:Scanning for Arduino COM devices...
+2022-12-31 10:51:44,698:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000022E71A7DAE0>]
+2022-12-31 10:51:44,698:INFO:Serial ports found: [Serial<id=0x22e71a7d7b0, open=False>(port='COM4', baudrate=56700, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-12-31 10:51:44,698:INFO:Serial port opened successfully
+2022-12-31 10:51:44,698:INFO:successfully switched port to: COM4
+2022-12-31 10:51:46,327:INFO:successfully switched device to: Yo Mam
+2022-12-31 10:51:46,328:INFO:Active device changed to: Yo Mam at Serial<id=0x22e71a7d7b0, open=True>(port='COM4', baudrate=56700, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)
+2022-12-31 10:53:27,553:INFO:Closing AMKAPP...
+2022-12-31 10:53:29,736:INFO:Closed serial port
+2022-12-31 10:53:30,093:INFO:Window destroyed
+2022-12-31 10:53:31,554:INFO:Starting AMK companion app
+2022-12-31 10:53:31,554:INFO:Logging level: 20 (10: DEBUG, 20: INFO)
+2022-12-31 10:53:33,817:INFO:Scanning for Arduino COM devices...
+2022-12-31 10:53:33,832:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001570B98EA40>]
+2022-12-31 10:53:33,832:INFO:Refreshing window
+2022-12-31 10:53:34,786:INFO:Looking for the active serial port:
+2022-12-31 10:53:34,786:INFO:Scanning Arduino devices for serial ports...
+2022-12-31 10:53:34,786:INFO:Scanning for Arduino COM devices...
+2022-12-31 10:53:34,786:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001570B98F0A0>]
+2022-12-31 10:53:34,786:INFO:Serial ports found: [Serial<id=0x1570b98eb60, open=False>(port='COM4', baudrate=56700, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-12-31 10:53:34,786:WARNING:Didn't find any open serial port
+2022-12-31 10:53:34,786:INFO:Opening serial port for device: COM4
+2022-12-31 10:53:34,786:INFO:Scanning Arduino devices for serial ports...
+2022-12-31 10:53:34,786:INFO:Scanning for Arduino COM devices...
+2022-12-31 10:53:34,802:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000001570B98F010>]
+2022-12-31 10:53:34,802:INFO:Serial ports found: [Serial<id=0x1570b98ebf0, open=False>(port='COM4', baudrate=56700, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-12-31 10:53:34,802:INFO:Serial port opened successfully
+2022-12-31 10:53:34,802:INFO:successfully switched port to: COM4
+2022-12-31 10:53:36,421:INFO:successfully switched device to: Yo Mam
+2022-12-31 10:53:36,422:INFO:Active device changed to: Yo Mam at Serial<id=0x1570b98ebf0, open=True>(port='COM4', baudrate=56700, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)
+2022-12-31 10:54:56,249:INFO:Closing AMKAPP...
+2022-12-31 10:54:58,186:INFO:Closed serial port
+2022-12-31 10:54:58,454:INFO:Window destroyed
+2022-12-31 10:54:58,776:INFO:Starting AMK companion app
+2022-12-31 10:54:58,776:INFO:Logging level: 20 (10: DEBUG, 20: INFO)
+2022-12-31 10:55:00,702:INFO:Scanning for Arduino COM devices...
+2022-12-31 10:55:00,713:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000022E6A60EA40>]
+2022-12-31 10:55:00,713:INFO:Refreshing window
+2022-12-31 10:55:02,112:INFO:Looking for the active serial port:
+2022-12-31 10:55:02,112:INFO:Scanning Arduino devices for serial ports...
+2022-12-31 10:55:02,112:INFO:Scanning for Arduino COM devices...
+2022-12-31 10:55:02,127:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000022E6A60F0A0>]
+2022-12-31 10:55:02,127:INFO:Serial ports found: [Serial<id=0x22e6a60eb60, open=False>(port='COM4', baudrate=56700, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-12-31 10:55:02,127:WARNING:Didn't find any open serial port
+2022-12-31 10:55:02,127:INFO:Opening serial port for device: COM4
+2022-12-31 10:55:02,127:INFO:Scanning Arduino devices for serial ports...
+2022-12-31 10:55:02,127:INFO:Scanning for Arduino COM devices...
+2022-12-31 10:55:02,134:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000022E6A60F010>]
+2022-12-31 10:55:02,134:INFO:Serial ports found: [Serial<id=0x22e6a60ebf0, open=False>(port='COM4', baudrate=56700, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-12-31 10:55:02,134:INFO:Serial port opened successfully
+2022-12-31 10:55:02,134:INFO:successfully switched port to: COM4
+2022-12-31 10:55:03,769:INFO:successfully switched device to: Yo Mam
+2022-12-31 10:55:03,769:INFO:Active device changed to: Yo Mam at Serial<id=0x22e6a60ebf0, open=True>(port='COM4', baudrate=56700, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)
+2022-12-31 10:55:03,790:INFO:Scanning for Arduino COM devices...
+2022-12-31 10:55:03,801:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x0000022E6A5F0160>]
+2022-12-31 10:55:03,802:INFO:Refreshing window
+2022-12-31 10:55:25,197:INFO:Saving AMK config to arduino
+2022-12-31 10:55:25,519:INFO:AMK config saved
+2022-12-31 10:55:34,007:INFO:Saving AMK config to arduino
+2022-12-31 10:55:34,336:INFO:AMK config saved
+2022-12-31 10:56:54,203:INFO:Saving AMK config to arduino
+2022-12-31 10:56:54,533:INFO:AMK config saved
+2022-12-31 10:57:01,692:INFO:Saving AMK config to arduino
+2022-12-31 10:57:02,033:INFO:AMK config saved
+2022-12-31 10:58:42,532:INFO:Closing AMKAPP...
+2022-12-31 10:58:44,930:INFO:Closed serial port
+2022-12-31 10:58:45,248:INFO:Window destroyed
+2022-12-31 11:02:03,326:INFO:Starting AMK companion app
+2022-12-31 11:02:03,326:INFO:Logging level: 20 (10: DEBUG, 20: INFO)
+2022-12-31 11:02:04,778:INFO:Scanning for Arduino COM devices...
+2022-12-31 11:02:04,794:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002E0E0F0EA10>]
+2022-12-31 11:02:04,794:INFO:Refreshing window
+2022-12-31 11:02:05,700:INFO:Looking for the active serial port:
+2022-12-31 11:02:05,700:INFO:Scanning Arduino devices for serial ports...
+2022-12-31 11:02:05,700:INFO:Scanning for Arduino COM devices...
+2022-12-31 11:02:05,708:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002E0E0F0F070>]
+2022-12-31 11:02:05,708:INFO:Serial ports found: [Serial<id=0x2e0e0f0eb30, open=False>(port='COM4', baudrate=56700, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-12-31 11:02:05,708:WARNING:Didn't find any open serial port
+2022-12-31 11:02:05,708:INFO:Opening serial port for device: COM4
+2022-12-31 11:02:05,708:INFO:Scanning Arduino devices for serial ports...
+2022-12-31 11:02:05,708:INFO:Scanning for Arduino COM devices...
+2022-12-31 11:02:05,714:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002E0E0F0EFE0>]
+2022-12-31 11:02:05,714:INFO:Serial ports found: [Serial<id=0x2e0e0f0ebc0, open=False>(port='COM4', baudrate=56700, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)]
+2022-12-31 11:02:05,714:INFO:Serial port opened successfully
+2022-12-31 11:02:05,714:INFO:successfully switched port to: COM4
+2022-12-31 11:02:07,317:INFO:successfully switched device to: Yo Mam
+2022-12-31 11:02:07,317:INFO:Active device changed to: Yo Mam at Serial<id=0x2e0e0f0ebc0, open=True>(port='COM4', baudrate=56700, bytesize=8, parity='N', stopbits=1, timeout=1, xonxoff=False, rtscts=False, dsrdtr=False)
+2022-12-31 11:02:07,334:INFO:Scanning for Arduino COM devices...
+2022-12-31 11:02:07,344:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002E0E0EF0160>]
+2022-12-31 11:02:07,344:INFO:Refreshing window
+2022-12-31 11:02:23,387:INFO:Scanning for Arduino COM devices...
+2022-12-31 11:02:23,400:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002E0E0EF1EA0>]
+2022-12-31 11:02:23,400:INFO:Refreshing window
+2022-12-31 11:02:23,780:INFO:binding for key: (1,2) changed to: KEY_DELETE (bindstr: kL)
+2022-12-31 11:02:34,377:INFO:Scanning for Arduino COM devices...
+2022-12-31 11:02:34,387:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002E0E0EDFB80>]
+2022-12-31 11:02:34,388:INFO:Refreshing window
+2022-12-31 11:02:34,430:INFO:binding for key: (1,8) changed to: "doo" (bindstr: sdoo)
+2022-12-31 11:02:47,000:INFO:Scanning for Arduino COM devices...
+2022-12-31 11:02:47,008:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002E0E0EDD540>]
+2022-12-31 11:02:47,008:INFO:Refreshing window
+2022-12-31 11:02:47,056:INFO:binding for key: (1,2) changed to: KEY_J (bindstr: k)
+2022-12-31 11:02:50,709:INFO:Saving AMK config to arduino
+2022-12-31 11:02:51,054:INFO:AMK config saved
+2022-12-31 11:03:12,519:INFO:Scanning for Arduino COM devices...
+2022-12-31 11:03:12,530:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002E0E0F315D0>]
+2022-12-31 11:03:12,530:INFO:Refreshing window
+2022-12-31 11:03:12,579:INFO:binding for key: (1,0) changed to: "yaba" (bindstr: syaba)
+2022-12-31 11:03:17,931:INFO:Scanning for Arduino COM devices...
+2022-12-31 11:03:17,943:INFO:Arduino COM devices found: [<serial.tools.list_ports_common.ListPortInfo object at 0x000002E0E0F33AF0>]
+2022-12-31 11:03:17,943:INFO:Refreshing window
+2022-12-31 11:03:17,998:INFO:binding for key: (1,1) changed to: "daba" (bindstr: sdaba)
+2022-12-31 11:03:23,005:INFO:Saving AMK config to arduino
+2022-12-31 11:03:23,391:INFO:AMK config saved
+2022-12-31 11:03:30,872:INFO:Closing AMKAPP...
+2022-12-31 11:03:33,195:INFO:Closed serial port
+2022-12-31 11:03:33,639:INFO:Window destroyed

@@ -115,58 +115,6 @@ def chuncks(lst, n):
     for i in range(0, len(lst), n):
         yield lst[i:i + n]
 
-# def readlines():
-#     data =   CURRENT_AMK.serial_port.readlines()
-#     return data
-
-# def write_readlines(message):
-#     """Writes a message on serial, expecting an anwser.  \
-#     Reads multiple lines, if available.
-
-#     :param message: A message to AMK in the specified protocol.
-#     :returns: The reply from AMK device
-#     """
-#     global   CURRENT_AMK
-#     message_type = type(message) #NTS: maybe just write type(message)? or match-case?
-
-#     if message_type == str:
-#         message = bytes(message, ENCODING)
-#     elif message_type == bytes:
-#         message = message
-
-#     CURRENT_AMK.serial_port.write(message)
-#     time.sleep(0.05)
-#     data =   CURRENT_AMK.serial_port.readlines()
-
-#     if DEBUG_OUT_COMMS:
-#         print(f'request: {message}')
-#     if DEBUG_IN_COMMS:
-#         print(f'reply: {data}')
-
-#     return data
-
-# def wait_for_arduino(num_tries=3, delay=0.5): #NTS: maybe change name to handshake/wait_for_handshake?
-#     """Tells the AMK device to get ready for communication, and waits \
-#         for a reply
-    
-#     :param num_tries: The number of time to try the handshake.
-#     :param delay: Time to wait between tries.
-#     """
-#     global arduino_ready
-    
-#     while((not arduino_ready) and (num_tries > 0)):
-#         logging.info(f'Querying arduino. tries left:{num_tries}')
-#         reply = write_readlines('ao0'+end_marker)
-#         reply = reply[0].decode(ENCODING) if len(reply)>0 else ''
-#         if ('ready' in reply):
-#             arduino_ready = True
-#             logging.info(f'Arduino: AMK device ready!')
-#         else:
-#             num_tries -= 1
-#             time.sleep(0.5)
-    
-#     if num_tries == 0 and not arduino_ready:
-#         logging.error(f'No answer from AMK device')
 
 def close_window(app_window):
     """Closes the GUI window, and informs the AMK Device.
@@ -274,7 +222,7 @@ def parse_message(message, target_amk): #NTS: make target_amk optional, and a co
     """#NTS: incomplete docstring``
     error = False
     if message:
-        error = False
+        error = False #NTS: redundant?
         for line in message:
             if len(line)>2: # split the message to it's parts, excludes the end of line character
                 print(f'line: {line}')
@@ -323,12 +271,6 @@ def parse_message(message, target_amk): #NTS: make target_amk optional, and a co
 
     if error:
         print(f'An error has occured while parsing. See logging.log for more information')
-        
-
-# def int_to_bytes(i: int, *, signed: bool = False) -> bytes:
-#     length = ((i + ((i * signed) < 0)).bit_length() + 7 + signed) // 8
-#     return i.to_bytes(length, byteorder='big', signed=signed)
-
 #endregion
 
 #region get functions
